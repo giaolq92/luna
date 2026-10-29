@@ -1,0 +1,192 @@
+<title>Lệnh Bot Mua hàng XNK</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Bố cục: một cột tra cứu nhanh, mỗi lệnh một thẻ, ví dụ gõ được ngay */
+:root {
+  --bg: #eef1ee; --surface: #ffffff; --ink: #17201c; --muted: #56625c; --line: #d3dad5; --accent: #2b52c4; --accent-soft: #e2e8f8;
+  --f-display: "Archivo", "Segoe UI", system-ui, sans-serif; --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa6a0; --line: #2b3430; --accent: #86a2f2; --accent-soft: #1f2a48; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa6a0; --line: #2b3430; --accent: #86a2f2; --accent-soft: #1f2a48; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
+h1, h2 { font-family: var(--f-display); margin: 0; text-wrap: balance; }
+h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; line-height: 1.1; }
+h2 { font-size: 17px; font-weight: 700; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header p, .how p { margin: 0; color: var(--muted); max-width: 70ch; }
+code { font-family: var(--f-mono); font-size: .92em; background: var(--accent-soft); border-radius: 4px; padding: 1px 5px; }
+.how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.how section { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.cmds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.cmd { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.cmd p { margin: 0; font-size: 14px; }
+.cmd-head { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.name { font-size: 15px; font-weight: 500; color: var(--accent); background: none; padding: 0; }
+.alias { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--muted); } dd { margin: 0; }
+.ex { margin: 0; padding-left: 18px; font-size: 13px; display: grid; gap: 3px; }
+.foot { font-size: 12.5px; color: var(--muted); }
+.nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.nav a { font-size: 13.5px; color: var(--accent); text-decoration: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; }
+.group { display: grid; gap: 10px; }
+.group-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.group-name { font-size: 20px; }
+@media (max-width: 760px) { .how, .cmds { grid-template-columns: 1fr; } }
+</style>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Bot Mua hàng XNK · TST</div>
+    <h1>Bot trả lời được những gì</h1>
+    <p>Mọi số lấy từ báo cáo BCQTMH, dùng đúng chỉ số và bộ lọc của trang BCQT, cuối câu trả lời luôn ghi phạm vi dữ liệu để đối chiếu.</p>
+  </header>
+  <div class="how">
+    <section><h2>Gõ lệnh</h2><p>Bắt đầu bằng dấu <code>/</code>, thêm tháng, Sea/Air, <code>tach</code> nếu cần. Ví dụ <code>/kpi 10/2026</code>.</p></section>
+    <section><h2>Hoặc hỏi bình thường</h2><p>Bot tự hiểu câu hỏi thuộc lệnh nào, ví dụ "leadtime hàng air tháng 9 có đạt không?".</p></section>
+    <section><h2>Mặc định</h2><p>Không nêu tháng thì lấy tháng hiện tại. KPI mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung. Slicer không nêu thì "Tất cả".</p></section>
+  </div>
+  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime</a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng</a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng</a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo</a><a href="#nhom-kho">Tồn kho</a></nav>
+  <section class="group" id="nhom-kpi">
+    <div class="group-head"><h2 class="group-name">KPI &amp; leadtime</h2><code>/lenh kpi</code><span class="alias">4 lệnh</span></div>
+    <div class="cmds">
+      <article class="cmd" id="kpi">
+        <div class="cmd-head"><code class="name">/kpi</code><span class="alias">/cpmh</span><span class="alias">/chiphi</span></div>
+        <h2>KPI chi phí mua hàng</h2>
+        <p>CPMH/FOB, từng cấu phần (thuế NK, VC quốc tế, chi phí lấy hàng), chỉ tiêu, cùng kỳ. Mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung; tháng chưa kết thúc là số tạm tính / dự kiến.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, tách riêng NCC, Sea/Air, kho, nhóm hàng</dd></dl>
+        <ul class="ex"><li><code>/kpi 10/2026</code></li><li><code>/kpi 9 tach</code></li><li><code>/kpi 9 kho:da nhom:ptu</code></li><li><code>KPI dự kiến tháng 10 bao nhiêu?</code></li></ul>
+      </article>
+      <article class="cmd" id="leadtime">
+        <div class="cmd-head"><code class="name">/leadtime</code><span class="alias">/lt</span></div>
+        <h2>KPI leadtime</h2>
+        <p>CHỈ khi hỏi KPI / chỉ tiêu / đạt hay không: tỷ lệ dòng hàng Air ≤ 22 ngày, Sea ≤ 80 ngày so với chỉ tiêu. Mặc định 2 NCC Mobis gộp chung.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air, tách riêng NCC, kho, nhóm hàng</dd></dl>
+        <ul class="ex"><li><code>/leadtime 8</code></li><li><code>/leadtime 9 air</code></li><li><code>/leadtime 9 kho:hn</code></li><li><code>Leadtime hàng Sea tháng 9 đạt không?</code></li></ul>
+      </article>
+      <article class="cmd" id="leadtime-tb">
+        <div class="cmd-head"><code class="name">/leadtime-tb</code><span class="alias">/lttb</span></div>
+        <h2>Leadtime trung bình</h2>
+        <p>Số ngày leadtime trung bình theo giá trị và theo line item, chia Sea/Air, từng giai đoạn (đặt hàng → invoice → ship → cập cảng → về kho), so cùng kỳ. Cả năm hoặc 1 tháng; NCC nhập khẩu và nội địa.</p>
+        <dl><dt>Tham số</dt><dd>năm, tháng, NCC, Sea/Air, kho, nhóm hàng</dd></dl>
+        <ul class="ex"><li><code>/leadtime-tb 2026 hhka148</code></li><li><code>/leadtime-tb 9/2026 dtmb001</code></li><li><code>Lead time mua hàng trung bình năm 2026 từ HHKA148</code></li></ul>
+      </article>
+      <article class="cmd" id="co">
+        <div class="cmd-head"><code class="name">/co</code></div>
+        <h2>Tỷ lệ áp dụng C/O</h2>
+        <p>Tỷ lệ giá trị hàng có C/O trong tháng.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
+        <ul class="ex"><li><code>/co 9</code></li></ul>
+      </article>
+    </div>
+  </section>
+  <section class="group" id="nhom-mua">
+    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">3 lệnh</span></div>
+    <div class="cmds">
+      <article class="cmd" id="yeu-cau-mua">
+        <div class="cmd-head"><code class="name">/yeu-cau-mua</code><span class="alias">/ycmh</span></div>
+        <h2>Giá trị yêu cầu mua hàng</h2>
+        <p>Giá trị phiếu yêu cầu mua hàng trong tháng, chia Sea/Air, so cùng kỳ.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
+        <ul class="ex"><li><code>/yeu-cau-mua 10</code></li></ul>
+      </article>
+      <article class="cmd" id="cho-duyet">
+        <div class="cmd-head"><code class="name">/cho-duyet</code><span class="alias">/choduyet</span></div>
+        <h2>Yêu cầu mua hàng chờ duyệt</h2>
+        <p>Phiếu PP/PR đang chờ duyệt, người lập, số ngày chờ, giá trị.</p>
+        <dl><dt>Tham số</dt><dd>không</dd></dl>
+        <ul class="ex"><li><code>/cho-duyet</code></li></ul>
+      </article>
+      <article class="cmd" id="dat-hang">
+        <div class="cmd-head"><code class="name">/dat-hang</code><span class="alias">/ddh</span></div>
+        <h2>Giá trị đặt hàng</h2>
+        <p>Giá trị đơn đặt hàng mua trong tháng, chia Sea/Air.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
+        <ul class="ex"><li><code>/dat-hang 10</code></li></ul>
+      </article>
+    </div>
+  </section>
+  <section class="group" id="nhom-hang-ve">
+    <div class="group-head"><h2 class="group-name">Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="alias">5 lệnh</span></div>
+    <div class="cmds">
+      <article class="cmd" id="hang-ve">
+        <div class="cmd-head"><code class="name">/hang-ve</code><span class="alias">/hangve</span></div>
+        <h2>Giá trị hàng về</h2>
+        <p>Giá trị hàng về (FOB) trong tháng, chia Sea/Air, so cùng kỳ.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, kho, nhóm hàng</dd></dl>
+        <ul class="ex"><li><code>/hang-ve 9</code></li><li><code>/hang-ve 9 nhom:lop</code></li><li><code>Tháng 9 về bao nhiêu hàng?</code></li></ul>
+      </article>
+      <article class="cmd" id="lich-hang-ve">
+        <div class="cmd-head"><code class="name">/lich-hang-ve</code><span class="alias">/lich</span></div>
+        <h2>Lịch hàng về</h2>
+        <p>Các lô hàng (invoice) dự kiến về kho trong N ngày tới (mặc định 7).</p>
+        <dl><dt>Tham số</dt><dd>số ngày</dd></dl>
+        <ul class="ex"><li><code>/lich-hang-ve</code></li><li><code>/lich-hang-ve 14</code></li></ul>
+      </article>
+      <article class="cmd" id="tau">
+        <div class="cmd-head"><code class="name">/tau</code><span class="alias">/bill</span><span class="alias">/vandon</span><span class="alias">/tracking</span></div>
+        <h2>Tra cứu lô hàng / hãng tàu</h2>
+        <p>Tra 1 số bill, booking, số cont hoặc số invoice: invoice, NCC, ngày vận đơn, cập cảng, dự kiến về kho, danh sách cont, kèm link tra cứu trên trang hãng tàu. Riêng ONE: bot tự tra trang hãng (chờ tối đa 10 giây) và trả luôn tàu, ETD/ETA, các mốc kèm ảnh lịch trình; Maersk, Wan Hai, Pan Ocean chỉ gửi link. Dùng số booking hoặc master bill.</p>
+        <dl><dt>Tham số</dt><dd>số bill / booking / cont / invoice, hãng tàu</dd></dl>
+        <ul class="ex"><li><code>/tau ONEU0175432</code></li><li><code>/tau ANBHPH26030104</code></li><li><code>Tra bill DONA26090366</code></li></ul>
+      </article>
+      <article class="cmd" id="cont">
+        <div class="cmd-head"><code class="name">/cont</code><span class="alias">/container</span></div>
+        <h2>Số cont nhập kho</h2>
+        <p>Số cont 20, cont 40 và số bill hàng lẻ (LCL) nhập kho theo ngày dự kiến về kho, chia theo NCC và kho.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, kho</dd></dl>
+        <ul class="ex"><li><code>/cont 10 dtmb001</code></li><li><code>Số cont nhập kho từ Hyundai Mobis tháng 10</code></li></ul>
+      </article>
+      <article class="cmd" id="tre-hang">
+        <div class="cmd-head"><code class="name">/tre-hang</code><span class="alias">/tre</span></div>
+        <h2>Invoice trễ hàng</h2>
+        <p>Invoice quá ngày dự kiến về kho mà chưa hoàn thiện.</p>
+        <dl><dt>Tham số</dt><dd>không</dd></dl>
+        <ul class="ex"><li><code>/tre-hang</code></li></ul>
+      </article>
+    </div>
+  </section>
+  <section class="group" id="nhom-kiem-tra">
+    <div class="group-head"><h2 class="group-name">Kiểm tra dữ liệu Bravo</h2><code>/lenh kiem-tra</code><span class="alias">3 lệnh</span></div>
+    <div class="cmds">
+      <article class="cmd" id="chua-tbhv">
+        <div class="cmd-head"><code class="name">/chua-tbhv</code><span class="alias">/tbhv</span></div>
+        <h2>Chưa gửi mail TBHV</h2>
+        <p>Invoice đã cập cảng nhưng chưa gửi email thông báo hàng về.</p>
+        <dl><dt>Tham số</dt><dd>không</dd></dl>
+        <ul class="ex"><li><code>/chua-tbhv</code></li></ul>
+      </article>
+      <article class="cmd" id="lap-phieu">
+        <div class="cmd-head"><code class="name">/lap-phieu</code></div>
+        <h2>Còn Lập phiếu</h2>
+        <p>Invoice hàng quốc tế đã có vận đơn mà phiếu còn ở trạng thái Lập phiếu.</p>
+        <dl><dt>Tham số</dt><dd>không</dd></dl>
+        <ul class="ex"><li><code>/lap-phieu</code></li></ul>
+      </article>
+      <article class="cmd" id="vat">
+        <div class="cmd-head"><code class="name">/vat</code></div>
+        <h2>VAT bán ra cần xử lý</h2>
+        <p>Số mã hàng theo nhóm (c chưa có, b hết hạn, f thiếu HS, d lệch thuế suất, e sắp hết hạn) và ưu tiên, kèm 20 mã ưu tiên nhất.</p>
+        <dl><dt>Tham số</dt><dd>nhóm c/b/f/d/e</dd></dl>
+        <ul class="ex"><li><code>/vat</code></li><li><code>/vat c</code></li><li><code>/vat f</code></li><li><code>Mã nào chưa có VAT bán ra?</code></li></ul>
+      </article>
+    </div>
+  </section>
+  <section class="group" id="nhom-kho">
+    <div class="group-head"><h2 class="group-name">Tồn kho</h2><code>/lenh kho</code><span class="alias">1 lệnh</span></div>
+    <div class="cmds">
+      <article class="cmd" id="ton-kho">
+        <div class="cmd-head"><code class="name">/ton-kho</code><span class="alias">/tonkho</span><span class="alias">/ton</span></div>
+        <h2>Tồn kho</h2>
+        <p>Tồn kho hiện tại theo báo cáo tồn kho theo kho của Bravo: giá trị, số lượng, số mã còn tồn, chia theo kho và nhóm hàng; hoặc tồn từng kho của 1 mã hàng (gõ một phần mã thì liệt kê các mã khớp).</p>
+        <dl><dt>Tham số</dt><dd>mã hàng, kho, nhóm hàng, Sea/Air</dd></dl>
+        <ul class="ex"><li><code>/ton-kho</code></li><li><code>/ton-kho kho:da nhom:ptu</code></li><li><code>/ton-kho 59796AA400</code></li><li><code>Mã 230404A960 còn tồn bao nhiêu?</code></li></ul>
+      </article>
+    </div>
+  </section>
+  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 27/10/2026.</p>
+</div>
