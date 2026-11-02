@@ -117,15 +117,15 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       </article>
       <article class="cmd" id="don-invoice">
         <div class="cmd-head"><code class="name">/don-invoice</code><span class="alias">/chua-invoice</span><span class="alias">/da-invoice</span></div>
-        <h2>Đã đặt / đã lên invoice</h2>
-        <p>Giá trị hàng đã đặt, đã lên invoice và đã đặt nhưng chưa lên invoice, chia Sea/Air và theo tháng đặt hàng. Không nêu kỳ thì tính toàn bộ đơn từ 01/01/2025; nêu tháng/năm thì tính đơn đặt trong kỳ đó.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air</dd></dl>
-        <ul class="ex"><li><code>/don-invoice dtmb001</code></li><li><code>/don-invoice 9/2026 air</code></li><li><code>Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice</code></li></ul>
+        <h2>Đã đặt / đã lên invoice / đã giao</h2>
+        <p>Giá trị hàng đã đặt, đã lên invoice và đã đặt nhưng chưa lên invoice, chia Sea/Air và theo tháng đặt hàng. Không nêu kỳ thì tính toàn bộ đơn từ 01/01/2025; nêu tháng/năm thì tính đơn đặt trong kỳ đó. Mặc định VND; thêm usd để xem bằng USD (chỉ NCC nước ngoài). Thêm giao để xem đã giao / chưa giao (đã nhập kho theo ngày dự kiến về kho).</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air, usd, giao</dd></dl>
+        <ul class="ex"><li><code>/don-invoice dtmb001</code></li><li><code>/don-invoice dtmb001 usd</code></li><li><code>/don-invoice hhka161 giao</code></li><li><code>/don-invoice 9/2026 air</code></li><li><code>Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice</code></li><li><code>Giá trị đã đặt, đã giao và chưa giao của Foton</code></li></ul>
       </article>
     </div>
   </section>
   <section class="group" id="nhom-hang-ve">
-    <div class="group-head"><h2 class="group-name">Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="alias">5 lệnh</span></div>
+    <div class="group-head"><h2 class="group-name">Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="alias">4 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="hang-ve">
         <div class="cmd-head"><code class="name">/hang-ve</code><span class="alias">/hangve</span></div>
@@ -140,13 +140,6 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
         <p>Các lô hàng (invoice) dự kiến về kho trong N ngày tới (mặc định 7).</p>
         <dl><dt>Tham số</dt><dd>số ngày</dd></dl>
         <ul class="ex"><li><code>/lich-hang-ve</code></li><li><code>/lich-hang-ve 14</code></li></ul>
-      </article>
-      <article class="cmd" id="tau">
-        <div class="cmd-head"><code class="name">/tau</code><span class="alias">/bill</span><span class="alias">/vandon</span><span class="alias">/tracking</span></div>
-        <h2>Tra cứu lô hàng / hãng tàu</h2>
-        <p>Tra 1 số bill, booking, số cont hoặc số invoice: invoice, NCC, ngày vận đơn, cập cảng, dự kiến về kho, danh sách cont, kèm link tra cứu trên trang hãng tàu. Riêng ONE: bot tự tra trang hãng (chờ tối đa 10 giây) và trả luôn tàu, ETD/ETA, các mốc kèm ảnh lịch trình; Maersk, Wan Hai, Pan Ocean chỉ gửi link. Dùng số booking hoặc master bill.</p>
-        <dl><dt>Tham số</dt><dd>số bill / booking / cont / invoice, hãng tàu</dd></dl>
-        <ul class="ex"><li><code>/tau ONEU0175432</code></li><li><code>/tau ANBHPH26030104</code></li><li><code>Tra bill DONA26090366</code></li></ul>
       </article>
       <article class="cmd" id="cont">
         <div class="cmd-head"><code class="name">/cont</code><span class="alias">/container</span></div>
