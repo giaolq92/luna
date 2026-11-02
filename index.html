@@ -85,7 +85,7 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
     </div>
   </section>
   <section class="group" id="nhom-mua">
-    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">3 lệnh</span></div>
+    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">5 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="yeu-cau-mua">
         <div class="cmd-head"><code class="name">/yeu-cau-mua</code><span class="alias">/ycmh</span></div>
@@ -107,6 +107,20 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
         <p>Giá trị đơn đặt hàng mua trong tháng, chia Sea/Air.</p>
         <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
         <ul class="ex"><li><code>/dat-hang 10</code></li></ul>
+      </article>
+      <article class="cmd" id="thong-ke-don">
+        <div class="cmd-head"><code class="name">/thong-ke-don</code></div>
+        <h2>Thống kê đơn đặt hàng</h2>
+        <p>Số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. N tháng gần nhất mặc định là N tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. Hỗ trợ NCC và Sea/Air, gồm hàng nội địa.</p>
+        <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm kết thúc, NCC, Sea/Air</dd></dl>
+        <ul class="ex"><li><code>/thong-ke-don 3thang air</code></li><li><code>Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?</code></li></ul>
+      </article>
+      <article class="cmd" id="don-invoice">
+        <div class="cmd-head"><code class="name">/don-invoice</code><span class="alias">/chua-invoice</span><span class="alias">/da-invoice</span></div>
+        <h2>Đã đặt / đã lên invoice</h2>
+        <p>Giá trị hàng đã đặt, đã lên invoice và đã đặt nhưng chưa lên invoice, chia Sea/Air và theo tháng đặt hàng. Không nêu kỳ thì tính toàn bộ đơn từ 01/01/2025; nêu tháng/năm thì tính đơn đặt trong kỳ đó.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air</dd></dl>
+        <ul class="ex"><li><code>/don-invoice dtmb001</code></li><li><code>/don-invoice 9/2026 air</code></li><li><code>Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice</code></li></ul>
       </article>
     </div>
   </section>
@@ -188,5 +202,5 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       </article>
     </div>
   </section>
-  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 27/10/2026.</p>
+  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 02/11/2026.</p>
 </div>
