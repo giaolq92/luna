@@ -111,9 +111,9 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       <article class="cmd" id="thong-ke-don">
         <div class="cmd-head"><code class="name">/thong-ke-don</code></div>
         <h2>Thống kê đơn đặt hàng</h2>
-        <p>Số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. N tháng gần nhất mặc định là N tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. Hỗ trợ NCC và Sea/Air, gồm hàng nội địa.</p>
-        <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm kết thúc, NCC, Sea/Air</dd></dl>
-        <ul class="ex"><li><code>/thong-ke-don 3thang air</code></li><li><code>Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?</code></li></ul>
+        <p>Số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. N tháng gần nhất mặc định là N tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. Hoặc tính trong một khoảng ngày tùy chọn (từ ngày đến ngày). Hỗ trợ NCC và Sea/Air, gồm hàng nội địa.</p>
+        <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm kết thúc, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air</dd></dl>
+        <ul class="ex"><li><code>/thong-ke-don 3thang air</code></li><li><code>/thong-ke-don 31/10/2026-9/11/2026 hhka161</code></li><li><code>Tính tổng số đơn hàng từ 31/10/2026 đến 9/11/2026 của Foton</code></li><li><code>Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?</code></li></ul>
       </article>
       <article class="cmd" id="don-invoice">
         <div class="cmd-head"><code class="name">/don-invoice</code><span class="alias">/chua-invoice</span><span class="alias">/da-invoice</span></div>
@@ -195,5 +195,5 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       </article>
     </div>
   </section>
-  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 02/11/2026.</p>
+  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 10/11/2026.</p>
 </div>
