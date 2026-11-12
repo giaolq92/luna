@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trợ lý AI Luna</title>
+<meta name="description" content="Giới thiệu trợ lý AI Luna của phòng Mua hàng XNK: theo dõi chuyến hàng, cảnh báo đích danh và hỗ trợ thao tác Bravo an toàn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f7fb; --bg2:#ffffff; --ink:#0f172a; --ink2:#334155; --muted:#64748b; --line:#e2e8f0;
+  --brand:#2563eb; --brand2:#7c3aed; --teal:#0d9488; --amber:#d97706; --red:#dc2626; --green:#16a34a;
+  --card:#ffffff; --soft:#eef2ff; --soft2:#ecfeff; --shadow:0 10px 30px -12px rgba(15,23,42,.18);
+  --hero1:#1e3a8a; --hero2:#6d28d9; --hero3:#0f766e; --term:#0b1220; --termink:#cbd5e1;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1020; --bg2:#0f172a; --ink:#e5e7eb; --ink2:#cbd5e1; --muted:#94a3b8; --line:#1e293b;
+    --brand:#60a5fa; --brand2:#a78bfa; --teal:#2dd4bf; --amber:#fbbf24; --red:#f87171; --green:#4ade80;
+    --card:#111a2e; --soft:#172042; --soft2:#0f2a2e; --shadow:0 10px 30px -12px rgba(0,0,0,.6);
+    --hero1:#1e2a6b; --hero2:#4c1d95; --hero3:#134e4a; --term:#060a14; --termink:#cbd5e1;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1020; --bg2:#0f172a; --ink:#e5e7eb; --ink2:#cbd5e1; --muted:#94a3b8; --line:#1e293b;
+  --brand:#60a5fa; --brand2:#a78bfa; --teal:#2dd4bf; --amber:#fbbf24; --red:#f87171; --green:#4ade80;
+  --card:#111a2e; --soft:#172042; --soft2:#0f2a2e; --shadow:0 10px 30px -12px rgba(0,0,0,.6);
+  --hero1:#1e2a6b; --hero2:#4c1d95; --hero3:#134e4a; --term:#060a14; --termink:#cbd5e1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em}
+.logo i{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-style:normal;font-size:15px}
+.links{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.links a{text-decoration:none;color:var(--ink2);font-size:14px;font-weight:500;padding:6px 10px;border-radius:8px}
+.links a:hover{background:var(--soft)}
+.theme{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer;font:inherit;font-size:13px}
+@media (max-width:760px){.links a.opt{display:none}}
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;background:linear-gradient(120deg,var(--hero1),var(--hero2) 55%,var(--hero3))}
+.hero::before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.18),transparent 35%),radial-gradient(circle at 80% 70%,rgba(45,212,191,.25),transparent 40%);animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(4%,-3%) rotate(6deg)}}
+.hero .wrap{position:relative;padding:72px 16px 64px;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr;padding:48px 16px}}
+.pill{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:500}
+.pill b{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.25)}
+h1{font-size:clamp(34px,5.2vw,56px);line-height:1.08;letter-spacing:-.03em;margin:18px 0 14px;font-weight:800}
+h1 span{background:linear-gradient(90deg,#fff,#a5f3fc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(16px,1.9vw,19px);opacity:.92;max-width:600px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;padding:12px 18px;border-radius:12px;font-size:15px}
+.btn.w{background:#fff;color:#1e3a8a}
+.btn.g{border:1px solid rgba(255,255,255,.4);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:34px;max-width:560px}
+.stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px}
+.stat strong{display:block;font-size:22px}
+.stat small{opacity:.85;font-size:12.5px}
+/* hero visual */
+.orb{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:22px;padding:18px;backdrop-filter:blur(6px);box-shadow:0 30px 60px -20px rgba(0,0,0,.45)}
+.orb h4{margin:0 0 12px;font-size:13px;font-weight:600;opacity:.85;letter-spacing:.04em;text-transform:uppercase}
+.alert{display:flex;gap:12px;background:rgba(255,255,255,.95);color:#0f172a;border-radius:14px;padding:12px;margin-bottom:10px;opacity:0;transform:translateY(8px);animation:pop .6s forwards}
+.alert:nth-child(2){animation-delay:.3s}.alert:nth-child(3){animation-delay:.9s}.alert:nth-child(4){animation-delay:1.5s}
+@keyframes pop{to{opacity:1;transform:none}}
+.alert .ic{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:18px}
+.alert p{margin:0;font-size:13.5px;line-height:1.45}
+.alert p b{display:block;font-size:14px}
+.alert small{color:#64748b;font-size:12px}
+/* sections */
+section{padding:76px 0}
+.eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}
+h2{font-size:clamp(26px,3.4vw,38px);letter-spacing:-.02em;line-height:1.15;margin:8px 0 12px}
+.sub{color:var(--muted);max-width:720px;font-size:17px;margin:0}
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:620px){.g3,.g2,.g4{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+.card:hover{transform:translateY(-3px)}
+.card h3{margin:12px 0 6px;font-size:18px;letter-spacing:-.01em}
+.card p{margin:0;color:var(--ink2);font-size:15px}
+.icon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:22px}
+.i-blue{background:color-mix(in srgb,var(--brand) 14%,transparent)}
+.i-violet{background:color-mix(in srgb,var(--brand2) 16%,transparent)}
+.i-teal{background:color-mix(in srgb,var(--teal) 16%,transparent)}
+.i-amber{background:color-mix(in srgb,var(--amber) 18%,transparent)}
+.i-red{background:color-mix(in srgb,var(--red) 14%,transparent)}
+.i-green{background:color-mix(in srgb,var(--green) 16%,transparent)}
+.part{display:flex;gap:18px;align-items:flex-start;margin-bottom:30px}
+.badge{flex:none;width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-weight:800;font-size:26px;color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:var(--shadow)}
+.badge.b{background:linear-gradient(135deg,var(--teal),var(--brand))}
+/* flow */
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:28px 0 8px;counter-reset:s}
+@media (max-width:900px){.flow{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.flow{grid-template-columns:1fr}}
+.step{position:relative;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:16px 14px 14px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;top:-11px;left:14px;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;font-size:12.5px;font-weight:700;display:grid;place-items:center}
+.step b{display:block;font-size:14.5px;margin-top:4px}
+.step span{font-size:13.5px;color:var(--ink2)}
+/* safety box */
+.safe{margin-top:26px;border-radius:20px;border:1px solid color-mix(in srgb,var(--green) 35%,var(--line));background:linear-gradient(180deg,color-mix(in srgb,var(--green) 8%,var(--card)),var(--card));padding:22px}
+.safe h3{margin:0 0 14px;display:flex;align-items:center;gap:10px;font-size:18px}
+.rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+@media (max-width:760px){.rules{grid-template-columns:1fr}}
+.rules li{display:flex;gap:10px;font-size:15px;color:var(--ink2)}
+.rules li::before{content:"✓";flex:none;width:22px;height:22px;border-radius:7px;background:color-mix(in srgb,var(--green) 18%,transparent);color:var(--green);font-weight:800;display:grid;place-items:center;font-size:13px;margin-top:2px}
+.rules li.no::before{content:"✕";background:color-mix(in srgb,var(--red) 15%,transparent);color:var(--red)}
+.rules b{color:var(--ink)}
+/* permission matrix */
+.matrix{width:100%;border-collapse:separate;border-spacing:0;margin-top:22px;font-size:14.5px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.matrix th,.matrix td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left}
+.matrix th{background:var(--soft);font-weight:700;font-size:13.5px}
+.matrix tr:last-child td{border-bottom:0}
+.tick{color:var(--green);font-weight:800}.dash{color:var(--muted)}
+.tablewrap{overflow-x:auto}
+/* console mock */
+.console{margin-top:28px;display:grid;grid-template-columns:1.25fr .75fr;gap:16px}
+@media (max-width:900px){.console{grid-template-columns:1fr}}
+.term{background:var(--term);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #1e293b}
+.term .bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#111827;color:#94a3b8;font-size:13px}
+.dot{width:11px;height:11px;border-radius:50%}
+.term .bar .t{margin-left:8px;font-weight:600;color:#e2e8f0}
+.speed{margin-left:auto;font-size:12px;color:#94a3b8}
+.log{font-family:"JetBrains Mono",ui-monospace,Consolas,monospace;font-size:13px;color:var(--termink);padding:14px 16px;height:300px;overflow:auto;line-height:1.75}
+.log div{white-space:pre-wrap;opacity:0;animation:pop .35s forwards}
+.log .ok{color:#4ade80}.log .run{color:#60a5fa}.log .wait{color:#fbbf24}.log .stop{color:#f87171}.log .tm{color:#64748b}
+.controls{display:flex;gap:10px;padding:12px 14px;border-top:1px solid #1e293b;flex-wrap:wrap}
+.cbtn{border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.cbtn.start{background:#16a34a;color:#fff}.cbtn.pause{background:#334155;color:#e2e8f0}.cbtn.kill{background:#dc2626;color:#fff;margin-left:auto;box-shadow:0 0 0 0 rgba(220,38,38,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(220,38,38,0)}100%{box-shadow:0 0 0 0 rgba(220,38,38,0)}}
+.cbtn:disabled{opacity:.45;cursor:not-allowed;animation:none}
+.steps{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.steps h4{margin:0 0 10px;font-size:15px}
+.st{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px;color:var(--ink2)}
+.st:last-child{border:0}
+.st i{font-style:normal;width:22px;text-align:center}
+.st.human{color:var(--ink);font-weight:600}
+.note{margin-top:12px;font-size:13px;color:var(--muted)}
+/* pillars */
+.pillar{display:flex;gap:16px;align-items:flex-start}
+.pillar .icon{flex:none}
+.band{background:linear-gradient(135deg,var(--soft),var(--soft2));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.quote{font-size:clamp(18px,2.2vw,22px);font-weight:600;letter-spacing:-.01em;max-width:860px;margin:0 auto;text-align:center}
+.quote small{display:block;margin-top:10px;font-size:14px;color:var(--muted);font-weight:500}
+footer{padding:36px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+footer .wrap{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.alert,.log div{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo"><i>L</i>Luna · Trợ lý AI</div>
+    <div class="links">
+      <a href="#a">A. Theo dõi &amp; cảnh báo</a>
+      <a href="#b">B. Hỗ trợ Bravo</a>
+      <a class="opt" href="#an-toan">An toàn</a>
+      <a class="opt" href="#cam-ket">Cam kết</a>
+    </div>
+    <button class="theme" id="themeBtn" type="button" aria-label="Đổi giao diện sáng/tối">◐</button>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="pill"><b></b>Phòng Mua hàng Xuất nhập khẩu</span>
+      <h1>Luna — trợ lý AI <span>làm việc lặp lại, báo đúng người, đúng lúc</span></h1>
+      <p class="lead">Luna đọc email, cổng thông tin nhà cung cấp và website hãng tàu để theo dõi hàng hóa, chuyến tàu, thời gian cập cảng, rồi gửi cảnh báo đích danh cho người cần biết. Trên Bravo, Luna điền sẵn phiếu cho các thủ tục lặp lại để nhân viên chỉ còn kiểm tra và bấm lưu.</p>
+      <div class="cta">
+        <a class="btn w" href="#a">Xem chức năng →</a>
+        <a class="btn g" href="#an-toan">Giới hạn &amp; an toàn</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>Chỉ đọc</strong><small>với cơ sở dữ liệu công ty</small></div>
+        <div class="stat"><strong>Đích danh</strong><small>mọi thông báo đều theo phân quyền</small></div>
+        <div class="stat"><strong>Người bấm lưu</strong><small>mọi phiếu trên Bravo</small></div>
+      </div>
+    </div>
+    <div class="orb" aria-label="Ví dụ cảnh báo Luna gửi">
+      <h4>Ví dụ cảnh báo trên Teams</h4>
+      <div class="alert"><div class="ic i-blue">🚢</div><p><b>Tàu đổi lịch cập cảng</b>Container ABCU1234567 (invoice INV-0001) dời ETA từ 14/11 sang 16/11 tại Cát Lái.<br><small>Gửi riêng: nhóm Logistics, người phụ trách đơn</small></p></div>
+      <div class="alert"><div class="ic i-teal">📄</div><p><b>Có invoice mới từ NCC</b>NCC Hàn Quốc đã phát hành invoice INV-0002, 160 dòng hàng. Đã tải về thư mục chứng từ.<br><small>Gửi riêng: người phụ trách NCC Hàn Quốc</small></p></div>
+      <div class="alert"><div class="ic i-amber">⏰</div><p><b>Sắp đến hạn cập cảng</b>2 lô hàng cập cảng trong 48 giờ tới, còn thiếu C/O bản gốc.<br><small>Gửi riêng: nhóm chứng từ</small></p></div>
+    </div>
+  </div>
+</header>
+
+<!-- PART A -->
+<section id="a">
+  <div class="wrap">
+    <div class="part reveal">
+      <div class="badge">A</div>
+      <div>
+        <span class="eyebrow">Phần A</span>
+        <h2>Theo dõi thông tin &amp; gửi cảnh báo</h2>
+        <p class="sub">Luna thay nhân viên đi "gom tin" mỗi ngày: hộp thư, cổng nhà cung cấp, website hãng tàu. Khi có điều cần chú ý, Luna báo ngay cho đúng người hoặc đúng nhóm.</p>
+      </div>
+    </div>
+
+    <div class="grid g4">
+      <div class="card reveal"><div class="icon i-blue">✉️</div><h3>Đọc email</h3><p>Đọc invoice, packing list, thông báo giao hàng trong các hộp thư và thư mục đã được cấu hình cho phép.</p></div>
+      <div class="card reveal"><div class="icon i-violet">🏭</div><h3>Cổng thông tin NCC</h3><p>Truy cập web platform của nhà cung cấp đối tác để xem trạng thái đơn và tải chứng từ.</p></div>
+      <div class="card reveal"><div class="icon i-teal">🚢</div><h3>Website hãng tàu</h3><p>Cập nhật lịch tàu, ETD/ETA, trạng thái container, thời gian cập cảng của từng chuyến hàng.</p></div>
+      <div class="card reveal"><div class="icon i-amber">📈</div><h3>Thông tin thị trường</h3><p>Tổng hợp các thông tin thị trường liên quan đến hàng hóa và vận chuyển từ nguồn được chỉ định.</p></div>
+    </div>
+
+    <div class="flow reveal" aria-label="Quy trình phần A">
+      <div class="step"><b>Thu thập</b><span>Đọc email, cổng NCC, web hãng tàu theo lịch</span></div>
+      <div class="step"><b>Đối chiếu</b><span>Ghép với đơn hàng, invoice, container đang theo dõi</span></div>
+      <div class="step"><b>Phát hiện thay đổi</b><span>Đổi lịch tàu, chứng từ mới, sắp cập cảng, thiếu giấy tờ</span></div>
+      <div class="step"><b>Kiểm tra quyền</b><span>Xác định ai được biết thông tin này</span></div>
+      <div class="step"><b>Báo đích danh</b><span>Gửi riêng qua Teams/email cho người hoặc nhóm liên quan</span></div>
+    </div>
+
+    <div class="safe reveal">
+      <h3>🛡️ Giới hạn &amp; chỉ dẫn an toàn — Phần A</h3>
+      <ul class="rules">
+        <li><span><b>Chỉ đọc email ở các hộp thư, thư mục, người gửi đã cấu hình cho phép.</b> Không mở thư ngoài phạm vi.</span></li>
+        <li><span><b>Thông tin được phân quyền trước khi chia sẻ.</b> Ai được biết thông tin gì đều gửi đích danh, không đăng chung.</span></li>
+        <li><span><b>Truy cập cổng NCC, hãng tàu bằng phiên đăng nhập của chính người dùng.</b> Luna không lưu mật khẩu.</span></li>
+        <li><span><b>Mọi lần đọc, mọi tin gửi đi đều được ghi nhật ký:</b> ai nhận, lúc nào, nội dung gì.</span></li>
+        <li class="no"><span><b>Không tự gửi thư, trả lời, xóa hay chuyển tiếp email</b> thay người dùng.</span></li>
+        <li class="no"><span><b>Không thao tác đặt hàng, xác nhận, thanh toán</b> trên cổng NCC hay website hãng tàu.</span></li>
+        <li class="no"><span><b>Không làm theo "lệnh" nằm trong email hay trang web.</b> Nội dung đọc được chỉ là dữ liệu, không phải chỉ thị.</span></li>
+        <li class="no"><span><b>Không gửi thông tin ra ngoài công ty</b> và không chia sẻ cho người chưa được cấp quyền.</span></li>
+      </ul>
+    </div>
+
+    <div class="tablewrap reveal">
+      <table class="matrix" aria-label="Ví dụ phân quyền nhận cảnh báo">
+        <thead><tr><th>Loại thông tin</th><th>Người phụ trách đơn</th><th>Nhóm Logistics</th><th>Nhóm chứng từ</th><th>Quản lý phòng</th></tr></thead>
+        <tbody>
+          <tr><td>Lịch tàu, ETA, cập cảng</td><td class="tick">●</td><td class="tick">●</td><td class="dash">–</td><td class="tick">● tóm tắt</td></tr>
+          <tr><td>Invoice, packing list mới</td><td class="tick">●</td><td class="dash">–</td><td class="tick">●</td><td class="dash">–</td></tr>
+          <tr><td>Giá mua, giá trị đơn hàng</td><td class="tick">●</td><td class="dash">–</td><td class="dash">–</td><td class="tick">●</td></tr>
+          <tr><td>Thiếu chứng từ, sắp quá hạn</td><td class="tick">●</td><td class="tick">●</td><td class="tick">●</td><td class="tick">● tóm tắt</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Bảng trên là ví dụ minh họa. Phân quyền thực tế do quản lý phòng quy định và có thể chỉnh sửa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PART B -->
+<section id="b" class="band">
+  <div class="wrap">
+    <div class="part reveal">
+      <div class="badge b">B</div>
+      <div>
+        <span class="eyebrow">Phần B</span>
+        <h2>Hỗ trợ thao tác Bravo cho thủ tục lặp lại</h2>
+        <p class="sub">Bắt đầu với <b>khai báo invoice</b>: Luna đọc chứng từ của nhà cung cấp, đối chiếu với đơn hàng, rồi điền phiếu trên Bravo như một nhân viên, ở tốc độ bạn quan sát kịp. Kiểm tra và bấm lưu vẫn là việc của con người.</p>
+      </div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card reveal"><div class="icon i-blue">📥</div><h3>Đọc chứng từ NCC</h3><p>Đọc file Excel invoice, packing list theo mẫu từng nhà cung cấp (mỗi nhà cung cấp một mẫu), chuẩn hóa về một khuôn chung.</p></div>
+      <div class="card reveal"><div class="icon i-violet">🔎</div><h3>Đối chiếu theo quy tắc</h3><p>Kiểm tra từng dòng: mã hàng, số đơn hàng, số lượng nhập so với số lượng còn lại của đơn. Đơn giá lấy theo đơn hàng.</p></div>
+      <div class="card reveal"><div class="icon i-teal">⌨️</div><h3>Điền phiếu trên Bravo</h3><p>Invoice 1 đơn hàng thì kế thừa đơn; invoice nhiều đơn hàng thì dùng chức năng import của Bravo. Điền xong thì dừng lại.</p></div>
+    </div>
+
+    <div class="console reveal">
+      <div class="term" role="region" aria-label="Màn hình theo dõi Luna thao tác Bravo">
+        <div class="bar"><span class="dot" style="background:#ef4444"></span><span class="dot" style="background:#f59e0b"></span><span class="dot" style="background:#22c55e"></span><span class="t">Màn hình theo dõi · Khai báo invoice INV-0002</span><span class="speed">Tốc độ: Bình thường</span></div>
+        <div class="log" id="log" aria-live="polite"></div>
+        <div class="controls">
+          <button class="cbtn start" id="bStart" type="button">▶ Bắt đầu</button>
+          <button class="cbtn pause" id="bPause" type="button" disabled>⏸ Tạm dừng</button>
+          <button class="cbtn kill" id="bKill" type="button" disabled>■ DỪNG KHẨN CẤP</button>
+        </div>
+      </div>
+      <div class="steps">
+        <h4>Ai làm bước nào?</h4>
+        <div class="st"><i>🤖</i>Đọc chứng từ, chuẩn hóa dữ liệu</div>
+        <div class="st"><i>🤖</i>Đối chiếu đơn hàng, số lượng còn lại</div>
+        <div class="st"><i>🤖</i>Mở màn hình, điền phiếu trên Bravo</div>
+        <div class="st"><i>🤖</i>Đọc lại từng ô, báo khác biệt</div>
+        <div class="st human"><i>👤</i>Kiểm tra phiếu trên Bravo</div>
+        <div class="st human"><i>👤</i>Duyệt và bấm Lưu</div>
+        <p class="note">Bấm "Bắt đầu" bên cạnh để xem mô phỏng. Nhân viên chạm chuột hoặc bàn phím thì Luna tự tạm dừng.</p>
+      </div>
+    </div>
+
+    <div class="safe reveal">
+      <h3>🛡️ Giới hạn &amp; chỉ dẫn an toàn — Phần B</h3>
+      <ul class="rules">
+        <li><span><b>Mọi thao tác đều có nhật ký</b> và hiện trực tiếp trên màn hình theo dõi.</span></li>
+        <li><span><b>Có nút Bắt đầu, Tạm dừng và Dừng khẩn cấp</b> luôn hiển thị; chạm chuột hoặc bàn phím thì tự tạm dừng.</span></li>
+        <li><span><b>Chạy ở tốc độ người xem theo kịp,</b> ô đang điền được tô sáng để dễ quan sát.</span></li>
+        <li><span><b>Luna chỉ điền xong dữ liệu trên phiếu.</b> Con người tự kiểm tra, duyệt và bấm Lưu.</span></li>
+        <li><span><b>Dùng chính tài khoản và quyền Bravo của nhân viên,</b> không có quyền nào vượt quá người dùng.</span></li>
+        <li><span><b>Dữ liệu sai lệch hoặc thiếu thì dừng lại và báo,</b> không tự đoán, không tự sửa cho khớp.</span></li>
+        <li class="no"><span><b>Không bấm Lưu, Duyệt, Xóa, Đánh lại số</b> hay chuyển trạng thái chứng từ.</span></li>
+        <li class="no"><span><b>Không ghi trực tiếp vào cơ sở dữ liệu.</b> Mọi dữ liệu chỉ đi qua giao diện Bravo như người dùng thật.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section id="an-toan">
+  <div class="wrap">
+    <span class="eyebrow">Nguyên tắc chung</span>
+    <h2>An toàn cho hệ thống và dữ liệu công ty</h2>
+    <p class="sub">Áp dụng cho cả phần A và phần B, không có ngoại lệ.</p>
+    <div class="grid g2" style="margin-top:28px">
+      <div class="card pillar reveal"><div class="icon i-green">🔒</div><div><h3>Chỉ đọc cơ sở dữ liệu</h3><p>Luna chỉ đọc phần dữ liệu được <b>phòng CNQT mở cổng</b>, bằng tài khoản chỉ đọc. Không sửa, không xóa, không cập nhật bất cứ dữ liệu nào trong CSDL.</p></div></div>
+      <div class="card pillar reveal"><div class="icon i-blue">🧱</div><div><h3>Không ảnh hưởng vận hành</h3><p>Không cài đặt lên máy chủ Bravo, không thay đổi cấu hình hệ thống, truy vấn nhẹ và có giới hạn tần suất. Tính toàn vẹn và khả năng vận hành của hệ thống công ty được giữ nguyên.</p></div></div>
+      <div class="card pillar reveal"><div class="icon i-violet">🧾</div><div><h3>Minh bạch, truy vết được</h3><p>Mọi lần đọc, gửi, điền đều được ghi nhật ký kèm thời điểm và người liên quan. Quản lý xem lại được toàn bộ quá trình bất cứ lúc nào.</p></div></div>
+      <div class="card pillar reveal"><div class="icon i-amber">🎯</div><div><h3>Quy tắc trước, AI sau</h3><p>Phần lớn công việc chạy bằng quy tắc đã được duyệt. AI chỉ hỗ trợ ở vài điểm có tên trong thủ tục và không được tự ra quyết định thay con người.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="cam-ket" class="band">
+  <div class="wrap">
+    <p class="quote reveal">"Luna làm phần việc lặp lại và báo tin đúng người. Con người giữ quyền quyết định cuối cùng."<small>Cam kết vận hành của trợ lý AI Luna · Phòng Mua hàng XNK</small></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Luna · Trợ lý AI phòng Mua hàng Xuất nhập khẩu</span>
+    <span>Tài liệu giới thiệu nội bộ · 11/2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Theme toggle (lưu lựa chọn trên trình duyệt nếu được)
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  try{var t=localStorage.getItem('luna-theme'); if(t) root.setAttribute('data-theme',t);}catch(e){}
+  btn.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    var dark=cur? cur==='dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var next=dark?'light':'dark'; root.setAttribute('data-theme',next);
+    try{localStorage.setItem('luna-theme',next);}catch(e){}
+  });
+
+  // Hiện dần khi cuộn
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12});
+    els.forEach(function(el){io.observe(el);});
+  } else els.forEach(function(el){el.classList.add('in');});
+
+  // Mô phỏng màn hình theo dõi
+  var lines=[
+    ['run','Bắt đầu: khai báo invoice INV-0002 · NCC Hàn Quốc'],
+    ['ok','Đọc InvoiceDetail.xlsx: 160 dòng hàng (theo quy tắc, không dùng AI)'],
+    ['ok','Đọc PackingHeaderList.xlsx: 29 kiện, container XYZU7654321'],
+    ['ok','Kiểm tra trùng: invoice chưa có trên Bravo'],
+    ['ok','Đối chiếu 160/160 dòng: mã hàng, số đơn hàng, số lượng ≤ số lượng còn lại'],
+    ['run','Mở màn hình Khai báo invoice → Thêm mới'],
+    ['run','Chọn Import… → bảng chi tiết mặt hàng → file đã chuẩn hóa'],
+    ['ok','Lưới xem trước: 160 dòng, 0 lỗi, 0 cảnh báo'],
+    ['run','Điền Số invoice = INV-0002 … đọc lại ô: khớp'],
+    ['ok','Đọc lại toàn bộ phiếu: tổng số lượng khớp chứng từ'],
+    ['wait','Đã điền xong. Chờ bạn kiểm tra, duyệt và bấm Lưu trên Bravo.']
+  ];
+  var log=document.getElementById('log'), bS=document.getElementById('bStart'), bP=document.getElementById('bPause'), bK=document.getElementById('bKill');
+  var i=0, timer=null, paused=false;
+  function now(){var d=new Date(); return d.toTimeString().slice(0,8);}
+  function add(cls,txt){var div=document.createElement('div'); div.innerHTML='<span class="tm">'+now()+'</span>  <span class="'+cls+'">'+(cls==='ok'?'✓':cls==='wait'?'⏸':cls==='stop'?'■':'▶')+'</span> '+txt; log.appendChild(div); log.scrollTop=log.scrollHeight;}
+  function tick(){ if(paused) return; if(i<lines.length){add(lines[i][0],lines[i][1]); i++;} if(i>=lines.length){clearInterval(timer); timer=null; bP.disabled=true; bK.disabled=true; bS.disabled=false; bS.textContent='↺ Chạy lại';} }
+  bS.addEventListener('click',function(){ if(i>=lines.length||bS.textContent.indexOf('Chạy lại')>=0){log.innerHTML=''; i=0;} paused=false; bS.disabled=true; bP.disabled=false; bK.disabled=false; bP.textContent='⏸ Tạm dừng'; tick(); timer=setInterval(tick,1100); });
+  bP.addEventListener('click',function(){ paused=!paused; bP.textContent=paused?'▶ Tiếp tục':'⏸ Tạm dừng'; add(paused?'wait':'run', paused?'Tạm dừng theo yêu cầu':'Tiếp tục'); });
+  bK.addEventListener('click',function(){ clearInterval(timer); timer=null; add('stop','DỪNG KHẨN CẤP: đã ngừng mọi thao tác, phiếu chưa được lưu.'); bP.disabled=true; bK.disabled=true; bS.disabled=false; bS.textContent='↺ Chạy lại'; });
+  add('tm','Sẵn sàng. Bấm "Bắt đầu" để xem mô phỏng.');
+})();
+</script>
+</body>
+</html>
