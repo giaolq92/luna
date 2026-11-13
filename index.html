@@ -71,9 +71,9 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       <article class="cmd" id="leadtime-tb">
         <div class="cmd-head"><code class="name">/leadtime-tb</code><span class="alias">/lttb</span></div>
         <h2>Leadtime trung bình</h2>
-        <p>Số ngày leadtime trung bình theo giá trị và theo line item, chia Sea/Air, từng giai đoạn (đặt hàng → invoice → ship → cập cảng → về kho), so cùng kỳ. Cả năm hoặc 1 tháng; NCC nhập khẩu và nội địa.</p>
+        <p>Số ngày leadtime trung bình theo giá trị và theo line item, chia Sea/Air, từng giai đoạn (đặt hàng → invoice → ship → cập cảng → về kho), so cùng kỳ. Cả năm hoặc 1 tháng; NCC nhập khẩu và nội địa. Thêm thang (hoặc hỏi &quot;từng tháng&quot;) để có bảng leadtime từng tháng của năm.</p>
         <dl><dt>Tham số</dt><dd>năm, tháng, NCC, Sea/Air, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/leadtime-tb 2026 hhka148</code></li><li><code>/leadtime-tb 9/2026 dtmb001</code></li><li><code>Lead time mua hàng trung bình năm 2026 từ HHKA148</code></li></ul>
+        <ul class="ex"><li><code>/leadtime-tb 2026 hhka148</code></li><li><code>/leadtime-tb 2026 dtmb002 sea thang</code></li><li><code>Leadtime thực tế theo giá trị hàng sea từng tháng năm 2026 NCC India</code></li><li><code>/leadtime-tb 9/2026 dtmb001</code></li><li><code>Lead time mua hàng trung bình năm 2026 từ HHKA148</code></li></ul>
       </article>
       <article class="cmd" id="co">
         <div class="cmd-head"><code class="name">/co</code></div>
@@ -85,7 +85,7 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
     </div>
   </section>
   <section class="group" id="nhom-mua">
-    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">6 lệnh</span></div>
+    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">7 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="yeu-cau-mua">
         <div class="cmd-head"><code class="name">/yeu-cau-mua</code><span class="alias">/ycmh</span></div>
@@ -104,9 +104,9 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       <article class="cmd" id="dat-hang">
         <div class="cmd-head"><code class="name">/dat-hang</code><span class="alias">/ddh</span></div>
         <h2>Giá trị đặt hàng</h2>
-        <p>Giá trị đơn đặt hàng mua trong tháng, chia Sea/Air.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
-        <ul class="ex"><li><code>/dat-hang 10</code></li></ul>
+        <p>Giá trị đơn đặt hàng mua trong tháng, chia Sea/Air. Kỳ nhiều tháng (cả năm, N tháng, khoảng ngày nhiều năm) thì có bảng theo từng tháng: giá trị Sea, Air, tổng và tỷ trọng Sea/Air. Không kèm phần đã / chưa lên invoice (xem /don-invoice).</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, số tháng (so_thang), khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</dd></dl>
+        <ul class="ex"><li><code>/dat-hang 10</code></li><li><code>/dat-hang 2026 dtmb002</code></li><li><code>/dat-hang 1/1/2025-13/11/2026 dtmb002 air</code></li><li><code>Giá trị đơn hàng mua theo từng tháng năm 2025 và 2026, hình thức air của NCC India</code></li><li><code>Tỷ trọng giá trị mua hàng Sea và Air theo từng tháng năm 2026 của NCC India</code></li></ul>
       </article>
       <article class="cmd" id="thong-ke-don">
         <div class="cmd-head"><code class="name">/thong-ke-don</code></div>
@@ -121,6 +121,13 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
         <p>Số mã hàng khác nhau (không trùng) trên đơn đặt hàng theo từng tháng và cả kỳ, kèm số dòng hàng. Kỳ giống /thong-ke-don: N tháng gần nhất (mặc định 3 tháng đã kết thúc), tháng/năm, hoặc khoảng ngày. Số mã cả kỳ không bằng tổng các tháng vì một mã chỉ đếm 1 lần.</p>
         <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</dd></dl>
         <ul class="ex"><li><code>/so-ma-hang 2026 dtmb002</code></li><li><code>/so-ma-hang 10/2026 hhka161 air</code></li><li><code>Số lượng mã hàng đặt năm 2026 theo từng tháng của Mobis India</code></li></ul>
+      </article>
+      <article class="cmd" id="top-ma">
+        <div class="cmd-head"><code class="name">/top-ma</code><span class="alias">/topma</span><span class="alias">/ma-mua-nhieu</span></div>
+        <h2>Mã hàng đặt mua nhiều nhất</h2>
+        <p>Danh sách N mã hàng có tổng tiền đặt mua lớn nhất (mặc định 20, tối đa 250): mã, tên, model (nhóm xe cấp 3), số lượng, đơn giá bình quân, tổng tiền và tỷ trọng. Theo đơn đặt hàng, ngày đặt trong kỳ; kỳ giống /thong-ke-don (N tháng gần nhất, tháng/năm, khoảng ngày).</p>
+        <dl><dt>Tham số</dt><dd>số mã (topN), tháng/năm, khoảng ngày, NCC, Sea/Air, kho, nhóm hàng, nk/nd</dd></dl>
+        <ul class="ex"><li><code>/top-ma top200 2026 dtmb001 dtmb002</code></li><li><code>/top-ma 10/2026 hhka161</code></li><li><code>Cho tôi danh mục 200 mã mua nhiều nhất của Mobis Hàn và Mobis Ấn năm 2026</code></li></ul>
       </article>
       <article class="cmd" id="don-invoice">
         <div class="cmd-head"><code class="name">/don-invoice</code><span class="alias">/chua-invoice</span><span class="alias">/da-invoice</span></div>
@@ -151,9 +158,9 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       <article class="cmd" id="giao-hang">
         <div class="cmd-head"><code class="name">/giao-hang</code><span class="alias">/thoi-gian-giao</span><span class="alias">/tggh</span></div>
         <h2>Thời gian giao hàng</h2>
-        <p>Các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (Sea/Air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. Kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/giao-hang hhka161</code></li><li><code>/giao-hang 10/2026 hhka161 air</code></li><li><code>/giao-hang 1/10/2026-10/11/2026 dtmb001</code></li><li><code>Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho</code></li></ul>
+        <p>Các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (Sea/Air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. Thêm invoice để tính đến ngày invoice ghi trên phiếu yêu cầu nhập kho thay cho ngày lập phiếu. Kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nhóm hàng, invoice</dd></dl>
+        <ul class="ex"><li><code>/giao-hang hhka161</code></li><li><code>/giao-hang hhka161 invoice</code></li><li><code>/giao-hang 10/2026 hhka161 air</code></li><li><code>/giao-hang 1/10/2026-10/11/2026 dtmb001</code></li><li><code>Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho</code></li></ul>
       </article>
       <article class="cmd" id="cont">
         <div class="cmd-head"><code class="name">/cont</code><span class="alias">/container</span></div>
