@@ -85,7 +85,7 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
     </div>
   </section>
   <section class="group" id="nhom-mua">
-    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">5 lệnh</span></div>
+    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">6 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="yeu-cau-mua">
         <div class="cmd-head"><code class="name">/yeu-cau-mua</code><span class="alias">/ycmh</span></div>
@@ -111,9 +111,16 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       <article class="cmd" id="thong-ke-don">
         <div class="cmd-head"><code class="name">/thong-ke-don</code></div>
         <h2>Thống kê đơn đặt hàng</h2>
-        <p>Số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. N tháng gần nhất mặc định là N tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. Hoặc tính trong một khoảng ngày tùy chọn (từ ngày đến ngày). Hỗ trợ NCC và Sea/Air, gồm hàng nội địa.</p>
+        <p>Số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. N tháng gần nhất mặc định là N tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. Hoặc tính trong một khoảng ngày tùy chọn (từ ngày đến ngày). Không chọn Sea/Air thì có thêm bảng chia Sea / Air kèm dòng tổng. Hỗ trợ NCC và Sea/Air, gồm hàng nội địa.</p>
         <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm kết thúc, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air</dd></dl>
         <ul class="ex"><li><code>/thong-ke-don 3thang air</code></li><li><code>/thong-ke-don 31/10/2026-9/11/2026 hhka161</code></li><li><code>Tính tổng số đơn hàng từ 31/10/2026 đến 9/11/2026 của Foton</code></li><li><code>Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?</code></li></ul>
+      </article>
+      <article class="cmd" id="so-ma-hang">
+        <div class="cmd-head"><code class="name">/so-ma-hang</code><span class="alias">/somahang</span><span class="alias">/ma-dat</span></div>
+        <h2>Số mã hàng đã đặt</h2>
+        <p>Số mã hàng khác nhau (không trùng) trên đơn đặt hàng theo từng tháng và cả kỳ, kèm số dòng hàng. Kỳ giống /thong-ke-don: N tháng gần nhất (mặc định 3 tháng đã kết thúc), tháng/năm, hoặc khoảng ngày. Số mã cả kỳ không bằng tổng các tháng vì một mã chỉ đếm 1 lần.</p>
+        <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</dd></dl>
+        <ul class="ex"><li><code>/so-ma-hang 2026 dtmb002</code></li><li><code>/so-ma-hang 10/2026 hhka161 air</code></li><li><code>Số lượng mã hàng đặt năm 2026 theo từng tháng của Mobis India</code></li></ul>
       </article>
       <article class="cmd" id="don-invoice">
         <div class="cmd-head"><code class="name">/don-invoice</code><span class="alias">/chua-invoice</span><span class="alias">/da-invoice</span></div>
@@ -125,7 +132,7 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
     </div>
   </section>
   <section class="group" id="nhom-hang-ve">
-    <div class="group-head"><h2 class="group-name">Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="alias">4 lệnh</span></div>
+    <div class="group-head"><h2 class="group-name">Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="alias">5 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="hang-ve">
         <div class="cmd-head"><code class="name">/hang-ve</code><span class="alias">/hangve</span></div>
@@ -140,6 +147,13 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
         <p>Các lô hàng (invoice) dự kiến về kho trong N ngày tới (mặc định 7).</p>
         <dl><dt>Tham số</dt><dd>số ngày</dd></dl>
         <ul class="ex"><li><code>/lich-hang-ve</code></li><li><code>/lich-hang-ve 14</code></li></ul>
+      </article>
+      <article class="cmd" id="giao-hang">
+        <div class="cmd-head"><code class="name">/giao-hang</code><span class="alias">/thoi-gian-giao</span><span class="alias">/tggh</span></div>
+        <h2>Thời gian giao hàng</h2>
+        <p>Các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (Sea/Air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. Kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nhóm hàng</dd></dl>
+        <ul class="ex"><li><code>/giao-hang hhka161</code></li><li><code>/giao-hang 10/2026 hhka161 air</code></li><li><code>/giao-hang 1/10/2026-10/11/2026 dtmb001</code></li><li><code>Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho</code></li></ul>
       </article>
       <article class="cmd" id="cont">
         <div class="cmd-head"><code class="name">/cont</code><span class="alias">/container</span></div>
@@ -158,7 +172,7 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
     </div>
   </section>
   <section class="group" id="nhom-kiem-tra">
-    <div class="group-head"><h2 class="group-name">Kiểm tra dữ liệu Bravo</h2><code>/lenh kiem-tra</code><span class="alias">3 lệnh</span></div>
+    <div class="group-head"><h2 class="group-name">Kiểm tra dữ liệu Bravo</h2><code>/lenh kiem-tra</code><span class="alias">4 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="chua-tbhv">
         <div class="cmd-head"><code class="name">/chua-tbhv</code><span class="alias">/tbhv</span></div>
@@ -178,8 +192,15 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
         <div class="cmd-head"><code class="name">/vat</code></div>
         <h2>VAT bán ra cần xử lý</h2>
         <p>Số mã hàng theo nhóm (c chưa có, b hết hạn, f thiếu HS, d lệch thuế suất, e sắp hết hạn) và ưu tiên, kèm 20 mã ưu tiên nhất.</p>
-        <dl><dt>Tham số</dt><dd>nhóm c/b/f/d/e</dd></dl>
-        <ul class="ex"><li><code>/vat</code></li><li><code>/vat c</code></li><li><code>/vat f</code></li><li><code>Mã nào chưa có VAT bán ra?</code></li></ul>
+        <dl><dt>Tham số</dt><dd>nhóm c/b/f/d/e, NCC (mã hàng trên invoice của NCC), hàng nhập khẩu / nội địa (nk / nd)</dd></dl>
+        <ul class="ex"><li><code>/vat</code></li><li><code>/vat c</code></li><li><code>/vat f</code></li><li><code>/vat hhka161</code></li><li><code>Mã nào chưa có VAT bán ra?</code></li><li><code>Có bao nhiêu mã hàng Foton đang thiếu thông tin VAT nội địa và VAT bán ra?</code></li></ul>
+      </article>
+      <article class="cmd" id="vat-nhap-kho">
+        <div class="cmd-head"><code class="name">/vat-nhap-kho</code><span class="alias">/vatnk</span></div>
+        <h2>VAT mã hàng nhập kho trong ngày</h2>
+        <p>Mã hàng lên phiếu yêu cầu nhập kho trong ngày (mặc định hôm nay) đang thiếu VAT đầu vào (mua vào), đầu ra (bán ra), hết hạn, thiếu mã HS hoặc lệch thuế suất, kèm invoice và NCC. Gõ ngày hoặc khoảng ngày để xem ngày khác.</p>
+        <dl><dt>Tham số</dt><dd>ngày hoặc khoảng ngày (tu_ngay, den_ngay), NCC, hàng nhập khẩu / nội địa (nk / nd), kho</dd></dl>
+        <ul class="ex"><li><code>/vat-nhap-kho</code></li><li><code>/vat-nhap-kho 10/11/2026</code></li><li><code>/vat-nhap-kho nd</code></li><li><code>Hàng nội địa nhập kho ngày 10/11 có mã nào thiếu VAT không?</code></li><li><code>Có mã hàng nào nhập kho hôm nay bị thiếu VAT đầu vào - đầu ra không?</code></li></ul>
       </article>
     </div>
   </section>
@@ -195,5 +216,5 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       </article>
     </div>
   </section>
-  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 10/11/2026.</p>
+  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 13/11/2026.</p>
 </div>
