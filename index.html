@@ -85,7 +85,7 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
     </div>
   </section>
   <section class="group" id="nhom-mua">
-    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">7 lệnh</span></div>
+    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">8 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="yeu-cau-mua">
         <div class="cmd-head"><code class="name">/yeu-cau-mua</code><span class="alias">/ycmh</span></div>
@@ -136,6 +136,13 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
         <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air, usd, giao</dd></dl>
         <ul class="ex"><li><code>/don-invoice dtmb001</code></li><li><code>/don-invoice dtmb001 usd</code></li><li><code>/don-invoice hhka161 giao</code></li><li><code>/don-invoice 9/2026 air</code></li><li><code>Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice</code></li><li><code>Giá trị đã đặt, đã giao và chưa giao của Foton</code></li></ul>
       </article>
+      <article class="cmd" id="don-so-luong">
+        <div class="cmd-head"><code class="name">/don-so-luong</code><span class="alias">/sl-don</span><span class="alias">/so-luong-don</span></div>
+        <h2>Số lượng, số mã đã đặt / đã thực hiện</h2>
+        <p>Số lượng (đơn vị hàng) và số mã hàng: đã đặt, đã thực hiện (đã giao = nhập kho) và chưa thực hiện, chia Sea/Air và theo tháng đặt hàng. Thêm invoice để tính theo đã lên invoice. Kỳ: tháng/năm, khoảng ngày, không nêu = từ 01/01/2025. Giá trị (tiền) xem /don-invoice.</p>
+        <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd, invoice</dd></dl>
+        <ul class="ex"><li><code>/don-so-luong 1/11/2025-13/11/2026 hhka161</code></li><li><code>/don-so-luong 2026 dtmb001 invoice</code></li><li><code>Tính số lượng đã đặt hàng, đã thực hiện, chưa thực hiện của Foton giai đoạn từ 1/11/2025 đến 13/11/2026</code></li></ul>
+      </article>
     </div>
   </section>
   <section class="group" id="nhom-hang-ve">
@@ -158,9 +165,9 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       <article class="cmd" id="giao-hang">
         <div class="cmd-head"><code class="name">/giao-hang</code><span class="alias">/thoi-gian-giao</span><span class="alias">/tggh</span></div>
         <h2>Thời gian giao hàng</h2>
-        <p>Các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (Sea/Air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. Thêm invoice để tính đến ngày invoice ghi trên phiếu yêu cầu nhập kho thay cho ngày lập phiếu. Kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay.</p>
+        <p>Các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (Sea/Air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. Thêm invoice để tính đến ngày invoice ghi trên phiếu yêu cầu nhập kho thay cho ngày lập phiếu. Thêm chua-giao để liệt kê theo mã các mã còn hàng chưa lên phiếu yêu cầu nhập kho và số ngày đã chờ. Kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay.</p>
         <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nhóm hàng, invoice</dd></dl>
-        <ul class="ex"><li><code>/giao-hang hhka161</code></li><li><code>/giao-hang hhka161 invoice</code></li><li><code>/giao-hang 10/2026 hhka161 air</code></li><li><code>/giao-hang 1/10/2026-10/11/2026 dtmb001</code></li><li><code>Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho</code></li></ul>
+        <ul class="ex"><li><code>/giao-hang hhka161</code></li><li><code>/giao-hang hhka161 invoice</code></li><li><code>/giao-hang 31/10/2026-13/11/2026 hhka161 chua-giao</code></li><li><code>/giao-hang 10/2026 hhka161 air</code></li><li><code>/giao-hang 1/10/2026-10/11/2026 dtmb001</code></li><li><code>Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho</code></li></ul>
       </article>
       <article class="cmd" id="cont">
         <div class="cmd-head"><code class="name">/cont</code><span class="alias">/container</span></div>
