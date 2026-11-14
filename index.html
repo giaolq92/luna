@@ -50,7 +50,7 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
     <section><h2>Hoặc hỏi bình thường</h2><p>Bot tự hiểu câu hỏi thuộc lệnh nào, ví dụ "leadtime hàng air tháng 9 có đạt không?".</p></section>
     <section><h2>Mặc định</h2><p>Không nêu tháng thì lấy tháng hiện tại. KPI mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung. Slicer không nêu thì "Tất cả".</p></section>
   </div>
-  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime</a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng</a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng</a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo</a><a href="#nhom-kho">Tồn kho</a></nav>
+  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime</a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng</a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng</a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo</a><a href="#nhom-kho">Tồn kho</a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu</a></nav>
   <section class="group" id="nhom-kpi">
     <div class="group-head"><h2 class="group-name">KPI &amp; leadtime</h2><code>/lenh kpi</code><span class="alias">4 lệnh</span></div>
     <div class="cmds">
@@ -230,5 +230,17 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
       </article>
     </div>
   </section>
-  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 13/11/2026.</p>
+  <section class="group" id="nhom-danh-ba">
+    <div class="group-head"><h2 class="group-name">Danh bạ công cụ &amp; tài liệu</h2><code>/lenh danh-ba</code><span class="alias">1 lệnh</span></div>
+    <div class="cmds">
+      <article class="cmd" id="danh-ba">
+        <div class="cmd-head"><code class="name">/danh-ba</code><span class="alias">/danhba</span><span class="alias">/cong-cu</span><span class="alias">/tai-lieu</span></div>
+        <h2>Danh bạ công cụ, báo cáo, tài liệu của phòng</h2>
+        <p>Tìm công cụ / tool / báo cáo / template Excel / quy trình / tài liệu đào tạo của phòng MH-XNK ở đâu, link mở, đã chuyển chỗ mới chưa. Không từ khoá: link file danh bạ + tổng quan. Từ khoá (so_tra_cuu) để tìm theo tên.</p>
+        <dl><dt>Tham số</dt><dd>từ khoá (so_tra_cuu)</dd></dl>
+        <ul class="ex"><li><code>/danh-ba</code></li><li><code>/danh-ba invoice</code></li><li><code>Quy trình mua hàng XNK để ở đâu?</code></li><li><code>Cho xin link tài liệu đào tạo Excel</code></li></ul>
+      </article>
+    </div>
+  </section>
+  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 14/11/2026.</p>
 </div>
