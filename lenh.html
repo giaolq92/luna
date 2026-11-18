@@ -202,10 +202,10 @@ a { color:inherit; }
         <div class="param"><b>Tham số</b><span>tháng, năm, NCC</span></div>
         <div class="exs"><button class="ex" type="button" data-copy="/co 9"><i>›</i>/co 9</button></div>
       </article>
-      <article class="cmd" id="cap-co" data-tim="cap-co danh mục cấp c/o theo nơi nhập hyundai mobis hàn (dtmb001): mã nào có c/o ở hp / cm / nội bài theo lần nhập gần nhất ở từng nơi (loại thuế nk áp dụng = 2). không nêu mã: số mã theo 8 nhóm tổ hợp nơi và tỷ lệ có c/o từng nơi; nêu mã (tối đa 200): ngày nhập gần nhất và có / không c/o ở từng nơi. mã hàng (so_tra_cuu, nhiều mã cách nhau dấu cách hoặc phẩy) dm-co co-noi /cap-co /cap-co 88380n9010 55540d3000 mã 88380n9010 về cái mép lần gần nhất có c/o không?">
+      <article class="cmd" id="cap-co" data-tim="cap-co danh mục cấp c/o theo nơi nhập hyundai mobis hàn (dtmb001): mã nào có c/o ở hp / cm / nội bài theo lần nhập gần nhất ở từng nơi (loại thuế nk áp dụng = 2, c/o vk); nêu ncc khác (vd ncc:dtmb008) thì có c/o = loại ưu đãi bất kỳ ak/vk/e/ai/d. không nêu mã: số mã theo 8 nhóm tổ hợp nơi và tỷ lệ có c/o từng nơi; nêu mã (tối đa 200): ngày nhập gần nhất và có / không c/o ở từng nơi. mã hàng (so_tra_cuu, nhiều mã cách nhau dấu cách hoặc phẩy) dm-co co-noi /cap-co /cap-co 88380n9010 55540d3000 mã 88380n9010 về cái mép lần gần nhất có c/o không?">
         <header><code class="name">/cap-co</code><div class="alias"><span>/dm-co</span><span>/co-noi</span></div></header>
         <h3>Danh mục cấp C/O theo nơi nhập</h3>
-        <p>Hyundai Mobis Hàn (DTMB001): mã nào có C/O ở HP / CM / Nội Bài theo lần nhập gần nhất ở từng nơi (loại thuế NK áp dụng = 2). Không nêu mã: số mã theo 8 nhóm tổ hợp nơi và tỷ lệ có C/O từng nơi; nêu mã (tối đa 200): ngày nhập gần nhất và có / không C/O ở từng nơi.</p>
+        <p>Hyundai Mobis Hàn (DTMB001): mã nào có C/O ở HP / CM / Nội Bài theo lần nhập gần nhất ở từng nơi (loại thuế NK áp dụng = 2, C/O VK); nêu NCC khác (vd ncc:dtmb008) thì có C/O = loại ưu đãi bất kỳ AK/VK/E/AI/D. Không nêu mã: số mã theo 8 nhóm tổ hợp nơi và tỷ lệ có C/O từng nơi; nêu mã (tối đa 200): ngày nhập gần nhất và có / không C/O ở từng nơi.</p>
         <div class="param"><b>Tham số</b><span>mã hàng (so_tra_cuu, nhiều mã cách nhau dấu cách hoặc phẩy)</span></div>
         <div class="exs"><button class="ex" type="button" data-copy="/cap-co"><i>›</i>/cap-co</button><button class="ex" type="button" data-copy="/cap-co 88380N9010 55540D3000"><i>›</i>/cap-co 88380N9010 55540D3000</button><button class="ex" type="button" data-copy="Mã 88380N9010 về Cái Mép lần gần nhất có C/O không?"><i>›</i>Mã 88380N9010 về Cái Mép lần gần nhất có C/O không?</button></div>
       </article></div>
@@ -379,12 +379,12 @@ a { color:inherit; }
   <section class="group" id="nhom-kho">
     <div class="group-head"><span class="idx">05</span><h2>Tồn kho</h2><code>/lenh kho</code><span class="count">1 lệnh</span></div>
     <div class="cmds">
-      <article class="cmd" id="ton-kho" data-tim="ton-kho tồn kho tồn kho hiện tại theo báo cáo tồn kho theo kho của bravo: giá trị, số lượng, số mã còn tồn, chia theo kho và nhóm hàng; hoặc tồn từng kho của 1 mã hàng (gõ một phần mã thì liệt kê các mã khớp). mã hàng, kho, nhóm hàng, sea/air tonkho ton /ton-kho /ton-kho kho:da nhom:ptu /ton-kho 59796aa400 mã 230404a960 còn tồn bao nhiêu?">
+      <article class="cmd" id="ton-kho" data-tim="ton-kho tồn kho tồn kho hiện tại theo báo cáo tồn kho theo kho của bravo: giá trị, số lượng, số mã còn tồn, chia theo kho và nhóm hàng; hoặc tồn từng kho của 1 mã hàng (gõ một phần mã thì liệt kê các mã khớp). mã hàng, kho, nhóm hàng, sea/air, ncc (mã hàng đã có trên invoice của ncc; gõ ncc:&lt;mã&gt;), nk/nd tonkho ton /ton-kho /ton-kho kho:da nhom:ptu /ton-kho 59796aa400 /ton-kho ncc:hhka161 mã 230404a960 còn tồn bao nhiêu?">
         <header><code class="name">/ton-kho</code><div class="alias"><span>/tonkho</span><span>/ton</span></div></header>
         <h3>Tồn kho</h3>
         <p>Tồn kho hiện tại theo báo cáo tồn kho theo kho của Bravo: giá trị, số lượng, số mã còn tồn, chia theo kho và nhóm hàng; hoặc tồn từng kho của 1 mã hàng (gõ một phần mã thì liệt kê các mã khớp).</p>
-        <div class="param"><b>Tham số</b><span>mã hàng, kho, nhóm hàng, Sea/Air</span></div>
-        <div class="exs"><button class="ex" type="button" data-copy="/ton-kho"><i>›</i>/ton-kho</button><button class="ex" type="button" data-copy="/ton-kho kho:da nhom:ptu"><i>›</i>/ton-kho kho:da nhom:ptu</button><button class="ex" type="button" data-copy="/ton-kho 59796AA400"><i>›</i>/ton-kho 59796AA400</button><button class="ex" type="button" data-copy="Mã 230404A960 còn tồn bao nhiêu?"><i>›</i>Mã 230404A960 còn tồn bao nhiêu?</button></div>
+        <div class="param"><b>Tham số</b><span>mã hàng, kho, nhóm hàng, Sea/Air, NCC (mã hàng đã có trên invoice của NCC; gõ ncc:&lt;mã&gt;), nk/nd</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/ton-kho"><i>›</i>/ton-kho</button><button class="ex" type="button" data-copy="/ton-kho kho:da nhom:ptu"><i>›</i>/ton-kho kho:da nhom:ptu</button><button class="ex" type="button" data-copy="/ton-kho 59796AA400"><i>›</i>/ton-kho 59796AA400</button><button class="ex" type="button" data-copy="/ton-kho ncc:hhka161"><i>›</i>/ton-kho ncc:hhka161</button><button class="ex" type="button" data-copy="Mã 230404A960 còn tồn bao nhiêu?"><i>›</i>Mã 230404A960 còn tồn bao nhiêu?</button></div>
       </article></div>
   </section>
   <section class="group" id="nhom-danh-ba">
@@ -413,7 +413,7 @@ a { color:inherit; }
       </article></div>
   </section>
   <p class="empty" id="rong">Không có lệnh khớp. Thử từ khoá khác – hoặc cứ hỏi Luna bằng câu bình thường.</p>
-  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>31 lệnh · 109 ví dụ · cập nhật 18/11/2026</span></div>
+  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>31 lệnh · 110 ví dụ · cập nhật 18/11/2026</span></div>
 </main>
 <div class="toast" id="toast">Đã copy</div>
 <script>
