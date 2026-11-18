@@ -1,295 +1,426 @@
-<title>Lệnh Bot Mua hàng XNK</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Luna – AI Agent Mua hàng XNK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
-/* Bố cục: một cột tra cứu nhanh, mỗi lệnh một thẻ, ví dụ gõ được ngay */
 :root {
-  --bg: #eef1ee; --surface: #ffffff; --ink: #17201c; --muted: #56625c; --line: #d3dad5; --accent: #2b52c4; --accent-soft: #e2e8f8;
-  --f-display: "Archivo", "Segoe UI", system-ui, sans-serif; --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --bg:#f5f7fb; --surface:#ffffff; --surface2:#f0f3f9; --ink:#0e1525; --muted:#5b6578; --line:#e1e6f0;
+  --accent:#4f46e5; --accent2:#06b6d4; --accent-soft:#eef0ff; --ok:#10b981;
+  --hero:#070b1a; --hero-ink:#e8ecff; --hero-muted:#9aa3c7;
+  --f:"Be Vietnam Pro","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa6a0; --line: #2b3430; --accent: #86a2f2; --accent-soft: #1f2a48; color-scheme: dark; } }
-:root[data-theme="dark"] { --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa6a0; --line: #2b3430; --accent: #86a2f2; --accent-soft: #1f2a48; color-scheme: dark; }
-* { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
-.wrap { max-width: 980px; margin: 0 auto; padding-block: 28px 56px;
-  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
-h1, h2 { font-family: var(--f-display); margin: 0; text-wrap: balance; }
-h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; line-height: 1.1; }
-h2 { font-size: 17px; font-weight: 700; }
-.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-header p, .how p { margin: 0; color: var(--muted); max-width: 70ch; }
-code { font-family: var(--f-mono); font-size: .92em; background: var(--accent-soft); border-radius: 4px; padding: 1px 5px; }
-.how { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.how section { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
-.cmds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.cmd { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
-.cmd p { margin: 0; font-size: 14px; }
-.cmd-head { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.name { font-size: 15px; font-weight: 500; color: var(--accent); background: none; padding: 0; }
-.alias { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
-dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--muted); } dd { margin: 0; }
-.ex { margin: 0; padding-left: 18px; font-size: 13px; display: grid; gap: 3px; }
-.foot { font-size: 12.5px; color: var(--muted); }
-.nav { display: flex; flex-wrap: wrap; gap: 8px; }
-.nav a { font-size: 13.5px; color: var(--accent); text-decoration: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; }
-.group { display: grid; gap: 10px; }
-.group-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
-.group-name { font-size: 20px; }
-@media (max-width: 760px) { .how, .cmds { grid-template-columns: 1fr; } }
-</style>
-<div class="wrap">
-  <header>
-    <div class="eyebrow">Bot Mua hàng XNK · TST</div>
-    <h1>Bot trả lời được những gì</h1>
-    <p>Số báo cáo lấy từ BCQTMH đã publish; cuối câu trả lời ghi từng slicer và bộ lọc thực tế của trang BCQT tương ứng. Lệnh chưa có trang đối chiếu chính xác sẽ ghi rõ phạm vi và nguồn.</p>
-  </header>
-  <div class="how">
-    <section><h2>Gõ lệnh</h2><p>Bắt đầu bằng dấu <code>/</code>, thêm tháng, Sea/Air, <code>tach</code> nếu cần. Ví dụ <code>/kpi 10/2026</code>.</p></section>
-    <section><h2>Hoặc hỏi bình thường</h2><p>Bot tự hiểu câu hỏi thuộc lệnh nào, ví dụ "leadtime hàng air tháng 9 có đạt không?".</p></section>
-    <section><h2>Mặc định</h2><p>Không nêu tháng thì lấy tháng hiện tại. KPI mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung. Slicer không nêu thì "Tất cả".</p></section>
-  </div>
-  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime</a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng</a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng</a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo</a><a href="#nhom-kho">Tồn kho</a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu</a></nav>
-  <section class="group" id="nhom-kpi">
-    <div class="group-head"><h2 class="group-name">KPI &amp; leadtime</h2><code>/lenh kpi</code><span class="alias">5 lệnh</span></div>
-    <div class="cmds">
-      <article class="cmd" id="kpi">
-        <div class="cmd-head"><code class="name">/kpi</code><span class="alias">/cpmh</span><span class="alias">/chiphi</span></div>
-        <h2>KPI chi phí mua hàng</h2>
-        <p>CPMH/FOB, từng cấu phần (thuế NK, VC quốc tế, chi phí lấy hàng), chỉ tiêu, cùng kỳ. Mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung; tháng chưa kết thúc là số tạm tính / dự kiến.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, tách riêng NCC, Sea/Air, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/kpi 10/2026</code></li><li><code>/kpi 9 tach</code></li><li><code>/kpi 9 kho:da nhom:ptu</code></li><li><code>KPI dự kiến tháng 10 bao nhiêu?</code></li></ul>
-      </article>
-      <article class="cmd" id="leadtime">
-        <div class="cmd-head"><code class="name">/leadtime</code><span class="alias">/lt</span></div>
-        <h2>KPI leadtime</h2>
-        <p>CHỈ khi hỏi KPI / chỉ tiêu / đạt hay không: tỷ lệ dòng hàng Air ≤ 22 ngày, Sea ≤ 80 ngày so với chỉ tiêu. Mặc định 2 NCC Mobis gộp chung.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air, tách riêng NCC, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/leadtime 8</code></li><li><code>/leadtime 9 air</code></li><li><code>/leadtime 9 kho:hn</code></li><li><code>Leadtime hàng Sea tháng 9 đạt không?</code></li></ul>
-      </article>
-      <article class="cmd" id="leadtime-tb">
-        <div class="cmd-head"><code class="name">/leadtime-tb</code><span class="alias">/lttb</span></div>
-        <h2>Leadtime trung bình</h2>
-        <p>Số ngày leadtime trung bình theo giá trị và theo line item, chia Sea/Air, từng giai đoạn (đặt hàng → invoice → ship → cập cảng → về kho), so cùng kỳ. Cả năm hoặc 1 tháng; NCC nhập khẩu và nội địa. Thêm thang (hoặc hỏi &quot;từng tháng&quot;) để có bảng leadtime từng tháng của năm.</p>
-        <dl><dt>Tham số</dt><dd>năm, tháng, NCC, Sea/Air, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/leadtime-tb 2026 hhka148</code></li><li><code>/leadtime-tb 2026 dtmb002 sea thang</code></li><li><code>Leadtime thực tế theo giá trị hàng sea từng tháng năm 2026 NCC India</code></li><li><code>/leadtime-tb 9/2026 dtmb001</code></li><li><code>Lead time mua hàng trung bình năm 2026 từ HHKA148</code></li></ul>
-      </article>
-      <article class="cmd" id="co">
-        <div class="cmd-head"><code class="name">/co</code></div>
-        <h2>Tỷ lệ áp dụng C/O</h2>
-        <p>Tỷ lệ giá trị hàng có C/O trong tháng.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
-        <ul class="ex"><li><code>/co 9</code></li></ul>
-      </article>
-      <article class="cmd" id="cap-co">
-        <div class="cmd-head"><code class="name">/cap-co</code><span class="alias">/dm-co</span><span class="alias">/co-noi</span></div>
-        <h2>Danh mục cấp C/O theo nơi nhập</h2>
-        <p>Hyundai Mobis Hàn (DTMB001): mã nào có C/O ở HP / CM / Nội Bài theo lần nhập gần nhất ở từng nơi (loại thuế NK áp dụng = 2). Không nêu mã: số mã theo 8 nhóm tổ hợp nơi và tỷ lệ có C/O từng nơi; nêu mã (tối đa 200): ngày nhập gần nhất và có / không C/O ở từng nơi.</p>
-        <dl><dt>Tham số</dt><dd>mã hàng (so_tra_cuu, nhiều mã cách nhau dấu cách hoặc phẩy)</dd></dl>
-        <ul class="ex"><li><code>/cap-co</code></li><li><code>/cap-co 88380N9010 55540D3000</code></li><li><code>Mã 88380N9010 về Cái Mép lần gần nhất có C/O không?</code></li></ul>
-      </article>
+  --bg:#0a0e1c; --surface:#11172a; --surface2:#161d33; --ink:#e6eaf7; --muted:#9099b5; --line:#232c47; --accent:#8b85ff; --accent-soft:#1d2147; color-scheme:dark; } }
+:root[data-theme="dark"] { --bg:#0a0e1c; --surface:#11172a; --surface2:#161d33; --ink:#e6eaf7; --muted:#9099b5; --line:#232c47; --accent:#8b85ff; --accent-soft:#1d2147; color-scheme:dark; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.6 var(--f); -webkit-font-smoothing:antialiased; }
+code { font-family:var(--mono); font-size:.88em; }
+a { color:inherit; }
+.wrap { max-width:1180px; margin:0 auto; padding:0 max(16px,env(safe-area-inset-left)); }
+
+/* ---------- HERO ---------- */
+.hero { position:relative; overflow:hidden; background:var(--hero); color:var(--hero-ink); padding:56px 0 64px; isolation:isolate; }
+.hero::before { content:""; position:absolute; inset:0; z-index:-1;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:44px 44px; mask-image:radial-gradient(ellipse 80% 70% at 50% 30%,#000 30%,transparent 80%); }
+.hero::after { content:""; position:absolute; z-index:-2; width:900px; height:900px; right:-260px; top:-420px;
+  background:radial-gradient(circle,rgba(99,102,241,.45),transparent 60%),radial-gradient(circle at 30% 70%,rgba(6,182,212,.35),transparent 55%); filter:blur(20px); }
+.hero-grid { display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center; }
+.badge { display:inline-flex; gap:8px; align-items:center; font:500 12px var(--mono); letter-spacing:.12em; text-transform:uppercase;
+  color:#c7cdf5; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); border-radius:999px; padding:6px 12px; }
+.badge i { width:8px; height:8px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 4px rgba(16,185,129,.18); animation:nhay 2s infinite; }
+@keyframes nhay { 50% { box-shadow:0 0 0 7px rgba(16,185,129,0); } }
+.hero h1 { font-size:clamp(44px,7vw,84px); line-height:.95; margin:18px 0 10px; font-weight:800; letter-spacing:-.03em;
+  background:linear-gradient(100deg,#fff 20%,#a5b4fc 55%,#67e8f9 95%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.hero .tag { font:600 clamp(17px,2vw,21px)/1.35 var(--f); color:#dfe4ff; margin:0 0 14px; }
+.hero p.lead { color:var(--hero-muted); max-width:56ch; margin:0 0 26px; }
+.stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
+.stat { border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.035); border-radius:12px; padding:12px 14px; }
+.stat b { display:block; font:700 26px/1.1 var(--mono); color:#fff; }
+.stat span { font-size:12px; color:var(--hero-muted); }
+.term { background:rgba(10,14,32,.85); border:1px solid rgba(255,255,255,.12); border-radius:14px; box-shadow:0 30px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06); overflow:hidden; backdrop-filter:blur(6px); }
+.term .bar { display:flex; gap:7px; align-items:center; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.08); font:12px var(--mono); color:var(--hero-muted); }
+.term .bar i { width:11px; height:11px; border-radius:50%; background:#ff5f57; } .term .bar i:nth-child(2) { background:#febc2e; } .term .bar i:nth-child(3) { background:#28c840; margin-right:8px; }
+.term pre { margin:0; padding:16px 18px; font:13px/1.75 var(--mono); color:#cfd6ff; white-space:pre-wrap; }
+.term .q { color:#fff; } .term .k { color:#a5b4fc; } .term .s { color:#67e8f9; } .term .g { color:#6ee7b7; } .term .m { color:#7c86b3; }
+.term table { border-collapse:collapse; margin:6px 0 2px; font:12px var(--mono); }
+.term td, .term th { border:1px solid rgba(255,255,255,.12); padding:3px 9px; text-align:right; } .term th { color:#a5b4fc; font-weight:500; } .term td:first-child, .term th:first-child { text-align:left; }
+.cursor { display:inline-block; width:8px; height:15px; background:#a5b4fc; vertical-align:-2px; animation:con 1s steps(1) infinite; }
+@keyframes con { 50% { opacity:0; } }
+
+/* ---------- PIPELINE ---------- */
+.sec { padding:56px 0 8px; }
+.kicker { font:600 12px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--accent); }
+.sec h2.big { font-size:clamp(24px,3vw,32px); letter-spacing:-.02em; margin:6px 0 8px; font-weight:800; }
+.sec p.sub { color:var(--muted); margin:0 0 26px; max-width:72ch; }
+.flow { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px; position:relative; }
+.node { position:relative; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px; min-width:0; }
+.node:not(:last-child)::after { content:""; position:absolute; right:-14px; top:34px; width:14px; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+.node .n { font:700 11px var(--mono); color:var(--accent); letter-spacing:.1em; }
+.node h4 { margin:6px 0 4px; font-size:15px; }
+.node p { margin:0; font-size:13px; color:var(--muted); }
+.node code { display:inline-block; margin-top:8px; background:var(--accent-soft); color:var(--accent); border-radius:6px; padding:2px 7px; font-size:11.5px; }
+.guards { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.guards span { font-size:12.5px; border:1px solid var(--line); background:var(--surface); border-radius:999px; padding:5px 12px; color:var(--muted); }
+.guards b { color:var(--ink); font-weight:600; }
+.how { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+.how div { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px; }
+.how h4 { margin:0 0 6px; font-size:15px; } .how p { margin:0; font-size:13.5px; color:var(--muted); }
+.how code { background:var(--accent-soft); color:var(--accent); border-radius:5px; padding:1px 6px; }
+
+/* ---------- COMMANDS ---------- */
+.tools { position:sticky; top:0; z-index:5; background:color-mix(in srgb,var(--bg) 88%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); padding:12px 0; margin-top:40px; }
+.tools .wrap { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.search { flex:1 1 260px; display:flex; align-items:center; gap:8px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:0 12px; }
+.search input { flex:1; border:0; outline:0; background:none; color:var(--ink); font:14px var(--f); padding:10px 0; }
+.search kbd { font:11px var(--mono); color:var(--muted); border:1px solid var(--line); border-radius:5px; padding:1px 6px; }
+.nav { display:flex; gap:6px; flex-wrap:wrap; }
+.nav a { text-decoration:none; font-size:13px; padding:6px 11px; border-radius:999px; border:1px solid var(--line); background:var(--surface); white-space:nowrap; }
+.nav a:hover { border-color:var(--accent); color:var(--accent); } .nav small { color:var(--muted); font-family:var(--mono); }
+.group { padding-top:34px; scroll-margin-top:70px; }
+.group-head { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+.group-head .idx { font:700 13px var(--mono); color:var(--accent); }
+.group-head h2 { margin:0; font-size:22px; letter-spacing:-.01em; }
+.group-head code { color:var(--muted); } .group-head .count { margin-left:auto; font:12px var(--mono); color:var(--muted); }
+.cmds { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
+.cmd { position:relative; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:7px; transition:transform .15s,border-color .15s,box-shadow .15s; scroll-margin-top:80px; }
+.cmd::before { content:""; position:absolute; left:0; top:16px; bottom:16px; width:3px; border-radius:0 3px 3px 0; background:linear-gradient(var(--accent),var(--accent2)); opacity:0; transition:opacity .15s; }
+.cmd:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 45%,var(--line)); box-shadow:0 12px 30px -12px rgba(79,70,229,.35); }
+.cmd:hover::before { opacity:1; }
+.cmd header { display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; }
+.cmd .name { font:700 16px var(--mono); color:var(--accent); }
+.cmd .alias { display:flex; gap:6px; flex-wrap:wrap; } .cmd .alias span { font:11.5px var(--mono); color:var(--muted); }
+.cmd h3 { margin:0; font-size:15.5px; font-weight:700; }
+.cmd p { margin:0; font-size:13.5px; color:var(--muted); }
+.param { display:flex; gap:8px; font-size:12.5px; background:var(--surface2); border-radius:8px; padding:6px 10px; }
+.param b { font:600 11px var(--mono); text-transform:uppercase; letter-spacing:.08em; color:var(--accent); padding-top:2px; white-space:nowrap; }
+.exs { display:flex; flex-direction:column; gap:5px; margin-top:auto; padding-top:4px; }
+.ex { all:unset; cursor:pointer; display:flex; gap:8px; font:12.5px var(--mono); color:var(--ink); background:var(--surface2); border:1px solid transparent; border-radius:8px; padding:6px 10px; word-break:break-word; }
+.ex i { font-style:normal; color:var(--accent); }
+.ex:hover { border-color:var(--accent); }
+.empty { display:none; text-align:center; color:var(--muted); padding:40px; }
+.foot { margin:56px 0 40px; padding-top:20px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px); opacity:0; background:#111827; color:#fff; font:13px var(--mono); padding:9px 16px; border-radius:10px; transition:.2s; pointer-events:none; z-index:9; }
+.toast.on { opacity:1; transform:translate(-50%,0); }
+.an { display:none !important; }
+@media (max-width:980px) { .hero-grid { grid-template-columns:1fr; } .flow { grid-template-columns:1fr 1fr; } .node::after { display:none; } .how { grid-template-columns:1fr; } }
+@media (max-width:560px) { .stats { grid-template-columns:1fr 1fr; } .flow { grid-template-columns:1fr; } .cmds { grid-template-columns:1fr; } .hero { padding:36px 0 44px; } }
+@media print { .hero { background:#fff; color:#000; } .tools,.toast { display:none; } }
+</style></head><body>
+
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <span class="badge"><i></i>AI Agent · Mua hàng XNK · TST</span>
+    <h1>Luna</h1>
+    <p class="tag">Hỏi bằng tiếng Việt. Nhận về bảng số kiểm chứng được.</p>
+    <p class="lead">Luna là AI Agent chạy trên Microsoft Teams: hiểu câu hỏi tự nhiên, chọn đúng lệnh trong thư viện, truy vấn DAX trực tiếp trên semantic model <b>BCQTMH</b> đã publish và trả lời bằng bảng số copy thẳng sang Excel – kèm bộ lọc và giờ làm mới dữ liệu để đối chiếu.</p>
+    <div class="stats">
+      <div class="stat"><b>30</b><span>lệnh nghiệp vụ</span></div>
+      <div class="stat"><b>6</b><span>nhóm chức năng</span></div>
+      <div class="stat"><b>1</b><span>nguồn số: BCQTMH</span></div>
+      <div class="stat"><b>2×</b><span>làm mới / ngày</span></div>
     </div>
+  </div>
+  <div class="term" aria-hidden="true">
+    <div class="bar"><i></i><i></i><i></i>Teams · chat với Luna</div>
+<pre><span class="m"># người dùng</span>
+<span class="q">leadtime hàng air tháng 9 có đạt không?</span>
+
+<span class="m"># router · phân loại câu hỏi → lệnh</span>
+<span class="k">intent</span>  <span class="s">/leadtime</span>  <span class="k">thang</span>=9  <span class="k">loai</span>=Air
+<span class="m"># thư viện lệnh · DAX trên BCQTMH</span>
+<span class="k">EVALUATE</span> SUMMARIZECOLUMNS(...)   <span class="g">✓ 0.8 s</span>
+
+<span class="m"># Luna trả lời</span>
+<table><tr><th>Chỉ tiêu</th><th>TB (ngày)</th><th>Mục tiêu</th><th>Đạt</th></tr>
+<tr><td>Leadtime Air</td><td>12.4</td><td>14</td><td class="g">✓</td></tr></table><span class="m">Nguồn: BCQTMH · refresh 12:30</span> <span class="cursor"></span></pre>
+  </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="kicker">Kiến trúc</div>
+  <h2 class="big">Lệnh trước, AI sau</h2>
+  <p class="sub">AI chỉ làm một việc: hiểu câu hỏi thuộc lệnh nào. Mọi con số đi qua thư viện lệnh đã kiểm thử, truy vấn cố định trên dataset đã publish – không để AI tự bịa số.</p>
+  <div class="flow">
+    <div class="node"><div class="n">01 · KÊNH</div><h4>Microsoft Teams</h4><p>Chat riêng 1–1 hoặc tag @Luna trong nhóm, kênh.</p><code>Agents SDK</code></div>
+    <div class="node"><div class="n">02 · ROUTER</div><h4>Hiểu câu hỏi</h4><p>Lệnh <b>/...</b> đi thẳng; câu tự nhiên được AI phân loại thành lệnh + tham số.</p><code>Claude Haiku</code></div>
+    <div class="node"><div class="n">03 · THƯ VIỆN</div><h4>30 lệnh nghiệp vụ</h4><p>Mỗi lệnh là truy vấn + mẫu trả lời đã kiểm thử bằng bộ câu hỏi thật.</p><code>DAX cố định</code></div>
+    <div class="node"><div class="n">04 · DỮ LIỆU</div><h4>BCQTMH</h4><p>Semantic model Power BI đã publish – nguồn số duy nhất, làm mới 07:00 và 12:30.</p><code>Power BI Service</code></div>
+    <div class="node"><div class="n">05 · TRẢ LỜI</div><h4>Bảng số chuẩn</h4><p>Số kiểu Bravo, đơn vị ở tiêu đề, ghi bộ lọc + giờ refresh; dài thì xuất Excel.</p><code>Teams · Excel</code></div>
+  </div>
+  <div class="guards">
+    <span><b>Phân quyền</b> theo từng lệnh</span><span><b>Chặn số cũ</b> khi refresh lỗi / quá 26 giờ</span>
+    <span><b>Không nhớ hội thoại</b> – mỗi câu độc lập, tiết kiệm chi phí</span><span><b>Gửi riêng</b> khi nhóm có người không được xem giá</span>
+    <span><b>Hạn mức AI</b> theo ngày</span>
+  </div>
+</div></section>
+
+<section class="sec"><div class="wrap">
+  <div class="kicker">Cách dùng</div>
+  <h2 class="big">Ba cách nói chuyện với Luna</h2>
+  <div class="how">
+    <div><h4>⌘ Gõ lệnh</h4><p>Bắt đầu bằng <code>/</code>, thêm kỳ, NCC, Sea/Air… Ví dụ <code>/kpi 10/2026</code>, <code>/top-ma mobis 200</code>.</p></div>
+    <div><h4>💬 Hỏi tự nhiên</h4><p>"leadtime hàng air tháng 9 có đạt không?" – Luna tự chọn lệnh. Nêu đủ ý trong một câu: Luna không nhớ câu trước.</p></div>
+    <div><h4>⚙ Mặc định thông minh</h4><p>Không nêu kỳ → tháng hiện tại. KPI mặc định 2 NCC Hyundai Mobis + Mobis India gộp chung. Bộ lọc không nêu → "Tất cả".</p></div>
+  </div>
+</div></section>
+
+<div class="tools"><div class="wrap">
+  <label class="search"><span>⌕</span><input id="q" type="search" placeholder="Tìm lệnh: leadtime, tồn kho, VAT, Foton…" autocomplete="off"><kbd>/</kbd></label>
+  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime <small>5</small></a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng <small>10</small></a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng <small>7</small></a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo <small>4</small></a><a href="#nhom-kho">Tồn kho <small>1</small></a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu <small>3</small></a></nav>
+</div></div>
+
+<main class="wrap">
+  <section class="group" id="nhom-kpi">
+    <div class="group-head"><span class="idx">01</span><h2>KPI &amp; leadtime</h2><code>/lenh kpi</code><span class="count">5 lệnh</span></div>
+    <div class="cmds">
+      <article class="cmd" id="kpi" data-tim="kpi kpi chi phí mua hàng cpmh/fob, từng cấu phần (thuế nk, vc quốc tế, chi phí lấy hàng), chỉ tiêu, cùng kỳ. mặc định 2 ncc hyundai mobis + mobis india ltd. gộp chung; tháng chưa kết thúc là số tạm tính / dự kiến. tháng, năm, ncc, tách riêng ncc, sea/air, kho, nhóm hàng cpmh chiphi /kpi 10/2026 /kpi 9 tach /kpi 9 kho:da nhom:ptu kpi dự kiến tháng 10 bao nhiêu?">
+        <header><code class="name">/kpi</code><div class="alias"><span>/cpmh</span><span>/chiphi</span></div></header>
+        <h3>KPI chi phí mua hàng</h3>
+        <p>CPMH/FOB, từng cấu phần (thuế NK, VC quốc tế, chi phí lấy hàng), chỉ tiêu, cùng kỳ. Mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung; tháng chưa kết thúc là số tạm tính / dự kiến.</p>
+        <div class="param"><b>Tham số</b><span>tháng, năm, NCC, tách riêng NCC, Sea/Air, kho, nhóm hàng</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/kpi 10/2026"><i>›</i>/kpi 10/2026</button><button class="ex" type="button" data-copy="/kpi 9 tach"><i>›</i>/kpi 9 tach</button><button class="ex" type="button" data-copy="/kpi 9 kho:da nhom:ptu"><i>›</i>/kpi 9 kho:da nhom:ptu</button><button class="ex" type="button" data-copy="KPI dự kiến tháng 10 bao nhiêu?"><i>›</i>KPI dự kiến tháng 10 bao nhiêu?</button></div>
+      </article>
+      <article class="cmd" id="leadtime" data-tim="leadtime kpi leadtime chỉ khi hỏi kpi / chỉ tiêu / đạt hay không: tỷ lệ dòng hàng air ≤ 22 ngày, sea ≤ 80 ngày so với chỉ tiêu. mặc định 2 ncc mobis gộp chung. tháng, năm, ncc, sea/air, tách riêng ncc, kho, nhóm hàng lt /leadtime 8 /leadtime 9 air /leadtime 9 kho:hn leadtime hàng sea tháng 9 đạt không?">
+        <header><code class="name">/leadtime</code><div class="alias"><span>/lt</span></div></header>
+        <h3>KPI leadtime</h3>
+        <p>CHỈ khi hỏi KPI / chỉ tiêu / đạt hay không: tỷ lệ dòng hàng Air ≤ 22 ngày, Sea ≤ 80 ngày so với chỉ tiêu. Mặc định 2 NCC Mobis gộp chung.</p>
+        <div class="param"><b>Tham số</b><span>tháng, năm, NCC, Sea/Air, tách riêng NCC, kho, nhóm hàng</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/leadtime 8"><i>›</i>/leadtime 8</button><button class="ex" type="button" data-copy="/leadtime 9 air"><i>›</i>/leadtime 9 air</button><button class="ex" type="button" data-copy="/leadtime 9 kho:hn"><i>›</i>/leadtime 9 kho:hn</button><button class="ex" type="button" data-copy="Leadtime hàng Sea tháng 9 đạt không?"><i>›</i>Leadtime hàng Sea tháng 9 đạt không?</button></div>
+      </article>
+      <article class="cmd" id="leadtime-tb" data-tim="leadtime-tb leadtime trung bình số ngày leadtime trung bình theo giá trị và theo line item, chia sea/air, từng giai đoạn (đặt hàng → invoice → ship → cập cảng → về kho), so cùng kỳ. cả năm hoặc 1 tháng; ncc nhập khẩu và nội địa. thêm thang (hoặc hỏi &quot;từng tháng&quot;) để có bảng leadtime từng tháng của năm. năm, tháng, ncc, sea/air, kho, nhóm hàng lttb /leadtime-tb 2026 hhka148 /leadtime-tb 2026 dtmb002 sea thang leadtime thực tế theo giá trị hàng sea từng tháng năm 2026 ncc india /leadtime-tb 9/2026 dtmb001 lead time mua hàng trung bình năm 2026 từ hhka148">
+        <header><code class="name">/leadtime-tb</code><div class="alias"><span>/lttb</span></div></header>
+        <h3>Leadtime trung bình</h3>
+        <p>Số ngày leadtime trung bình theo giá trị và theo line item, chia Sea/Air, từng giai đoạn (đặt hàng → invoice → ship → cập cảng → về kho), so cùng kỳ. Cả năm hoặc 1 tháng; NCC nhập khẩu và nội địa. Thêm thang (hoặc hỏi &quot;từng tháng&quot;) để có bảng leadtime từng tháng của năm.</p>
+        <div class="param"><b>Tham số</b><span>năm, tháng, NCC, Sea/Air, kho, nhóm hàng</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/leadtime-tb 2026 hhka148"><i>›</i>/leadtime-tb 2026 hhka148</button><button class="ex" type="button" data-copy="/leadtime-tb 2026 dtmb002 sea thang"><i>›</i>/leadtime-tb 2026 dtmb002 sea thang</button><button class="ex" type="button" data-copy="Leadtime thực tế theo giá trị hàng sea từng tháng năm 2026 NCC India"><i>›</i>Leadtime thực tế theo giá trị hàng sea từng tháng năm 2026 NCC India</button><button class="ex" type="button" data-copy="/leadtime-tb 9/2026 dtmb001"><i>›</i>/leadtime-tb 9/2026 dtmb001</button><button class="ex" type="button" data-copy="Lead time mua hàng trung bình năm 2026 từ HHKA148"><i>›</i>Lead time mua hàng trung bình năm 2026 từ HHKA148</button></div>
+      </article>
+      <article class="cmd" id="co" data-tim="co tỷ lệ áp dụng c/o tỷ lệ giá trị hàng có c/o trong tháng. tháng, năm, ncc /co 9">
+        <header><code class="name">/co</code><div class="alias"></div></header>
+        <h3>Tỷ lệ áp dụng C/O</h3>
+        <p>Tỷ lệ giá trị hàng có C/O trong tháng.</p>
+        <div class="param"><b>Tham số</b><span>tháng, năm, NCC</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/co 9"><i>›</i>/co 9</button></div>
+      </article>
+      <article class="cmd" id="cap-co" data-tim="cap-co danh mục cấp c/o theo nơi nhập hyundai mobis hàn (dtmb001): mã nào có c/o ở hp / cm / nội bài theo lần nhập gần nhất ở từng nơi (loại thuế nk áp dụng = 2). không nêu mã: số mã theo 8 nhóm tổ hợp nơi và tỷ lệ có c/o từng nơi; nêu mã (tối đa 200): ngày nhập gần nhất và có / không c/o ở từng nơi. mã hàng (so_tra_cuu, nhiều mã cách nhau dấu cách hoặc phẩy) dm-co co-noi /cap-co /cap-co 88380n9010 55540d3000 mã 88380n9010 về cái mép lần gần nhất có c/o không?">
+        <header><code class="name">/cap-co</code><div class="alias"><span>/dm-co</span><span>/co-noi</span></div></header>
+        <h3>Danh mục cấp C/O theo nơi nhập</h3>
+        <p>Hyundai Mobis Hàn (DTMB001): mã nào có C/O ở HP / CM / Nội Bài theo lần nhập gần nhất ở từng nơi (loại thuế NK áp dụng = 2). Không nêu mã: số mã theo 8 nhóm tổ hợp nơi và tỷ lệ có C/O từng nơi; nêu mã (tối đa 200): ngày nhập gần nhất và có / không C/O ở từng nơi.</p>
+        <div class="param"><b>Tham số</b><span>mã hàng (so_tra_cuu, nhiều mã cách nhau dấu cách hoặc phẩy)</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/cap-co"><i>›</i>/cap-co</button><button class="ex" type="button" data-copy="/cap-co 88380N9010 55540D3000"><i>›</i>/cap-co 88380N9010 55540D3000</button><button class="ex" type="button" data-copy="Mã 88380N9010 về Cái Mép lần gần nhất có C/O không?"><i>›</i>Mã 88380N9010 về Cái Mép lần gần nhất có C/O không?</button></div>
+      </article></div>
   </section>
   <section class="group" id="nhom-mua">
-    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">10 lệnh</span></div>
+    <div class="group-head"><span class="idx">02</span><h2>Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="count">10 lệnh</span></div>
     <div class="cmds">
-      <article class="cmd" id="yeu-cau-mua">
-        <div class="cmd-head"><code class="name">/yeu-cau-mua</code><span class="alias">/ycmh</span></div>
-        <h2>Giá trị yêu cầu mua hàng</h2>
+      <article class="cmd" id="yeu-cau-mua" data-tim="yeu-cau-mua giá trị yêu cầu mua hàng giá trị phiếu yêu cầu mua hàng trong tháng, chia sea/air, so cùng kỳ. tháng, năm, ncc ycmh /yeu-cau-mua 10">
+        <header><code class="name">/yeu-cau-mua</code><div class="alias"><span>/ycmh</span></div></header>
+        <h3>Giá trị yêu cầu mua hàng</h3>
         <p>Giá trị phiếu yêu cầu mua hàng trong tháng, chia Sea/Air, so cùng kỳ.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
-        <ul class="ex"><li><code>/yeu-cau-mua 10</code></li></ul>
+        <div class="param"><b>Tham số</b><span>tháng, năm, NCC</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/yeu-cau-mua 10"><i>›</i>/yeu-cau-mua 10</button></div>
       </article>
-      <article class="cmd" id="cho-duyet">
-        <div class="cmd-head"><code class="name">/cho-duyet</code><span class="alias">/choduyet</span></div>
-        <h2>Yêu cầu mua hàng chờ duyệt</h2>
+      <article class="cmd" id="cho-duyet" data-tim="cho-duyet yêu cầu mua hàng chờ duyệt phiếu pp/pr đang chờ duyệt, người lập, số ngày chờ, giá trị. không choduyet /cho-duyet">
+        <header><code class="name">/cho-duyet</code><div class="alias"><span>/choduyet</span></div></header>
+        <h3>Yêu cầu mua hàng chờ duyệt</h3>
         <p>Phiếu PP/PR đang chờ duyệt, người lập, số ngày chờ, giá trị.</p>
-        <dl><dt>Tham số</dt><dd>không</dd></dl>
-        <ul class="ex"><li><code>/cho-duyet</code></li></ul>
+        <div class="param"><b>Tham số</b><span>không</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/cho-duyet"><i>›</i>/cho-duyet</button></div>
       </article>
-      <article class="cmd" id="dat-hang">
-        <div class="cmd-head"><code class="name">/dat-hang</code><span class="alias">/ddh</span></div>
-        <h2>Giá trị đặt hàng</h2>
+      <article class="cmd" id="dat-hang" data-tim="dat-hang giá trị đặt hàng giá trị đơn đặt hàng mua trong tháng, chia sea/air. kỳ nhiều tháng (cả năm, n tháng, khoảng ngày nhiều năm) thì có bảng theo từng tháng: giá trị sea, air, tổng và tỷ trọng sea/air. không kèm phần đã / chưa lên invoice (xem /don-invoice). tháng, năm, số tháng (so_thang), khoảng ngày (tu_ngay, den_ngay), ncc, sea/air, kho, nk/nd ddh /dat-hang 10 /dat-hang 2026 dtmb002 /dat-hang 1/1/2025-13/11/2026 dtmb002 air giá trị đơn hàng mua theo từng tháng năm 2025 và 2026, hình thức air của ncc india tỷ trọng giá trị mua hàng sea và air theo từng tháng năm 2026 của ncc india">
+        <header><code class="name">/dat-hang</code><div class="alias"><span>/ddh</span></div></header>
+        <h3>Giá trị đặt hàng</h3>
         <p>Giá trị đơn đặt hàng mua trong tháng, chia Sea/Air. Kỳ nhiều tháng (cả năm, N tháng, khoảng ngày nhiều năm) thì có bảng theo từng tháng: giá trị Sea, Air, tổng và tỷ trọng Sea/Air. Không kèm phần đã / chưa lên invoice (xem /don-invoice).</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, số tháng (so_thang), khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</dd></dl>
-        <ul class="ex"><li><code>/dat-hang 10</code></li><li><code>/dat-hang 2026 dtmb002</code></li><li><code>/dat-hang 1/1/2025-13/11/2026 dtmb002 air</code></li><li><code>Giá trị đơn hàng mua theo từng tháng năm 2025 và 2026, hình thức air của NCC India</code></li><li><code>Tỷ trọng giá trị mua hàng Sea và Air theo từng tháng năm 2026 của NCC India</code></li></ul>
+        <div class="param"><b>Tham số</b><span>tháng, năm, số tháng (so_thang), khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/dat-hang 10"><i>›</i>/dat-hang 10</button><button class="ex" type="button" data-copy="/dat-hang 2026 dtmb002"><i>›</i>/dat-hang 2026 dtmb002</button><button class="ex" type="button" data-copy="/dat-hang 1/1/2025-13/11/2026 dtmb002 air"><i>›</i>/dat-hang 1/1/2025-13/11/2026 dtmb002 air</button><button class="ex" type="button" data-copy="Giá trị đơn hàng mua theo từng tháng năm 2025 và 2026, hình thức air của NCC India"><i>›</i>Giá trị đơn hàng mua theo từng tháng năm 2025 và 2026, hình thức air của NCC India</button><button class="ex" type="button" data-copy="Tỷ trọng giá trị mua hàng Sea và Air theo từng tháng năm 2026 của NCC India"><i>›</i>Tỷ trọng giá trị mua hàng Sea và Air theo từng tháng năm 2026 của NCC India</button></div>
       </article>
-      <article class="cmd" id="thong-ke-don">
-        <div class="cmd-head"><code class="name">/thong-ke-don</code></div>
-        <h2>Thống kê đơn đặt hàng</h2>
+      <article class="cmd" id="thong-ke-don" data-tim="thong-ke-don thống kê đơn đặt hàng số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. n tháng gần nhất mặc định là n tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. hoặc tính trong một khoảng ngày tùy chọn (từ ngày đến ngày). không chọn sea/air thì có thêm bảng chia sea / air kèm dòng tổng. hỗ trợ ncc và sea/air, gồm hàng nội địa. số tháng (so_thang), tháng/năm kết thúc, khoảng ngày (tu_ngay, den_ngay), ncc, sea/air /thong-ke-don 3thang air /thong-ke-don 31/10/2026-9/11/2026 hhka161 tính tổng số đơn hàng từ 31/10/2026 đến 9/11/2026 của foton đơn khẩn foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?">
+        <header><code class="name">/thong-ke-don</code><div class="alias"></div></header>
+        <h3>Thống kê đơn đặt hàng</h3>
         <p>Số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. N tháng gần nhất mặc định là N tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. Hoặc tính trong một khoảng ngày tùy chọn (từ ngày đến ngày). Không chọn Sea/Air thì có thêm bảng chia Sea / Air kèm dòng tổng. Hỗ trợ NCC và Sea/Air, gồm hàng nội địa.</p>
-        <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm kết thúc, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air</dd></dl>
-        <ul class="ex"><li><code>/thong-ke-don 3thang air</code></li><li><code>/thong-ke-don 31/10/2026-9/11/2026 hhka161</code></li><li><code>Tính tổng số đơn hàng từ 31/10/2026 đến 9/11/2026 của Foton</code></li><li><code>Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?</code></li></ul>
+        <div class="param"><b>Tham số</b><span>số tháng (so_thang), tháng/năm kết thúc, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/thong-ke-don 3thang air"><i>›</i>/thong-ke-don 3thang air</button><button class="ex" type="button" data-copy="/thong-ke-don 31/10/2026-9/11/2026 hhka161"><i>›</i>/thong-ke-don 31/10/2026-9/11/2026 hhka161</button><button class="ex" type="button" data-copy="Tính tổng số đơn hàng từ 31/10/2026 đến 9/11/2026 của Foton"><i>›</i>Tính tổng số đơn hàng từ 31/10/2026 đến 9/11/2026 của Foton</button><button class="ex" type="button" data-copy="Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?"><i>›</i>Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?</button></div>
       </article>
-      <article class="cmd" id="so-ma-hang">
-        <div class="cmd-head"><code class="name">/so-ma-hang</code><span class="alias">/somahang</span><span class="alias">/ma-dat</span></div>
-        <h2>Số mã hàng đã đặt</h2>
+      <article class="cmd" id="so-ma-hang" data-tim="so-ma-hang số mã hàng đã đặt số mã hàng khác nhau (không trùng) trên đơn đặt hàng theo từng tháng và cả kỳ, kèm số dòng hàng. kỳ giống /thong-ke-don: n tháng gần nhất (mặc định 3 tháng đã kết thúc), tháng/năm, hoặc khoảng ngày. số mã cả kỳ không bằng tổng các tháng vì một mã chỉ đếm 1 lần. số tháng (so_thang), tháng/năm, khoảng ngày (tu_ngay, den_ngay), ncc, sea/air, kho, nk/nd somahang ma-dat /so-ma-hang 2026 dtmb002 /so-ma-hang 10/2026 hhka161 air số lượng mã hàng đặt năm 2026 theo từng tháng của mobis india">
+        <header><code class="name">/so-ma-hang</code><div class="alias"><span>/somahang</span><span>/ma-dat</span></div></header>
+        <h3>Số mã hàng đã đặt</h3>
         <p>Số mã hàng khác nhau (không trùng) trên đơn đặt hàng theo từng tháng và cả kỳ, kèm số dòng hàng. Kỳ giống /thong-ke-don: N tháng gần nhất (mặc định 3 tháng đã kết thúc), tháng/năm, hoặc khoảng ngày. Số mã cả kỳ không bằng tổng các tháng vì một mã chỉ đếm 1 lần.</p>
-        <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</dd></dl>
-        <ul class="ex"><li><code>/so-ma-hang 2026 dtmb002</code></li><li><code>/so-ma-hang 10/2026 hhka161 air</code></li><li><code>Số lượng mã hàng đặt năm 2026 theo từng tháng của Mobis India</code></li></ul>
+        <div class="param"><b>Tham số</b><span>số tháng (so_thang), tháng/năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/so-ma-hang 2026 dtmb002"><i>›</i>/so-ma-hang 2026 dtmb002</button><button class="ex" type="button" data-copy="/so-ma-hang 10/2026 hhka161 air"><i>›</i>/so-ma-hang 10/2026 hhka161 air</button><button class="ex" type="button" data-copy="Số lượng mã hàng đặt năm 2026 theo từng tháng của Mobis India"><i>›</i>Số lượng mã hàng đặt năm 2026 theo từng tháng của Mobis India</button></div>
       </article>
-      <article class="cmd" id="top-ma">
-        <div class="cmd-head"><code class="name">/top-ma</code><span class="alias">/topma</span><span class="alias">/ma-mua-nhieu</span></div>
-        <h2>Mã hàng đặt mua nhiều nhất</h2>
+      <article class="cmd" id="top-ma" data-tim="top-ma mã hàng đặt mua nhiều nhất danh sách n mã hàng có tổng tiền đặt mua lớn nhất (mặc định 20, tối đa 1000; trên 60 mã gửi kèm file excel tạm): mã, tên, model (nhóm xe cấp 3), số lượng, đơn giá bình quân, tổng tiền và tỷ trọng; thêm chữ co để có cột được / không được áp dụng c/o (lần về kho gần nhất). theo đơn đặt hàng, ngày đặt trong kỳ; kỳ giống /thong-ke-don (n tháng gần nhất, tháng/năm, khoảng ngày). số mã (topn), tháng/năm, khoảng ngày, ncc, sea/air, kho, nhóm hàng, nk/nd, co topma ma-mua-nhieu /top-ma top200 2026 dtmb001 dtmb002 /top-ma top300 2026 dtmb001 co /top-ma 10/2026 hhka161 cho tôi danh mục 200 mã mua nhiều nhất của mobis hàn và mobis ấn năm 2026">
+        <header><code class="name">/top-ma</code><div class="alias"><span>/topma</span><span>/ma-mua-nhieu</span></div></header>
+        <h3>Mã hàng đặt mua nhiều nhất</h3>
         <p>Danh sách N mã hàng có tổng tiền đặt mua lớn nhất (mặc định 20, tối đa 1000; trên 60 mã gửi kèm file Excel tạm): mã, tên, model (nhóm xe cấp 3), số lượng, đơn giá bình quân, tổng tiền và tỷ trọng; thêm chữ co để có cột được / không được áp dụng C/O (lần về kho gần nhất). Theo đơn đặt hàng, ngày đặt trong kỳ; kỳ giống /thong-ke-don (N tháng gần nhất, tháng/năm, khoảng ngày).</p>
-        <dl><dt>Tham số</dt><dd>số mã (topN), tháng/năm, khoảng ngày, NCC, Sea/Air, kho, nhóm hàng, nk/nd, co</dd></dl>
-        <ul class="ex"><li><code>/top-ma top200 2026 dtmb001 dtmb002</code></li><li><code>/top-ma top300 2026 dtmb001 co</code></li><li><code>/top-ma 10/2026 hhka161</code></li><li><code>Cho tôi danh mục 200 mã mua nhiều nhất của Mobis Hàn và Mobis Ấn năm 2026</code></li></ul>
+        <div class="param"><b>Tham số</b><span>số mã (topN), tháng/năm, khoảng ngày, NCC, Sea/Air, kho, nhóm hàng, nk/nd, co</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/top-ma top200 2026 dtmb001 dtmb002"><i>›</i>/top-ma top200 2026 dtmb001 dtmb002</button><button class="ex" type="button" data-copy="/top-ma top300 2026 dtmb001 co"><i>›</i>/top-ma top300 2026 dtmb001 co</button><button class="ex" type="button" data-copy="/top-ma 10/2026 hhka161"><i>›</i>/top-ma 10/2026 hhka161</button><button class="ex" type="button" data-copy="Cho tôi danh mục 200 mã mua nhiều nhất của Mobis Hàn và Mobis Ấn năm 2026"><i>›</i>Cho tôi danh mục 200 mã mua nhiều nhất của Mobis Hàn và Mobis Ấn năm 2026</button></div>
       </article>
-      <article class="cmd" id="don-invoice">
-        <div class="cmd-head"><code class="name">/don-invoice</code><span class="alias">/chua-invoice</span><span class="alias">/da-invoice</span></div>
-        <h2>Đã đặt / đã lên invoice / đã giao</h2>
+      <article class="cmd" id="don-invoice" data-tim="don-invoice đã đặt / đã lên invoice / đã giao giá trị hàng đã đặt, đã lên invoice và đã đặt nhưng chưa lên invoice, chia sea/air và theo tháng đặt hàng. không nêu kỳ thì tính toàn bộ đơn từ 01/01/2025; nêu tháng/năm thì tính đơn đặt trong kỳ đó. mặc định vnd; thêm usd để xem bằng usd (chỉ ncc nước ngoài). thêm giao để xem đã giao / chưa giao (đã nhập kho theo ngày dự kiến về kho). tháng, năm, ncc, sea/air, usd, giao chua-invoice da-invoice /don-invoice dtmb001 /don-invoice dtmb001 usd /don-invoice hhka161 giao /don-invoice 9/2026 air giá trị hàng đã đặt hyundai mobis nhưng chưa lên invoice giá trị đã đặt, đã giao và chưa giao của foton">
+        <header><code class="name">/don-invoice</code><div class="alias"><span>/chua-invoice</span><span>/da-invoice</span></div></header>
+        <h3>Đã đặt / đã lên invoice / đã giao</h3>
         <p>Giá trị hàng đã đặt, đã lên invoice và đã đặt nhưng chưa lên invoice, chia Sea/Air và theo tháng đặt hàng. Không nêu kỳ thì tính toàn bộ đơn từ 01/01/2025; nêu tháng/năm thì tính đơn đặt trong kỳ đó. Mặc định VND; thêm usd để xem bằng USD (chỉ NCC nước ngoài). Thêm giao để xem đã giao / chưa giao (đã nhập kho theo ngày dự kiến về kho).</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air, usd, giao</dd></dl>
-        <ul class="ex"><li><code>/don-invoice dtmb001</code></li><li><code>/don-invoice dtmb001 usd</code></li><li><code>/don-invoice hhka161 giao</code></li><li><code>/don-invoice 9/2026 air</code></li><li><code>Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice</code></li><li><code>Giá trị đã đặt, đã giao và chưa giao của Foton</code></li></ul>
+        <div class="param"><b>Tham số</b><span>tháng, năm, NCC, Sea/Air, usd, giao</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/don-invoice dtmb001"><i>›</i>/don-invoice dtmb001</button><button class="ex" type="button" data-copy="/don-invoice dtmb001 usd"><i>›</i>/don-invoice dtmb001 usd</button><button class="ex" type="button" data-copy="/don-invoice hhka161 giao"><i>›</i>/don-invoice hhka161 giao</button><button class="ex" type="button" data-copy="/don-invoice 9/2026 air"><i>›</i>/don-invoice 9/2026 air</button><button class="ex" type="button" data-copy="Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice"><i>›</i>Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice</button><button class="ex" type="button" data-copy="Giá trị đã đặt, đã giao và chưa giao của Foton"><i>›</i>Giá trị đã đặt, đã giao và chưa giao của Foton</button></div>
       </article>
-      <article class="cmd" id="don-so-luong">
-        <div class="cmd-head"><code class="name">/don-so-luong</code><span class="alias">/sl-don</span><span class="alias">/so-luong-don</span></div>
-        <h2>Số lượng, số mã đã đặt / đã thực hiện</h2>
+      <article class="cmd" id="don-so-luong" data-tim="don-so-luong số lượng, số mã đã đặt / đã thực hiện số lượng (đơn vị hàng) và số mã hàng: đã đặt, đã thực hiện (đã giao = nhập kho) và chưa thực hiện, chia sea/air và theo tháng đặt hàng. thêm invoice để tính theo đã lên invoice. kỳ: tháng/năm, khoảng ngày, không nêu = từ 01/01/2025. giá trị (tiền) xem /don-invoice. tháng, năm, khoảng ngày (tu_ngay, den_ngay), ncc, sea/air, kho, nk/nd, invoice sl-don so-luong-don /don-so-luong 1/11/2025-13/11/2026 hhka161 /don-so-luong 2026 dtmb001 invoice tính số lượng đã đặt hàng, đã thực hiện, chưa thực hiện của foton giai đoạn từ 1/11/2025 đến 13/11/2026">
+        <header><code class="name">/don-so-luong</code><div class="alias"><span>/sl-don</span><span>/so-luong-don</span></div></header>
+        <h3>Số lượng, số mã đã đặt / đã thực hiện</h3>
         <p>Số lượng (đơn vị hàng) và số mã hàng: đã đặt, đã thực hiện (đã giao = nhập kho) và chưa thực hiện, chia Sea/Air và theo tháng đặt hàng. Thêm invoice để tính theo đã lên invoice. Kỳ: tháng/năm, khoảng ngày, không nêu = từ 01/01/2025. Giá trị (tiền) xem /don-invoice.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd, invoice</dd></dl>
-        <ul class="ex"><li><code>/don-so-luong 1/11/2025-13/11/2026 hhka161</code></li><li><code>/don-so-luong 2026 dtmb001 invoice</code></li><li><code>Tính số lượng đã đặt hàng, đã thực hiện, chưa thực hiện của Foton giai đoạn từ 1/11/2025 đến 13/11/2026</code></li></ul>
+        <div class="param"><b>Tham số</b><span>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd, invoice</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/don-so-luong 1/11/2025-13/11/2026 hhka161"><i>›</i>/don-so-luong 1/11/2025-13/11/2026 hhka161</button><button class="ex" type="button" data-copy="/don-so-luong 2026 dtmb001 invoice"><i>›</i>/don-so-luong 2026 dtmb001 invoice</button><button class="ex" type="button" data-copy="Tính số lượng đã đặt hàng, đã thực hiện, chưa thực hiện của Foton giai đoạn từ 1/11/2025 đến 13/11/2026"><i>›</i>Tính số lượng đã đặt hàng, đã thực hiện, chưa thực hiện của Foton giai đoạn từ 1/11/2025 đến 13/11/2026</button></div>
       </article>
-      <article class="cmd" id="khieu-nai">
-        <div class="cmd-head"><code class="name">/khieu-nai</code></div>
-        <h2>Tỷ lệ khiếu nại thành công theo giá trị</h2>
+      <article class="cmd" id="khieu-nai" data-tim="khieu-nai tỷ lệ khiếu nại thành công theo giá trị giá trị khiếu nại = đơn giá × sl; tỷ lệ = gt đồng ý / (gt đồng ý + gt từ chối). thêm theo-thang để xem từng tháng. tổng cộng đủ tiền và tính lại tỷ lệ khi một ncc hoặc nguồn xác nhận cùng loại tiền; nhiều ncc khác/chưa rõ loại tiền có tổng riêng từng ncc, không cộng chéo. chưa xử lý và khác không vào mẫu số. mặc định từ đầu năm đến hôm nay. năm, tháng, khoảng ngày (tu_ngay, den_ngay), ncc (tên chứa chuỗi hoặc mã), theo-thang /khieu-nai 2026 hhka161 theo-thang /khieu-nai 2026 thành công motor /khieu-nai 1/1/2026-31/10/2026 tỷ lệ khiếu nại thành công theo giá trị năm 2026">
+        <header><code class="name">/khieu-nai</code><div class="alias"></div></header>
+        <h3>Tỷ lệ khiếu nại thành công theo giá trị</h3>
         <p>Giá trị khiếu nại = Đơn giá × SL; tỷ lệ = GT Đồng ý / (GT Đồng ý + GT Từ chối). Thêm theo-thang để xem từng tháng. Tổng cộng đủ tiền và tính lại tỷ lệ khi một NCC hoặc nguồn xác nhận cùng loại tiền; nhiều NCC khác/chưa rõ loại tiền có tổng riêng từng NCC, không cộng chéo. Chưa xử lý và Khác không vào mẫu số. Mặc định từ đầu năm đến hôm nay.</p>
-        <dl><dt>Tham số</dt><dd>năm, tháng, khoảng ngày (tu_ngay, den_ngay), NCC (tên chứa chuỗi hoặc mã), theo-thang</dd></dl>
-        <ul class="ex"><li><code>/khieu-nai 2026 hhka161 theo-thang</code></li><li><code>/khieu-nai 2026 Thành Công Motor</code></li><li><code>/khieu-nai 1/1/2026-31/10/2026</code></li><li><code>Tỷ lệ khiếu nại thành công theo giá trị năm 2026</code></li></ul>
+        <div class="param"><b>Tham số</b><span>năm, tháng, khoảng ngày (tu_ngay, den_ngay), NCC (tên chứa chuỗi hoặc mã), theo-thang</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/khieu-nai 2026 hhka161 theo-thang"><i>›</i>/khieu-nai 2026 hhka161 theo-thang</button><button class="ex" type="button" data-copy="/khieu-nai 2026 Thành Công Motor"><i>›</i>/khieu-nai 2026 Thành Công Motor</button><button class="ex" type="button" data-copy="/khieu-nai 1/1/2026-31/10/2026"><i>›</i>/khieu-nai 1/1/2026-31/10/2026</button><button class="ex" type="button" data-copy="Tỷ lệ khiếu nại thành công theo giá trị năm 2026"><i>›</i>Tỷ lệ khiếu nại thành công theo giá trị năm 2026</button></div>
       </article>
-      <article class="cmd" id="bien-dong-gia">
-        <div class="cmd-head"><code class="name">/bien-dong-gia</code><span class="alias">/bdg</span><span class="alias">/gia</span></div>
-        <h2>Biến động giá mua</h2>
+      <article class="cmd" id="bien-dong-gia" data-tim="bien-dong-gia biến động giá mua so giá mua hiệu lực ngày cuối kỳ với ngày đầu kỳ và với giá lần trước (bảng giá mua bravo): % và tiền chênh gia quyền theo sl đã mua trong kỳ, số mã tăng / giảm, từng ncc, n mã tác động tiền lớn nhất (mặc định 10); hoặc giá từng ncc của 1 mã hàng. không nêu kỳ = 01/01 năm nay đến hôm nay; ngày cuối kỳ được ở tương lai (giá đã báo trước). khoảng ngày (tu_ngay = ngày đầu kỳ, den_ngay = ngày cuối kỳ), tháng, năm, ncc, số mã top (so_ma), mã hàng (so_tra_cuu) bdg gia /bien-dong-gia /bien-dong-gia 1/1/2026-31/12/2027 dtmb002 top20 /bien-dong-gia 0510000441c giá mua năm 2026 tăng bao nhiêu so với đầu năm?">
+        <header><code class="name">/bien-dong-gia</code><div class="alias"><span>/bdg</span><span>/gia</span></div></header>
+        <h3>Biến động giá mua</h3>
         <p>So giá mua hiệu lực ngày cuối kỳ với ngày đầu kỳ và với giá lần trước (bảng giá mua Bravo): % và tiền chênh gia quyền theo SL đã mua trong kỳ, số mã tăng / giảm, từng NCC, N mã tác động tiền lớn nhất (mặc định 10); hoặc giá từng NCC của 1 mã hàng. Không nêu kỳ = 01/01 năm nay đến hôm nay; ngày cuối kỳ được ở tương lai (giá đã báo trước).</p>
-        <dl><dt>Tham số</dt><dd>khoảng ngày (tu_ngay = ngày đầu kỳ, den_ngay = ngày cuối kỳ), tháng, năm, NCC, số mã top (so_ma), mã hàng (so_tra_cuu)</dd></dl>
-        <ul class="ex"><li><code>/bien-dong-gia</code></li><li><code>/bien-dong-gia 1/1/2026-31/12/2027 dtmb002 top20</code></li><li><code>/bien-dong-gia 0510000441C</code></li><li><code>Giá mua năm 2026 tăng bao nhiêu so với đầu năm?</code></li></ul>
-      </article>
-    </div>
+        <div class="param"><b>Tham số</b><span>khoảng ngày (tu_ngay = ngày đầu kỳ, den_ngay = ngày cuối kỳ), tháng, năm, NCC, số mã top (so_ma), mã hàng (so_tra_cuu)</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/bien-dong-gia"><i>›</i>/bien-dong-gia</button><button class="ex" type="button" data-copy="/bien-dong-gia 1/1/2026-31/12/2027 dtmb002 top20"><i>›</i>/bien-dong-gia 1/1/2026-31/12/2027 dtmb002 top20</button><button class="ex" type="button" data-copy="/bien-dong-gia 0510000441C"><i>›</i>/bien-dong-gia 0510000441C</button><button class="ex" type="button" data-copy="Giá mua năm 2026 tăng bao nhiêu so với đầu năm?"><i>›</i>Giá mua năm 2026 tăng bao nhiêu so với đầu năm?</button></div>
+      </article></div>
   </section>
   <section class="group" id="nhom-hang-ve">
-    <div class="group-head"><h2 class="group-name">Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="alias">7 lệnh</span></div>
+    <div class="group-head"><span class="idx">03</span><h2>Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="count">7 lệnh</span></div>
     <div class="cmds">
-      <article class="cmd" id="hang-ve">
-        <div class="cmd-head"><code class="name">/hang-ve</code><span class="alias">/hangve</span></div>
-        <h2>Giá trị hàng về</h2>
+      <article class="cmd" id="hang-ve" data-tim="hang-ve giá trị hàng về giá trị hàng về (fob) trong tháng, chia sea/air, so cùng kỳ. tháng, năm, ncc, kho, nhóm hàng hangve /hang-ve 9 /hang-ve 9 nhom:lop tháng 9 về bao nhiêu hàng?">
+        <header><code class="name">/hang-ve</code><div class="alias"><span>/hangve</span></div></header>
+        <h3>Giá trị hàng về</h3>
         <p>Giá trị hàng về (FOB) trong tháng, chia Sea/Air, so cùng kỳ.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/hang-ve 9</code></li><li><code>/hang-ve 9 nhom:lop</code></li><li><code>Tháng 9 về bao nhiêu hàng?</code></li></ul>
+        <div class="param"><b>Tham số</b><span>tháng, năm, NCC, kho, nhóm hàng</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/hang-ve 9"><i>›</i>/hang-ve 9</button><button class="ex" type="button" data-copy="/hang-ve 9 nhom:lop"><i>›</i>/hang-ve 9 nhom:lop</button><button class="ex" type="button" data-copy="Tháng 9 về bao nhiêu hàng?"><i>›</i>Tháng 9 về bao nhiêu hàng?</button></div>
       </article>
-      <article class="cmd" id="lich-hang-ve">
-        <div class="cmd-head"><code class="name">/lich-hang-ve</code><span class="alias">/lich</span></div>
-        <h2>Lịch hàng về</h2>
+      <article class="cmd" id="lich-hang-ve" data-tim="lich-hang-ve lịch hàng về các lô hàng (invoice) dự kiến về kho trong n ngày tới (mặc định 7). số ngày lich /lich-hang-ve /lich-hang-ve 14">
+        <header><code class="name">/lich-hang-ve</code><div class="alias"><span>/lich</span></div></header>
+        <h3>Lịch hàng về</h3>
         <p>Các lô hàng (invoice) dự kiến về kho trong N ngày tới (mặc định 7).</p>
-        <dl><dt>Tham số</dt><dd>số ngày</dd></dl>
-        <ul class="ex"><li><code>/lich-hang-ve</code></li><li><code>/lich-hang-ve 14</code></li></ul>
+        <div class="param"><b>Tham số</b><span>số ngày</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/lich-hang-ve"><i>›</i>/lich-hang-ve</button><button class="ex" type="button" data-copy="/lich-hang-ve 14"><i>›</i>/lich-hang-ve 14</button></div>
       </article>
-      <article class="cmd" id="giao-hang">
-        <div class="cmd-head"><code class="name">/giao-hang</code><span class="alias">/thoi-gian-giao</span><span class="alias">/tggh</span></div>
-        <h2>Thời gian giao hàng</h2>
+      <article class="cmd" id="giao-hang" data-tim="giao-hang thời gian giao hàng các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (sea/air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. thêm invoice để tính đến ngày invoice ghi trên phiếu yêu cầu nhập kho thay cho ngày lập phiếu. thêm theo-thang để xem bảng ngang: hàng leadtime theo giá trị sea/air, cột năm (cả kỳ) và từng tháng đặt hàng; tháng không có dòng để trống. kèm số dòng và bảng tb theo dòng. thêm phan-bo để xem tỷ lệ % giá trị đã giao theo mốc ≤15, 16–30, 31–45, 46–60, 61–75, 76–90, &gt;90 ngày, chia theo tháng đặt hàng, hình thức sea/air và kho (hàng ngang = 100). thêm chua-giao để liệt kê theo mã các mã còn hàng chưa lên phiếu yêu cầu nhập kho và số ngày đã chờ. kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay. tháng, năm, khoảng ngày (tu_ngay, den_ngay), ncc, sea/air, kho, nhóm hàng, invoice, theo-thang, phan-bo thoi-gian-giao tggh /giao-hang hhka161 /giao-hang 1/1/2026-31/10/2026 hhka161 theo-thang /giao-hang hhka161 invoice /giao-hang 31/10/2026-13/11/2026 hhka161 chua-giao /giao-hang 2026 hhka161 phan-bo /giao-hang 10/2026 hhka161 air /giao-hang 1/10/2026-10/11/2026 dtmb001 tính thời gian giao hàng của các đơn foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho">
+        <header><code class="name">/giao-hang</code><div class="alias"><span>/thoi-gian-giao</span><span>/tggh</span></div></header>
+        <h3>Thời gian giao hàng</h3>
         <p>Các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (Sea/Air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. Thêm invoice để tính đến ngày invoice ghi trên phiếu yêu cầu nhập kho thay cho ngày lập phiếu. Thêm theo-thang để xem bảng ngang: hàng leadtime theo giá trị Sea/Air, cột Năm (cả kỳ) và từng tháng đặt hàng; tháng không có dòng để trống. Kèm số dòng và bảng TB theo dòng. Thêm phan-bo để xem tỷ lệ % giá trị đã giao theo mốc ≤15, 16–30, 31–45, 46–60, 61–75, 76–90, &gt;90 ngày, chia theo tháng đặt hàng, hình thức Sea/Air và kho (hàng ngang = 100). Thêm chua-giao để liệt kê theo mã các mã còn hàng chưa lên phiếu yêu cầu nhập kho và số ngày đã chờ. Kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nhóm hàng, invoice, theo-thang, phan-bo</dd></dl>
-        <ul class="ex"><li><code>/giao-hang hhka161</code></li><li><code>/giao-hang 1/1/2026-31/10/2026 hhka161 theo-thang</code></li><li><code>/giao-hang hhka161 invoice</code></li><li><code>/giao-hang 31/10/2026-13/11/2026 hhka161 chua-giao</code></li><li><code>/giao-hang 2026 hhka161 phan-bo</code></li><li><code>/giao-hang 10/2026 hhka161 air</code></li><li><code>/giao-hang 1/10/2026-10/11/2026 dtmb001</code></li><li><code>Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho</code></li></ul>
+        <div class="param"><b>Tham số</b><span>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nhóm hàng, invoice, theo-thang, phan-bo</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/giao-hang hhka161"><i>›</i>/giao-hang hhka161</button><button class="ex" type="button" data-copy="/giao-hang 1/1/2026-31/10/2026 hhka161 theo-thang"><i>›</i>/giao-hang 1/1/2026-31/10/2026 hhka161 theo-thang</button><button class="ex" type="button" data-copy="/giao-hang hhka161 invoice"><i>›</i>/giao-hang hhka161 invoice</button><button class="ex" type="button" data-copy="/giao-hang 31/10/2026-13/11/2026 hhka161 chua-giao"><i>›</i>/giao-hang 31/10/2026-13/11/2026 hhka161 chua-giao</button><button class="ex" type="button" data-copy="/giao-hang 2026 hhka161 phan-bo"><i>›</i>/giao-hang 2026 hhka161 phan-bo</button><button class="ex" type="button" data-copy="/giao-hang 10/2026 hhka161 air"><i>›</i>/giao-hang 10/2026 hhka161 air</button><button class="ex" type="button" data-copy="/giao-hang 1/10/2026-10/11/2026 dtmb001"><i>›</i>/giao-hang 1/10/2026-10/11/2026 dtmb001</button><button class="ex" type="button" data-copy="Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho"><i>›</i>Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho</button></div>
       </article>
-      <article class="cmd" id="thong-quan">
-        <div class="cmd-head"><code class="name">/thong-quan</code><span class="alias">/thongquan</span><span class="alias">/tq</span></div>
-        <h2>Thời gian cập cảng → thông quan</h2>
+      <article class="cmd" id="thong-quan" data-tim="thong-quan thời gian cập cảng → thông quan số ngày trung bình từ ngày cập cảng đến ngày thông quan, mỗi invoice (lô) tính 1 lần, chia sea/air kèm dòng tổng, nhanh nhất / chậm nhất; kỳ lọc theo ngày thông quan (khoảng ngày, tháng hoặc năm; không nêu = từ đầu năm nay). lô thông quan trước cập cảng tính 0 ngày; lô quá 30 ngày coi là nghi sai ngày, không tính, được liệt kê riêng. khoảng ngày (tu_ngay, den_ngay), tháng, năm, ncc, sea/air, kho, nk/nd thongquan tq /thong-quan 1/1/2026-31/10/2026 /thong-quan 2026 dtmb001 sea /thong-quan 10/2026 luna tính thời gian trung bình từ ngày cập cảng đến ngày thông quan trong khoảng từ 1/1/2026-31/10/2026">
+        <header><code class="name">/thong-quan</code><div class="alias"><span>/thongquan</span><span>/tq</span></div></header>
+        <h3>Thời gian cập cảng → thông quan</h3>
         <p>Số ngày trung bình từ ngày cập cảng đến ngày thông quan, mỗi invoice (lô) tính 1 lần, chia Sea/Air kèm dòng tổng, nhanh nhất / chậm nhất; kỳ lọc theo ngày thông quan (khoảng ngày, tháng hoặc năm; không nêu = từ đầu năm nay). Lô thông quan trước cập cảng tính 0 ngày; lô quá 30 ngày coi là nghi sai ngày, không tính, được liệt kê riêng.</p>
-        <dl><dt>Tham số</dt><dd>khoảng ngày (tu_ngay, den_ngay), tháng, năm, NCC, Sea/Air, kho, nk/nd</dd></dl>
-        <ul class="ex"><li><code>/thong-quan 1/1/2026-31/10/2026</code></li><li><code>/thong-quan 2026 dtmb001 sea</code></li><li><code>/thong-quan 10/2026</code></li><li><code>Luna tính thời gian trung bình từ ngày cập cảng đến ngày thông quan trong khoảng từ 1/1/2026-31/10/2026</code></li></ul>
+        <div class="param"><b>Tham số</b><span>khoảng ngày (tu_ngay, den_ngay), tháng, năm, NCC, Sea/Air, kho, nk/nd</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/thong-quan 1/1/2026-31/10/2026"><i>›</i>/thong-quan 1/1/2026-31/10/2026</button><button class="ex" type="button" data-copy="/thong-quan 2026 dtmb001 sea"><i>›</i>/thong-quan 2026 dtmb001 sea</button><button class="ex" type="button" data-copy="/thong-quan 10/2026"><i>›</i>/thong-quan 10/2026</button><button class="ex" type="button" data-copy="Luna tính thời gian trung bình từ ngày cập cảng đến ngày thông quan trong khoảng từ 1/1/2026-31/10/2026"><i>›</i>Luna tính thời gian trung bình từ ngày cập cảng đến ngày thông quan trong khoảng từ 1/1/2026-31/10/2026</button></div>
       </article>
-      <article class="cmd" id="cont">
-        <div class="cmd-head"><code class="name">/cont</code><span class="alias">/container</span></div>
-        <h2>Số cont nhập kho</h2>
+      <article class="cmd" id="cont" data-tim="cont số cont nhập kho số cont 20, cont 40 và số bill hàng lẻ (lcl) nhập kho theo ngày dự kiến về kho, chia theo ncc và kho. tháng, năm, ncc, kho container /cont 10 dtmb001 số cont nhập kho từ hyundai mobis tháng 10">
+        <header><code class="name">/cont</code><div class="alias"><span>/container</span></div></header>
+        <h3>Số cont nhập kho</h3>
         <p>Số cont 20, cont 40 và số bill hàng lẻ (LCL) nhập kho theo ngày dự kiến về kho, chia theo NCC và kho.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, kho</dd></dl>
-        <ul class="ex"><li><code>/cont 10 dtmb001</code></li><li><code>Số cont nhập kho từ Hyundai Mobis tháng 10</code></li></ul>
+        <div class="param"><b>Tham số</b><span>tháng, năm, NCC, kho</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/cont 10 dtmb001"><i>›</i>/cont 10 dtmb001</button><button class="ex" type="button" data-copy="Số cont nhập kho từ Hyundai Mobis tháng 10"><i>›</i>Số cont nhập kho từ Hyundai Mobis tháng 10</button></div>
       </article>
-      <article class="cmd" id="hang-nguy-hiem">
-        <div class="cmd-head"><code class="name">/hang-nguy-hiem</code><span class="alias">/nguy-hiem</span><span class="alias">/hnh</span></div>
-        <h2>Hàng nguy hiểm</h2>
+      <article class="cmd" id="hang-nguy-hiem" data-tim="hang-nguy-hiem hàng nguy hiểm hàng nguy hiểm (phân loại bravo mb01) theo từng tháng về kho: sea đếm số cont có hàng nguy hiểm (trong đó cont dg), air đếm số lô (invoice); giá trị hàng nguy hiểm, chi phí vận chuyển quốc tế + nội địa cả cont/lô và phần phân bổ cho hàng nguy hiểm. kỳ 1 tháng thì kèm danh sách cont / invoice. không nêu kỳ = từ đầu năm nay. khoảng ngày (tu_ngay, den_ngay), tháng, năm, ncc, sea/air nguy-hiem hnh /hang-nguy-hiem 2026 /hang-nguy-hiem 10/2026 air /hang-nguy-hiem 1/1/2026-31/10/2026 năm 2026 có bao nhiêu cont hàng nguy hiểm theo từng tháng">
+        <header><code class="name">/hang-nguy-hiem</code><div class="alias"><span>/nguy-hiem</span><span>/hnh</span></div></header>
+        <h3>Hàng nguy hiểm</h3>
         <p>Hàng nguy hiểm (phân loại Bravo MB01) theo từng tháng về kho: Sea đếm số cont có hàng nguy hiểm (trong đó cont DG), Air đếm số lô (invoice); giá trị hàng nguy hiểm, chi phí vận chuyển quốc tế + nội địa cả cont/lô và phần phân bổ cho hàng nguy hiểm. Kỳ 1 tháng thì kèm danh sách cont / invoice. Không nêu kỳ = từ đầu năm nay.</p>
-        <dl><dt>Tham số</dt><dd>khoảng ngày (tu_ngay, den_ngay), tháng, năm, NCC, Sea/Air</dd></dl>
-        <ul class="ex"><li><code>/hang-nguy-hiem 2026</code></li><li><code>/hang-nguy-hiem 10/2026 air</code></li><li><code>/hang-nguy-hiem 1/1/2026-31/10/2026</code></li><li><code>Năm 2026 có bao nhiêu cont hàng nguy hiểm theo từng tháng</code></li></ul>
+        <div class="param"><b>Tham số</b><span>khoảng ngày (tu_ngay, den_ngay), tháng, năm, NCC, Sea/Air</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/hang-nguy-hiem 2026"><i>›</i>/hang-nguy-hiem 2026</button><button class="ex" type="button" data-copy="/hang-nguy-hiem 10/2026 air"><i>›</i>/hang-nguy-hiem 10/2026 air</button><button class="ex" type="button" data-copy="/hang-nguy-hiem 1/1/2026-31/10/2026"><i>›</i>/hang-nguy-hiem 1/1/2026-31/10/2026</button><button class="ex" type="button" data-copy="Năm 2026 có bao nhiêu cont hàng nguy hiểm theo từng tháng"><i>›</i>Năm 2026 có bao nhiêu cont hàng nguy hiểm theo từng tháng</button></div>
       </article>
-      <article class="cmd" id="tre-hang">
-        <div class="cmd-head"><code class="name">/tre-hang</code><span class="alias">/tre</span></div>
-        <h2>Invoice trễ hàng</h2>
+      <article class="cmd" id="tre-hang" data-tim="tre-hang invoice trễ hàng invoice quá ngày dự kiến về kho mà chưa hoàn thiện. không tre /tre-hang">
+        <header><code class="name">/tre-hang</code><div class="alias"><span>/tre</span></div></header>
+        <h3>Invoice trễ hàng</h3>
         <p>Invoice quá ngày dự kiến về kho mà chưa hoàn thiện.</p>
-        <dl><dt>Tham số</dt><dd>không</dd></dl>
-        <ul class="ex"><li><code>/tre-hang</code></li></ul>
-      </article>
-    </div>
+        <div class="param"><b>Tham số</b><span>không</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/tre-hang"><i>›</i>/tre-hang</button></div>
+      </article></div>
   </section>
   <section class="group" id="nhom-kiem-tra">
-    <div class="group-head"><h2 class="group-name">Kiểm tra dữ liệu Bravo</h2><code>/lenh kiem-tra</code><span class="alias">4 lệnh</span></div>
+    <div class="group-head"><span class="idx">04</span><h2>Kiểm tra dữ liệu Bravo</h2><code>/lenh kiem-tra</code><span class="count">4 lệnh</span></div>
     <div class="cmds">
-      <article class="cmd" id="chua-tbhv">
-        <div class="cmd-head"><code class="name">/chua-tbhv</code><span class="alias">/tbhv</span></div>
-        <h2>Chưa gửi mail TBHV</h2>
+      <article class="cmd" id="chua-tbhv" data-tim="chua-tbhv chưa gửi mail tbhv invoice đã cập cảng nhưng chưa gửi email thông báo hàng về. không tbhv /chua-tbhv">
+        <header><code class="name">/chua-tbhv</code><div class="alias"><span>/tbhv</span></div></header>
+        <h3>Chưa gửi mail TBHV</h3>
         <p>Invoice đã cập cảng nhưng chưa gửi email thông báo hàng về.</p>
-        <dl><dt>Tham số</dt><dd>không</dd></dl>
-        <ul class="ex"><li><code>/chua-tbhv</code></li></ul>
+        <div class="param"><b>Tham số</b><span>không</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/chua-tbhv"><i>›</i>/chua-tbhv</button></div>
       </article>
-      <article class="cmd" id="lap-phieu">
-        <div class="cmd-head"><code class="name">/lap-phieu</code></div>
-        <h2>Còn Lập phiếu</h2>
+      <article class="cmd" id="lap-phieu" data-tim="lap-phieu còn lập phiếu invoice hàng quốc tế đã có vận đơn mà phiếu còn ở trạng thái lập phiếu. không /lap-phieu">
+        <header><code class="name">/lap-phieu</code><div class="alias"></div></header>
+        <h3>Còn Lập phiếu</h3>
         <p>Invoice hàng quốc tế đã có vận đơn mà phiếu còn ở trạng thái Lập phiếu.</p>
-        <dl><dt>Tham số</dt><dd>không</dd></dl>
-        <ul class="ex"><li><code>/lap-phieu</code></li></ul>
+        <div class="param"><b>Tham số</b><span>không</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/lap-phieu"><i>›</i>/lap-phieu</button></div>
       </article>
-      <article class="cmd" id="vat">
-        <div class="cmd-head"><code class="name">/vat</code></div>
-        <h2>VAT bán ra cần xử lý</h2>
+      <article class="cmd" id="vat" data-tim="vat vat bán ra cần xử lý số mã hàng theo nhóm (c chưa có, b hết hạn, f thiếu hs, d lệch thuế suất, e sắp hết hạn) và ưu tiên, kèm 20 mã ưu tiên nhất. nhóm c/b/f/d/e, ncc (mã hàng trên invoice của ncc), hàng nhập khẩu / nội địa (nk / nd) /vat /vat c /vat f /vat hhka161 mã nào chưa có vat bán ra? có bao nhiêu mã hàng foton đang thiếu thông tin vat nội địa và vat bán ra?">
+        <header><code class="name">/vat</code><div class="alias"></div></header>
+        <h3>VAT bán ra cần xử lý</h3>
         <p>Số mã hàng theo nhóm (c chưa có, b hết hạn, f thiếu HS, d lệch thuế suất, e sắp hết hạn) và ưu tiên, kèm 20 mã ưu tiên nhất.</p>
-        <dl><dt>Tham số</dt><dd>nhóm c/b/f/d/e, NCC (mã hàng trên invoice của NCC), hàng nhập khẩu / nội địa (nk / nd)</dd></dl>
-        <ul class="ex"><li><code>/vat</code></li><li><code>/vat c</code></li><li><code>/vat f</code></li><li><code>/vat hhka161</code></li><li><code>Mã nào chưa có VAT bán ra?</code></li><li><code>Có bao nhiêu mã hàng Foton đang thiếu thông tin VAT nội địa và VAT bán ra?</code></li></ul>
+        <div class="param"><b>Tham số</b><span>nhóm c/b/f/d/e, NCC (mã hàng trên invoice của NCC), hàng nhập khẩu / nội địa (nk / nd)</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/vat"><i>›</i>/vat</button><button class="ex" type="button" data-copy="/vat c"><i>›</i>/vat c</button><button class="ex" type="button" data-copy="/vat f"><i>›</i>/vat f</button><button class="ex" type="button" data-copy="/vat hhka161"><i>›</i>/vat hhka161</button><button class="ex" type="button" data-copy="Mã nào chưa có VAT bán ra?"><i>›</i>Mã nào chưa có VAT bán ra?</button><button class="ex" type="button" data-copy="Có bao nhiêu mã hàng Foton đang thiếu thông tin VAT nội địa và VAT bán ra?"><i>›</i>Có bao nhiêu mã hàng Foton đang thiếu thông tin VAT nội địa và VAT bán ra?</button></div>
       </article>
-      <article class="cmd" id="vat-nhap-kho">
-        <div class="cmd-head"><code class="name">/vat-nhap-kho</code><span class="alias">/vatnk</span></div>
-        <h2>VAT mã hàng nhập kho trong ngày</h2>
+      <article class="cmd" id="vat-nhap-kho" data-tim="vat-nhap-kho vat mã hàng nhập kho trong ngày mã hàng lên phiếu yêu cầu nhập kho trong ngày (mặc định hôm nay) đang thiếu vat đầu vào (mua vào), đầu ra (bán ra), hết hạn, thiếu mã hs hoặc lệch thuế suất, kèm invoice và ncc. gõ ngày hoặc khoảng ngày để xem ngày khác. ngày hoặc khoảng ngày (tu_ngay, den_ngay), ncc, hàng nhập khẩu / nội địa (nk / nd), kho vatnk /vat-nhap-kho /vat-nhap-kho 10/11/2026 /vat-nhap-kho nd hàng nội địa nhập kho ngày 10/11 có mã nào thiếu vat không? có mã hàng nào nhập kho hôm nay bị thiếu vat đầu vào - đầu ra không?">
+        <header><code class="name">/vat-nhap-kho</code><div class="alias"><span>/vatnk</span></div></header>
+        <h3>VAT mã hàng nhập kho trong ngày</h3>
         <p>Mã hàng lên phiếu yêu cầu nhập kho trong ngày (mặc định hôm nay) đang thiếu VAT đầu vào (mua vào), đầu ra (bán ra), hết hạn, thiếu mã HS hoặc lệch thuế suất, kèm invoice và NCC. Gõ ngày hoặc khoảng ngày để xem ngày khác.</p>
-        <dl><dt>Tham số</dt><dd>ngày hoặc khoảng ngày (tu_ngay, den_ngay), NCC, hàng nhập khẩu / nội địa (nk / nd), kho</dd></dl>
-        <ul class="ex"><li><code>/vat-nhap-kho</code></li><li><code>/vat-nhap-kho 10/11/2026</code></li><li><code>/vat-nhap-kho nd</code></li><li><code>Hàng nội địa nhập kho ngày 10/11 có mã nào thiếu VAT không?</code></li><li><code>Có mã hàng nào nhập kho hôm nay bị thiếu VAT đầu vào - đầu ra không?</code></li></ul>
-      </article>
-    </div>
+        <div class="param"><b>Tham số</b><span>ngày hoặc khoảng ngày (tu_ngay, den_ngay), NCC, hàng nhập khẩu / nội địa (nk / nd), kho</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/vat-nhap-kho"><i>›</i>/vat-nhap-kho</button><button class="ex" type="button" data-copy="/vat-nhap-kho 10/11/2026"><i>›</i>/vat-nhap-kho 10/11/2026</button><button class="ex" type="button" data-copy="/vat-nhap-kho nd"><i>›</i>/vat-nhap-kho nd</button><button class="ex" type="button" data-copy="Hàng nội địa nhập kho ngày 10/11 có mã nào thiếu VAT không?"><i>›</i>Hàng nội địa nhập kho ngày 10/11 có mã nào thiếu VAT không?</button><button class="ex" type="button" data-copy="Có mã hàng nào nhập kho hôm nay bị thiếu VAT đầu vào - đầu ra không?"><i>›</i>Có mã hàng nào nhập kho hôm nay bị thiếu VAT đầu vào - đầu ra không?</button></div>
+      </article></div>
   </section>
   <section class="group" id="nhom-kho">
-    <div class="group-head"><h2 class="group-name">Tồn kho</h2><code>/lenh kho</code><span class="alias">1 lệnh</span></div>
+    <div class="group-head"><span class="idx">05</span><h2>Tồn kho</h2><code>/lenh kho</code><span class="count">1 lệnh</span></div>
     <div class="cmds">
-      <article class="cmd" id="ton-kho">
-        <div class="cmd-head"><code class="name">/ton-kho</code><span class="alias">/tonkho</span><span class="alias">/ton</span></div>
-        <h2>Tồn kho</h2>
+      <article class="cmd" id="ton-kho" data-tim="ton-kho tồn kho tồn kho hiện tại theo báo cáo tồn kho theo kho của bravo: giá trị, số lượng, số mã còn tồn, chia theo kho và nhóm hàng; hoặc tồn từng kho của 1 mã hàng (gõ một phần mã thì liệt kê các mã khớp). mã hàng, kho, nhóm hàng, sea/air tonkho ton /ton-kho /ton-kho kho:da nhom:ptu /ton-kho 59796aa400 mã 230404a960 còn tồn bao nhiêu?">
+        <header><code class="name">/ton-kho</code><div class="alias"><span>/tonkho</span><span>/ton</span></div></header>
+        <h3>Tồn kho</h3>
         <p>Tồn kho hiện tại theo báo cáo tồn kho theo kho của Bravo: giá trị, số lượng, số mã còn tồn, chia theo kho và nhóm hàng; hoặc tồn từng kho của 1 mã hàng (gõ một phần mã thì liệt kê các mã khớp).</p>
-        <dl><dt>Tham số</dt><dd>mã hàng, kho, nhóm hàng, Sea/Air</dd></dl>
-        <ul class="ex"><li><code>/ton-kho</code></li><li><code>/ton-kho kho:da nhom:ptu</code></li><li><code>/ton-kho 59796AA400</code></li><li><code>Mã 230404A960 còn tồn bao nhiêu?</code></li></ul>
-      </article>
-    </div>
+        <div class="param"><b>Tham số</b><span>mã hàng, kho, nhóm hàng, Sea/Air</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/ton-kho"><i>›</i>/ton-kho</button><button class="ex" type="button" data-copy="/ton-kho kho:da nhom:ptu"><i>›</i>/ton-kho kho:da nhom:ptu</button><button class="ex" type="button" data-copy="/ton-kho 59796AA400"><i>›</i>/ton-kho 59796AA400</button><button class="ex" type="button" data-copy="Mã 230404A960 còn tồn bao nhiêu?"><i>›</i>Mã 230404A960 còn tồn bao nhiêu?</button></div>
+      </article></div>
   </section>
   <section class="group" id="nhom-danh-ba">
-    <div class="group-head"><h2 class="group-name">Danh bạ công cụ &amp; tài liệu</h2><code>/lenh danh-ba</code><span class="alias">3 lệnh</span></div>
+    <div class="group-head"><span class="idx">06</span><h2>Danh bạ công cụ &amp; tài liệu</h2><code>/lenh danh-ba</code><span class="count">3 lệnh</span></div>
     <div class="cmds">
-      <article class="cmd" id="danh-ba">
-        <div class="cmd-head"><code class="name">/danh-ba</code><span class="alias">/danhba</span><span class="alias">/cong-cu</span><span class="alias">/tai-lieu</span></div>
-        <h2>Danh bạ công cụ, báo cáo, tài liệu của phòng</h2>
+      <article class="cmd" id="danh-ba" data-tim="danh-ba danh bạ công cụ, báo cáo, tài liệu của phòng tìm công cụ / tool / báo cáo / template excel / quy trình / tài liệu đào tạo của phòng mh-xnk ở đâu, link mở, đã chuyển chỗ mới chưa. không từ khoá: link file danh bạ + tổng quan. từ khoá (so_tra_cuu) để tìm theo tên. từ khoá (so_tra_cuu) danhba cong-cu tai-lieu /danh-ba /danh-ba invoice quy trình mua hàng xnk để ở đâu? cho xin link tài liệu đào tạo excel">
+        <header><code class="name">/danh-ba</code><div class="alias"><span>/danhba</span><span>/cong-cu</span><span>/tai-lieu</span></div></header>
+        <h3>Danh bạ công cụ, báo cáo, tài liệu của phòng</h3>
         <p>Tìm công cụ / tool / báo cáo / template Excel / quy trình / tài liệu đào tạo của phòng MH-XNK ở đâu, link mở, đã chuyển chỗ mới chưa. Không từ khoá: link file danh bạ + tổng quan. Từ khoá (so_tra_cuu) để tìm theo tên.</p>
-        <dl><dt>Tham số</dt><dd>từ khoá (so_tra_cuu)</dd></dl>
-        <ul class="ex"><li><code>/danh-ba</code></li><li><code>/danh-ba invoice</code></li><li><code>Quy trình mua hàng XNK để ở đâu?</code></li><li><code>Cho xin link tài liệu đào tạo Excel</code></li></ul>
+        <div class="param"><b>Tham số</b><span>từ khoá (so_tra_cuu)</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/danh-ba"><i>›</i>/danh-ba</button><button class="ex" type="button" data-copy="/danh-ba invoice"><i>›</i>/danh-ba invoice</button><button class="ex" type="button" data-copy="Quy trình mua hàng XNK để ở đâu?"><i>›</i>Quy trình mua hàng XNK để ở đâu?</button><button class="ex" type="button" data-copy="Cho xin link tài liệu đào tạo Excel"><i>›</i>Cho xin link tài liệu đào tạo Excel</button></div>
       </article>
-      <article class="cmd" id="template">
-        <div class="cmd-head"><code class="name">/template</code><span class="alias">/templates</span><span class="alias">/mau</span><span class="alias">/bieu-mau</span><span class="alias">/tpl</span></div>
-        <h2>Template / biểu mẫu</h2>
+      <article class="cmd" id="template" data-tim="template template / biểu mẫu truy cập nhanh template excel (import invoice, tờ khai, vat, c/o, bảng kê ycnk, chứng từ ck...) và logo / mẫu trình ký của phòng: tên, dùng để làm gì, link mở thư mục. không từ khoá: cả danh sách; có từ khoá (so_tra_cuu): template khớp. từ khoá (so_tra_cuu) templates mau bieu-mau tpl /template /template invoice /template vat cho mình template import invoice mobis mẫu trình ký để ở đâu?">
+        <header><code class="name">/template</code><div class="alias"><span>/templates</span><span>/mau</span><span>/bieu-mau</span><span>/tpl</span></div></header>
+        <h3>Template / biểu mẫu</h3>
         <p>Truy cập nhanh template Excel (import invoice, tờ khai, VAT, C/O, bảng kê YCNK, chứng từ CK...) và logo / mẫu trình ký của phòng: tên, dùng để làm gì, link mở thư mục. Không từ khoá: cả danh sách; có từ khoá (so_tra_cuu): template khớp.</p>
-        <dl><dt>Tham số</dt><dd>từ khoá (so_tra_cuu)</dd></dl>
-        <ul class="ex"><li><code>/template</code></li><li><code>/template invoice</code></li><li><code>/template vat</code></li><li><code>Cho mình template import invoice Mobis</code></li><li><code>Mẫu trình ký để ở đâu?</code></li></ul>
+        <div class="param"><b>Tham số</b><span>từ khoá (so_tra_cuu)</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/template"><i>›</i>/template</button><button class="ex" type="button" data-copy="/template invoice"><i>›</i>/template invoice</button><button class="ex" type="button" data-copy="/template vat"><i>›</i>/template vat</button><button class="ex" type="button" data-copy="Cho mình template import invoice Mobis"><i>›</i>Cho mình template import invoice Mobis</button><button class="ex" type="button" data-copy="Mẫu trình ký để ở đâu?"><i>›</i>Mẫu trình ký để ở đâu?</button></div>
       </article>
-      <article class="cmd" id="chi-tieu">
-        <div class="cmd-head"><code class="name">/chi-tieu</code><span class="alias">/chitieu</span><span class="alias">/dinh-nghia</span></div>
-        <h2>Định nghĩa chỉ tiêu</h2>
+      <article class="cmd" id="chi-tieu" data-tim="chi-tieu định nghĩa chỉ tiêu tra định nghĩa, công thức (dax), nguồn, đơn vị, ngoại lệ của một chỉ tiêu / measure bcqtmh hoặc của một lệnh luna (sổ chỉ tiêu). không trả số liệu. từ khoá (so_tra_cuu): tên chỉ tiêu, measure hoặc tên lệnh chitieu dinh-nghia /chi-tieu leadtime /chi-tieu cpmh tỷ lệ c/o tính thế nào?">
+        <header><code class="name">/chi-tieu</code><div class="alias"><span>/chitieu</span><span>/dinh-nghia</span></div></header>
+        <h3>Định nghĩa chỉ tiêu</h3>
         <p>Tra định nghĩa, công thức (DAX), nguồn, đơn vị, ngoại lệ của một chỉ tiêu / measure BCQTMH hoặc của một lệnh Luna (sổ chỉ tiêu). Không trả số liệu.</p>
-        <dl><dt>Tham số</dt><dd>từ khoá (so_tra_cuu): tên chỉ tiêu, measure hoặc tên lệnh</dd></dl>
-        <ul class="ex"><li><code>/chi-tieu leadtime</code></li><li><code>/chi-tieu CPMH</code></li><li><code>Tỷ lệ C/O tính thế nào?</code></li></ul>
-      </article>
-    </div>
+        <div class="param"><b>Tham số</b><span>từ khoá (so_tra_cuu): tên chỉ tiêu, measure hoặc tên lệnh</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/chi-tieu leadtime"><i>›</i>/chi-tieu leadtime</button><button class="ex" type="button" data-copy="/chi-tieu CPMH"><i>›</i>/chi-tieu CPMH</button><button class="ex" type="button" data-copy="Tỷ lệ C/O tính thế nào?"><i>›</i>Tỷ lệ C/O tính thế nào?</button></div>
+      </article></div>
   </section>
-  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 18/11/2026.</p>
-</div>
+  <p class="empty" id="rong">Không có lệnh khớp. Thử từ khoá khác – hoặc cứ hỏi Luna bằng câu bình thường.</p>
+  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>30 lệnh · 105 ví dụ · cập nhật 18/11/2026</span></div>
+</main>
+<div class="toast" id="toast">Đã copy</div>
+<script>
+const q=document.getElementById('q'),cmds=[...document.querySelectorAll('.cmd')],groups=[...document.querySelectorAll('.group')];
+q.addEventListener('input',()=>{const s=q.value.trim().toLowerCase();let n=0;
+  cmds.forEach(c=>{const ok=!s||c.dataset.tim.includes(s);c.classList.toggle('an',!ok);n+=ok});
+  groups.forEach(g=>g.classList.toggle('an',!g.querySelector('.cmd:not(.an)')));
+  document.getElementById('rong').style.display=n?'none':'block'});
+document.addEventListener('keydown',ev=>{if(ev.key==='/'&&document.activeElement!==q){ev.preventDefault();q.focus()}});
+const toast=document.getElementById('toast');
+document.querySelectorAll('.ex').forEach(b=>b.addEventListener('click',async()=>{
+  const t=b.dataset.copy;try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();document.execCommand('copy');a.remove()}
+  toast.textContent='Đã copy: '+t;toast.classList.add('on');setTimeout(()=>toast.classList.remove('on'),1600)}));
+</script>
+</body></html>
