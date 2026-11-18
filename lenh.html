@@ -115,7 +115,7 @@ a { color:inherit; }
     <p class="tag">Hỏi bằng tiếng Việt. Nhận về bảng số kiểm chứng được.</p>
     <p class="lead">Luna là AI Agent chạy trên Microsoft Teams: hiểu câu hỏi tự nhiên, chọn đúng lệnh trong thư viện, truy vấn DAX trực tiếp trên semantic model <b>BCQTMH</b> đã publish và trả lời bằng bảng số copy thẳng sang Excel – kèm bộ lọc và giờ làm mới dữ liệu để đối chiếu.</p>
     <div class="stats">
-      <div class="stat"><b>30</b><span>lệnh nghiệp vụ</span></div>
+      <div class="stat"><b>31</b><span>lệnh nghiệp vụ</span></div>
       <div class="stat"><b>6</b><span>nhóm chức năng</span></div>
       <div class="stat"><b>1</b><span>nguồn số: BCQTMH</span></div>
       <div class="stat"><b>2×</b><span>làm mới / ngày</span></div>
@@ -144,7 +144,7 @@ a { color:inherit; }
   <div class="flow">
     <div class="node"><div class="n">01 · KÊNH</div><h4>Microsoft Teams</h4><p>Chat riêng 1–1 hoặc tag @Luna trong nhóm, kênh.</p><code>Agents SDK</code></div>
     <div class="node"><div class="n">02 · ROUTER</div><h4>Hiểu câu hỏi</h4><p>Lệnh <b>/...</b> đi thẳng; câu tự nhiên được AI phân loại thành lệnh + tham số.</p><code>Claude Haiku</code></div>
-    <div class="node"><div class="n">03 · THƯ VIỆN</div><h4>30 lệnh nghiệp vụ</h4><p>Mỗi lệnh là truy vấn + mẫu trả lời đã kiểm thử bằng bộ câu hỏi thật.</p><code>DAX cố định</code></div>
+    <div class="node"><div class="n">03 · THƯ VIỆN</div><h4>31 lệnh nghiệp vụ</h4><p>Mỗi lệnh là truy vấn + mẫu trả lời đã kiểm thử bằng bộ câu hỏi thật.</p><code>DAX cố định</code></div>
     <div class="node"><div class="n">04 · DỮ LIỆU</div><h4>BCQTMH</h4><p>Semantic model Power BI đã publish – nguồn số duy nhất, làm mới 07:00 và 12:30.</p><code>Power BI Service</code></div>
     <div class="node"><div class="n">05 · TRẢ LỜI</div><h4>Bảng số chuẩn</h4><p>Số kiểu Bravo, đơn vị ở tiêu đề, ghi bộ lọc + giờ refresh; dài thì xuất Excel.</p><code>Teams · Excel</code></div>
   </div>
@@ -167,7 +167,7 @@ a { color:inherit; }
 
 <div class="tools"><div class="wrap">
   <label class="search"><span>⌕</span><input id="q" type="search" placeholder="Tìm lệnh: leadtime, tồn kho, VAT, Foton…" autocomplete="off"><kbd>/</kbd></label>
-  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime <small>5</small></a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng <small>10</small></a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng <small>7</small></a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo <small>4</small></a><a href="#nhom-kho">Tồn kho <small>1</small></a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu <small>3</small></a></nav>
+  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime <small>5</small></a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng <small>11</small></a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng <small>7</small></a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo <small>4</small></a><a href="#nhom-kho">Tồn kho <small>1</small></a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu <small>3</small></a></nav>
 </div></div>
 
 <main class="wrap">
@@ -211,7 +211,7 @@ a { color:inherit; }
       </article></div>
   </section>
   <section class="group" id="nhom-mua">
-    <div class="group-head"><span class="idx">02</span><h2>Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="count">10 lệnh</span></div>
+    <div class="group-head"><span class="idx">02</span><h2>Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="count">11 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="yeu-cau-mua" data-tim="yeu-cau-mua giá trị yêu cầu mua hàng giá trị phiếu yêu cầu mua hàng trong tháng, chia sea/air, so cùng kỳ. tháng, năm, ncc ycmh /yeu-cau-mua 10">
         <header><code class="name">/yeu-cau-mua</code><div class="alias"><span>/ycmh</span></div></header>
@@ -275,6 +275,13 @@ a { color:inherit; }
         <p>Giá trị khiếu nại = Đơn giá × SL; tỷ lệ = GT Đồng ý / (GT Đồng ý + GT Từ chối). Thêm theo-thang để xem từng tháng. Tổng cộng đủ tiền và tính lại tỷ lệ khi một NCC hoặc nguồn xác nhận cùng loại tiền; nhiều NCC khác/chưa rõ loại tiền có tổng riêng từng NCC, không cộng chéo. Chưa xử lý và Khác không vào mẫu số. Mặc định từ đầu năm đến hôm nay.</p>
         <div class="param"><b>Tham số</b><span>năm, tháng, khoảng ngày (tu_ngay, den_ngay), NCC (tên chứa chuỗi hoặc mã), theo-thang</span></div>
         <div class="exs"><button class="ex" type="button" data-copy="/khieu-nai 2026 hhka161 theo-thang"><i>›</i>/khieu-nai 2026 hhka161 theo-thang</button><button class="ex" type="button" data-copy="/khieu-nai 2026 Thành Công Motor"><i>›</i>/khieu-nai 2026 Thành Công Motor</button><button class="ex" type="button" data-copy="/khieu-nai 1/1/2026-31/10/2026"><i>›</i>/khieu-nai 1/1/2026-31/10/2026</button><button class="ex" type="button" data-copy="Tỷ lệ khiếu nại thành công theo giá trị năm 2026"><i>›</i>Tỷ lệ khiếu nại thành công theo giá trị năm 2026</button></div>
+      </article>
+      <article class="cmd" id="kn-tu-choi" data-tim="kn-tu-choi khiếu nại bị từ chối theo phiếu và invoice danh sách giá trị khiếu nại bị từ chối theo từng số phiếu khiếu nại và invoice (kèm số phiếu yêu cầu kn, số dòng), tổng từng ncc; không cộng chéo ncc khác loại tiền. mặc định từ đầu năm đến hôm nay, mọi ncc. lọc được ncc, kỳ, số invoice (inv:), số phiếu kn (kn:), mã hàng (ma:), kho, trạng thái xử lý (tt:dang-xu-ly / tt:da-xong). năm, tháng, khoảng ngày (tu_ngay, den_ngay), ncc, so_invoice, so_phieu, ma_hang, kho, trang_thai tu-choi-kn kntc /kn-tu-choi hhka161 /kn-tu-choi 2026 dtmb001 tt:dang-xu-ly /kn-tu-choi 2026 inv:foton kho:cm giá trị từ chối khiếu nại của foton của số phiếu khiếu nại nào, thuộc invoice nào?">
+        <header><code class="name">/kn-tu-choi</code><div class="alias"><span>/tu-choi-kn</span><span>/kntc</span></div></header>
+        <h3>Khiếu nại bị từ chối theo phiếu và invoice</h3>
+        <p>Danh sách giá trị khiếu nại bị TỪ CHỐI theo từng số phiếu khiếu nại và invoice (kèm số phiếu yêu cầu KN, số dòng), tổng từng NCC; không cộng chéo NCC khác loại tiền. Mặc định từ đầu năm đến hôm nay, mọi NCC. Lọc được NCC, kỳ, số invoice (inv:), số phiếu KN (kn:), mã hàng (ma:), kho, trạng thái xử lý (tt:dang-xu-ly / tt:da-xong).</p>
+        <div class="param"><b>Tham số</b><span>năm, tháng, khoảng ngày (tu_ngay, den_ngay), NCC, so_invoice, so_phieu, ma_hang, kho, trang_thai</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/kn-tu-choi hhka161"><i>›</i>/kn-tu-choi hhka161</button><button class="ex" type="button" data-copy="/kn-tu-choi 2026 dtmb001 tt:dang-xu-ly"><i>›</i>/kn-tu-choi 2026 dtmb001 tt:dang-xu-ly</button><button class="ex" type="button" data-copy="/kn-tu-choi 2026 inv:FOTON kho:cm"><i>›</i>/kn-tu-choi 2026 inv:FOTON kho:cm</button><button class="ex" type="button" data-copy="Giá trị từ chối khiếu nại của Foton của số phiếu khiếu nại nào, thuộc invoice nào?"><i>›</i>Giá trị từ chối khiếu nại của Foton của số phiếu khiếu nại nào, thuộc invoice nào?</button></div>
       </article>
       <article class="cmd" id="bien-dong-gia" data-tim="bien-dong-gia biến động giá mua so giá mua hiệu lực ngày cuối kỳ với ngày đầu kỳ và với giá lần trước (bảng giá mua bravo): % và tiền chênh gia quyền theo sl đã mua trong kỳ, số mã tăng / giảm, từng ncc, n mã tác động tiền lớn nhất (mặc định 10); hoặc giá từng ncc của 1 mã hàng. không nêu kỳ = 01/01 năm nay đến hôm nay; ngày cuối kỳ được ở tương lai (giá đã báo trước). khoảng ngày (tu_ngay = ngày đầu kỳ, den_ngay = ngày cuối kỳ), tháng, năm, ncc, số mã top (so_ma), mã hàng (so_tra_cuu) bdg gia /bien-dong-gia /bien-dong-gia 1/1/2026-31/12/2027 dtmb002 top20 /bien-dong-gia 0510000441c giá mua năm 2026 tăng bao nhiêu so với đầu năm?">
         <header><code class="name">/bien-dong-gia</code><div class="alias"><span>/bdg</span><span>/gia</span></div></header>
@@ -406,7 +413,7 @@ a { color:inherit; }
       </article></div>
   </section>
   <p class="empty" id="rong">Không có lệnh khớp. Thử từ khoá khác – hoặc cứ hỏi Luna bằng câu bình thường.</p>
-  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>30 lệnh · 105 ví dụ · cập nhật 18/11/2026</span></div>
+  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>31 lệnh · 109 ví dụ · cập nhật 18/11/2026</span></div>
 </main>
 <div class="toast" id="toast">Đã copy</div>
 <script>
