@@ -1,16 +1,136 @@
-<title>Lệnh Bot Mua hàng XNK</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sổ tay MH-XNK</title>
 <style>
+:root{--nen:#f7f7f5;--giay:#fff;--chu:#1f2328;--mo:#667085;--vien:#e4e4e0;--nhan:#0b6e4f;--nhan2:#e8f3ee}
+*{box-sizing:border-box}
+body{margin:0;background:var(--nen);color:var(--chu);font:15px/1.6 "Segoe UI",system-ui,sans-serif}
+aside{position:fixed;top:0;left:0;bottom:0;width:300px;overflow:auto;background:var(--giay);border-right:1px solid var(--vien);padding:16px 12px}
+aside h1{font-size:17px;margin:0 0 4px} aside .pd{color:var(--mo);font-size:12px;margin-bottom:10px}
+#tim{width:100%;padding:7px 9px;border:1px solid var(--vien);border-radius:6px;font:inherit;margin-bottom:8px}
+aside .nc{font-weight:600;margin:12px 0 2px;font-size:13px;color:var(--nhan)}
+aside a{display:block;padding:2px 6px;border-radius:4px;color:var(--chu);text-decoration:none;font-size:13px}
+aside a:hover,aside a.dang{background:var(--nhan2)}
+main{margin-left:300px;padding:24px 40px 80px;max-width:1240px}
+header.bia{padding:28px 0 8px;border-bottom:2px solid var(--nhan);margin-bottom:16px}
+header.bia h1{margin:0;font-size:28px} header.bia p{margin:4px 0;color:var(--mo)}
+h1.chuong{font-size:22px;margin:40px 0 8px;color:var(--nhan)}
+section{background:var(--giay);border:1px solid var(--vien);border-radius:8px;padding:8px 24px 16px;margin:14px 0}
+section h2{font-size:19px;border-bottom:1px solid var(--vien);padding-bottom:6px}
+.bang{overflow-x:auto} table{border-collapse:collapse;font-size:13px;margin:8px 0}
+th,td{border:1px solid var(--vien);padding:4px 8px;text-align:left;vertical-align:top} th{background:#f0f2f0}
+code{background:#f1f1ef;padding:1px 4px;border-radius:3px;font-size:12.5px} pre{background:#f1f1ef;padding:10px;overflow-x:auto;border-radius:6px}
+pre code{background:none;padding:0}
+.nguon{color:var(--mo);font-size:12px} .lk{color:var(--nhan);border-bottom:1px dotted}
+.mo{margin:4px 0} iframe.nhung{width:100%;height:900px;border:1px solid var(--vien);border-radius:6px;background:#fff}
+.cay .goc{background:var(--nhan);color:#fff;border-radius:8px;padding:10px 16px;text-align:center;font-weight:600;max-width:520px;margin:8px auto 18px}
+.cay .goc small{display:block;font-weight:400;opacity:.85}
+.nhanh{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.nhom{border:1px solid var(--vien);border-top:4px solid var(--nhan);border-radius:8px;padding:8px;background:#fbfcfb}
+.nhom .dau{font-weight:600;margin-bottom:6px;display:flex;justify-content:space-between}
+.nhom .dau span{background:var(--nhan2);color:var(--nhan);border-radius:10px;padding:0 8px;font-size:12px}
+.dv{border:1px solid var(--vien);border-radius:6px;padding:5px 8px;margin:5px 0;background:#fff;cursor:help}
+.dv b{font-size:13px;font-weight:600} .dv small{display:block;color:var(--mo);font-size:11.5px}
+.dv .tt{margin-left:6px;font-size:10.5px;background:#fff4e0;color:#9a5b00;border-radius:8px;padding:0 6px}
+.an{display:none}
+@media (max-width:860px){aside{position:static;width:auto;border-right:0;border-bottom:1px solid var(--vien);max-height:45vh}main{margin:0;padding:16px}section{padding:8px 14px}}
+@media print{aside{display:none}main{margin:0}iframe.nhung{display:none}section{break-inside:avoid-page}}
+</style></head><body>
+<aside><h1>Sổ tay MH-XNK</h1><div class="pd">Sinh lúc 18/11/2026 09:58 · commit 35dda75 · scripts/tao_sach.py</div>
+<input id="tim" type="search" placeholder="Tìm trong sách…">
+<nav><div class="nc">1. Giới thiệu</div>
+<a href="#m1" data-m="m1">1.1 Hệ thống công cụ của phòng</a>
+<div class="nc">2. Sơ đồ tổ chức</div>
+<a href="#m2" data-m="m2">2.1 Sơ đồ tổ chức hệ thống</a>
+<div class="nc">3. Luna – trợ lý trên Teams</div>
+<a href="#m3" data-m="m3">3.1 Hướng dẫn sử dụng Luna</a>
+<a href="#m4" data-m="m4">3.2 Danh sách lệnh Luna</a>
+<div class="nc">4. Hướng dẫn sử dụng công cụ</div>
+<a href="#m5" data-m="m5">4.1 TOOL-ADM-01 – Điền khảo sát phối hợp TST</a>
+<a href="#m6" data-m="m6">4.2 TOOL-ADM-02 – In hàng loạt</a>
+<a href="#m7" data-m="m7">4.3 TOOL-ADM-03 – In đề xuất Base Request</a>
+<a href="#m8" data-m="m8">4.4 TOOL-ADM-04 – Ký PDF hàng loạt</a>
+<a href="#m9" data-m="m9">4.5 TOOL-CO-01 – Trích xuất C/O e-Form D</a>
+<a href="#m10" data-m="m10">4.6 TOOL-CO-02 – Trích xuất C/O Form E bằng OCR</a>
+<a href="#m11" data-m="m11">4.7 TOOL-CUS-02 – Tách tờ khai hải quan PDF</a>
+<a href="#m12" data-m="m12">4.8 TOOL-CUS-03 – Tra cứu kết quả đăng kiểm</a>
+<a href="#m13" data-m="m13">4.9 TOOL-CUS-04 – Hỗ trợ rà mã HS</a>
+<a href="#m14" data-m="m14">4.10 TOOL-INV-01 – Đọc hóa đơn điện tử XML</a>
+<a href="#m15" data-m="m15">4.11 TOOL-INV-02 – Đọc invoice Skoda</a>
+<a href="#m16" data-m="m16">4.12 TOOL-LOG-01 – Đọc packing list Skoda India</a>
+<a href="#m17" data-m="m17">4.13 TOOL-LOG-02 – Đọc Debit note PAM CARGO từ PDF</a>
+<a href="#m18" data-m="m18">4.14 TOOL-PO-01 – Đọc đơn hàng Skoda</a>
+<a href="#m19" data-m="m19">4.15 TOOL-PO-03 – Lấy giá và tồn Foton</a>
+<a href="#m20" data-m="m20">4.16 TOOL-SUP-01 – Tra cứu claim Skoda</a>
+<div class="nc">5. Báo cáo, mẫu biểu, dữ liệu</div>
+<a href="#m21" data-m="m21">5.1 Báo cáo</a>
+<a href="#m22" data-m="m22">5.2 Mẫu Excel / template</a>
+<a href="#m23" data-m="m23">5.3 Vùng dữ liệu</a>
+<a href="#m24" data-m="m24">5.4 Quy trình</a>
+<a href="#m25" data-m="m25">5.5 Đào tạo</a>
+<a href="#m26" data-m="m26">5.6 Thư viện mẫu</a></nav></aside>
+<main><header class="bia"><h1>Sổ tay MH-XNK</h1><p>Giới thiệu, sơ đồ tổ chức và hướng dẫn sử dụng cho nhân viên phòng Mua hàng XNK</p><p class="nguon">Sinh lúc 18/11/2026 09:58 · commit 35dda75 · scripts/tao_sach.py</p></header>
+<h1 class="chuong" id="c1">1. Giới thiệu</h1>
+<section id="m1"><h2>1.1 Hệ thống công cụ của phòng</h2>
+<p>Phòng Mua hàng XNK dùng một bộ công cụ, báo cáo và mẫu biểu chung, đặt theo <b>mã đơn vị</b> dạng
+<code>NHÓM-NGHIỆPVỤ-SỐ</code> (ví dụ <code>TOOL-CO-01</code> = công cụ, nghiệp vụ C/O, số 01).</p>
+<ul>
+<li><b>Luna</b> – trợ lý trên Microsoft Teams: hỏi số liệu mua hàng, leadtime, tồn kho, VAT, khiếu nại… Số liệu lấy từ báo cáo Power BI <b>BCQTMH</b> đã publish.</li>
+<li><b>16 công cụ</b> – bấm đúp file <code>.exe</code> trong thư mục <code>OneDrive - TST\Releases\&lt;MÃ&gt;_…</code>.</li>
+<li><b>9 báo cáo</b>, <b>9 mẫu Excel</b>, <b>5 vùng dữ liệu</b> – ở <code>OneDrive - TST\Data\&lt;MÃ&gt;_…</code>.</li>
+<li>Quy trình, tài liệu đào tạo, logo / mẫu trình ký – ở <code>OneDrive - TST\Releases</code>.</li>
+</ul>
+<h3>Tìm công cụ nhanh</h3>
+<ul>
+<li>File danh bạ <code>OneDrive - TST\Releases\_danh-ba\Danh_ba_MHXNK.xlsx</code>: đủ mã, tên, link thư mục.</li>
+<li>Trên Teams gõ cho Luna: <code>/tool</code>, <code>/template</code>, <code>/danh-ba</code>.</li>
+<li>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</li>
+</ul></section>
+<h1 class="chuong" id="c2">2. Sơ đồ tổ chức</h1>
+<section id="m2"><h2>2.1 Sơ đồ tổ chức hệ thống</h2><div class="cay"><div class="goc">Phòng Mua hàng XNK – hệ thống công cụ, báo cáo, dữ liệu<small>46 đơn vị đang dùng</small></div><div class="nhanh"><div class="nhom"><div class="dau">Trợ lý AI / bot<span>1</span></div><div class="dv" title="Bot Teams phục vụ phòng Mua hàng XNK; câu hỏi/lệnh → truy vấn dữ liệu mua hàng, tồn kho, VAT, chi phí → câu trả lời."><b>Luna – bot Teams MHXNK</b><small>AGT-CORE-01 · Dùng chung</small></div></div><div class="nhom"><div class="dau">Công cụ (phần mềm)<span>16</span></div><div class="dv" title="Hỗ trợ nhân viên MH&amp;XNK điền khảo sát phối hợp phòng ban. Danh bạ, kỳ khảo sát và điểm nhập/dán từ Excel → các phiếu được điền trên Edge, kèm lịch sử chống gửi trùng."><b>Điền khảo sát phối hợp TST</b><small>TOOL-ADM-01 · Hành chính</small></div><div class="dv" title="In hàng loạt tệp trong thư mục; có chức năng xuất/ghép trang đầu tờ khai ToKhaiHQ7N. Thư mục Excel/PDF → bản in hoặc PDF ghép."><b>In hàng loạt</b><small>TOOL-ADM-02 · Hành chính</small></div><div class="dv" title="Đọc danh sách đề xuất Base Request, kiểm tra duyệt, tải và in PDF chữ ký điện tử. List.xlsx + phiên Base → PDF trong downloads\, bản in và trạng thái cập nhật trong Excel."><b>In đề xuất Base Request</b><small>TOOL-ADM-03 · Hành chính</small></div><div class="dv" title="Theo tên và cấu hình build là ký/đóng dấu nhiều PDF. Phần còn đọc được chỉ là thử tạo ảnh dấu và cấu hình stamp; chưa đủ mã để xác nhận quy trình ký hoàn chỉnh."><b>Ký PDF hàng loạt</b><small>TOOL-ADM-04 · Hành chính</small></div><div class="dv" title="Trích xuất CO e-Form D có lớp chữ cho bộ phận XNK. PDF đơn lẻ/thư mục → Excel thông tin CO, mặt hàng và lỗi."><b>Trích xuất C/O e-Form D</b><small>TOOL-CO-01 · C/O</small></div><div class="dv" title="Đọc CO Form E bằng OCR và xuất Excel cho XNK. PDF trong thư mục chạy → file *_extracted.xlsx."><b>Trích xuất C/O Form E bằng OCR</b><small>TOOL-CO-02 · C/O</small></div><div class="dv" title="Tìm và tách trang tờ khai PDF theo danh sách Excel, mã KHSP, số lượng và tên xuất. PDF nguồn + file auto.xlsx → các PDF tách và log."><b>Tách tờ khai hải quan PDF</b><small>TOOL-CUS-02 · Hải quan, đăng kiểm</small></div><div class="dv" title="Tra kết quả hồ sơ đăng kiểm theo danh sách Excel. File có cột số hồ sơ một cửa + thông tin đăng nhập người dùng nhập → Ket_Qua_Tra_Cuu_Dang_Kiem.xlsx."><b>Tra cứu kết quả đăng kiểm</b><small>TOOL-CUS-03 · Hải quan, đăng kiểm</small></div><div class="dv" title="Hỗ trợ điền mã HS, phân nhóm và dẫn chứng cho danh sách phụ tùng → workbook đã điền."><b>Hỗ trợ rà mã HS</b><small>TOOL-CUS-04 · Hải quan, đăng kiểm</small></div><div class="dv" title="Đọc hàng loạt hoá đơn điện tử XML/ZIP, kiểm tra dữ liệu và chữ ký rồi xuất Excel cho bộ phận nghiệp vụ. Đầu vào hoá đơn → thông tin chung, chi tiết và chi tiết tổng hợp."><b>Đọc hóa đơn điện tử XML</b><small>TOOL-INV-01 · Invoice, chứng từ NCC</small></div><div class="dv" title="Bóc dòng hàng hoá đơn PDF Skoda sang Excel: mã hàng, tên, số lượng, giá, xuất xứ, kiện và reference. PDF chuẩn hãng → *_extracted.xlsx."><b>Đọc invoice Skoda</b><small>TOOL-INV-02 · Invoice, chứng từ NCC</small></div><div class="dv" title="Đọc PDF Invoice cum Packing List của Skoda India sang Excel: thông tin chung, dòng hàng (mã, tên, HS, SL, giá, net, kiện, đơn hàng), kiện, đối chiếu tổng. Sheet 1 đúng mẫu in invoice để TOOL-INV-03 điền mã Bravo/tên TV."><b>Đọc packing list Skoda India</b><small>TOOL-LOG-01 · Logistics, nhập kho</small></div><div class="dv" title="Đọc Debit note PDF của forwarder PAM CARGO (cước biển OF, phí local LCC) sang Excel: 1 dòng / khoản phí, tách tiền chưa VAT / VAT, tra HBL (dự phòng MBL) ra số invoice trên dataset BCQTMH, kiểm tra tổng = TOTAL = BALANCE DUE."><b>Đọc Debit note PAM CARGO từ PDF</b><small>TOOL-LOG-02 · Logistics, nhập kho</small></div><div class="dv" title="Đọc tài liệu đơn hàng Skoda với nhiều layout. PDF → Excel; có ba bộ đọc cục bộ theo form và một phương án Google Document AI."><b>Đọc đơn hàng Skoda</b><small>TOOL-PO-01 · Mua hàng, đơn hàng</small></div><div class="dv" title="Lấy danh mục, giá và tồn sản phẩm Foton trên CRM MISA. Phiên đăng nhập web/API sản phẩm → Excel Foton_Price_Crawling.xlsx."><b>Lấy giá và tồn Foton</b><small>TOOL-PO-03 · Mua hàng, đơn hàng</small></div><div class="dv" title="Tự động đăng nhập cổng claim Skoda, lấy thông tin ticket và tải tài liệu đính kèm. Cổng ServiceTonic → Ticket History.xlsx và các thư mục Tickets\&lt;ticket&gt;."><b>Tra cứu claim Skoda</b><small>TOOL-SUP-01 · NCC, claim</small></div></div><div class="nhom"><div class="dau">Báo cáo<span>9</span></div><div class="dv" title="Phân tích hiệu quả chuyển đổi C/O AK sang VK, phục vụ báo cáo tiết kiệm thuế và tỷ lệ chuyển đổi. Excel nguồn → JSON phân tích → PowerPoint 3 slide cho giai đoạn 6 tháng đầu 2026."><b>Báo cáo chuyển đổi C/O AK–VK</b><small>RPT-CO-01 · C/O</small></div><div class="dv" title="Tổng hợp khối lượng công việc, năng lực và kịch bản định biên MHXNK. Dữ liệu Bravo, ECUS và hồ sơ đăng kiểm → báo cáo Excel, phụ lục đối chiếu và kịch bản tải công việc."><b>Báo cáo định biên MHXNK</b><small>RPT-HR-01 · Định biên</small></div><div class="dv" title="Báo cáo mua hàng, chi phí, leadtime, C/O, kế hoạch kéo hàng và biến động giá cho phòng MHXNK. SQL Bravo và file SharePoint → semantic model, báo cáo Power BI và nguồn số cho các tool báo cáo khác."><b>BCQTMH – trang báo cáo quản trị mua hàng</b><small>RPT-KPI-01 · KPI, quản trị</small></div><div class="dv" title="Sinh báo cáo quản trị MHXNK hằng tháng, tổng hợp TST và VAD. Power BI BCQTMH (đã publish, không SQL riêng từ 16/11/2026), file VAD/KPI/khiếu nại và nội dung nhập tay → PowerPoint cùng danh sách dữ liệu cần bổ sung."><b>Báo cáo quản trị MHXNK</b><small>RPT-KPI-02 · KPI, quản trị</small></div><div class="dv" title="Tạo báo cáo giao ban tuần/tháng MHXNK. Số liệu Power BI BCQTMH và nội dung Markdown người dùng nhập → PowerPoint, số liệu JSON và phần phân tích tự động."><b>Báo cáo giao ban MHXNK</b><small>RPT-KPI-03 · KPI, quản trị</small></div><div class="dv" title="Tổng hợp chỉ số rủi ro về xác nhận yêu cầu mua hàng, khiếu nại và phí lưu cont/bãi/kho. File xuất nghiệp vụ và bộ KRI yêu cầu → báo cáo Excel theo tháng kèm cơ sở tính."><b>Báo cáo KRI MHXNK</b><small>RPT-KPI-04 · KPI, quản trị</small></div><div class="dv" title="Hàng nguy hiểm (phân loại Bravo MB01) theo tháng về kho – Sea theo cont, Air theo invoice – giá trị FOB, chi phí vận chuyển quốc tế + nội địa cả cont/lô và phần phân bổ cho hàng nguy hiểm. Số từ dataset BCQTMH đã publish → Excel."><b>Báo cáo hàng nguy hiểm</b><small>RPT-LOG-01 · Logistics, nhập kho</small></div><div class="dv" title="Hỗ trợ kế hoạch 2027 qua tỷ lệ giao hàng NCC, biến động giá mua và danh mục cấp C/O. Tỷ lệ giao hàng và biến động giá lấy từ dataset BCQTMH đã publish (16/11/2026; biến động giá = measure BDN.* → Excel pivot); C/O (BC Cấp C/O) cũng lấy từ dataset (F_BKICT, 16/11); phần biến động giá còn nằm trực tiếp trong PBIP của đơn vị KPI."><b>Kế hoạch năm MHXNK</b><small>RPT-PLN-01 · Kế hoạch</small></div><div class="dv" title="Tính lại thuế NK/VAT theo HS đúng cho 1.151 mã hàng khai sai HS, phần nộp thêm và tiền phạt chậm nộp 0,03%/ngày. Script lấy F_BKICT từ BCQTMH + biểu thuế 2026."><b>Báo cáo kiểm tra thuế nhập khẩu</b><small>RPT-VAT-01 · Thuế, VAT</small></div></div><div class="nhom"><div class="dau">Mẫu Excel / template<span>9</span></div><div class="dv" title="Đối chiếu danh sách Part No với dữ liệu invoice để lấy loại thuế nhập khẩu áp dụng và invoice gần nhất. Danh sách trong bảng Input → bảng kết quả ghép dữ liệu SQL."><b>Workbook đối chiếu C/O</b><small>TPL-CO-01 · C/O</small></div><div class="dv" title="Gom dữ liệu tờ khai hải quan Excel và ghép thông tin invoice/hợp đồng từ SQL để chuẩn bị nhập Bravo. File ToKhaiHQ7N*.xlsx + dữ liệu SQL → bảng tổng hợp và mapping import."><b>Workbook import tờ khai</b><small>TPL-CUS-01 · Hải quan, đăng kiểm</small></div><div class="dv" title="Chuyển chứng từ NCC Korea/India/Indo/Egypt/Shanghai thành bảng import invoice Bravo chuẩn 19 cột."><b>Template import invoice</b><small>TPL-INV-01 · Invoice, chứng từ NCC</small></div><div class="dv" title="Chuyển invoice/packing VAD → bảng Output phục vụ nhập liệu và phụ lục."><b>Template import invoice VAD</b><small>TPL-INV-02 · Invoice, chứng từ NCC</small></div><div class="dv" title="Bộ xử lý invoice/phụ lục/FXL và kiểm tra C/O; chứng từ đầu vào → file xử lý và chứng từ, gồm hai biến thể CK-No và CK-Yes."><b>Bộ xử lý chứng từ CK-No và CK-Yes</b><small>TPL-INV-03 · Invoice, chứng từ NCC</small></div><div class="dv" title="Nhập danh sách số invoice → Power Query lấy ngày invoice/ship/cập cảng/thông quan/về kho/nhập kho, hợp đồng, phụ lục, L/C, cont, giá trị, phí, thuế; sheet Sample ghép nội dung YCVC, hàng Air, bảo hiểm theo số vận đơn."><b>Tra cứu thông tin invoice (Invoice_Info)</b><small>TPL-INV-04 · Invoice, chứng từ NCC</small></div><div class="dv" title="Tạo bảng kê yêu cầu nhập kho từ dữ liệu đầu vào và danh mục NCC."><b>Template bảng kê yêu cầu nhập kho</b><small>TPL-LOG-01 · Logistics, nhập kho</small></div><div class="dv" title="Tổng hợp/chuẩn bị dữ liệu VAT và tờ khai phục vụ nghiệp vụ nhập khẩu."><b>Template import VAT</b><small>TPL-VAT-01 · Thuế, VAT</small></div><div class="dv" title="Tính/đối chiếu lại thuế, CO và chi phí nhập khẩu → bảng Final/Check."><b>Template tính lại thuế</b><small>TPL-VAT-02 · Thuế, VAT</small></div></div><div class="nhom"><div class="dau">Vùng dữ liệu<span>5</span></div><div class="dv" title="Danh sách VAT không cảnh báo dùng chung cho Luna và bảng tin; dữ liệu Excel → danh sách loại trừ."><b>Danh sách VAT không cảnh báo</b><small>DAT-CORE-02 · Dùng chung</small></div><div class="dv" title="Bản làm việc tổng hợp/theo dõi XNK; dữ liệu SQL và danh mục → kế hoạch, record và báo cáo."><b>Theo dõi nhập - xuất kho</b><small>DAT-LOG-04 · Logistics, nhập kho</small></div><div class="dv" title="Theo dõi yêu cầu và phản hồi BO; dữ liệu hai phía → bảng Record/đối chiếu."><b>Dữ liệu BO</b><small>DAT-PO-01 · Mua hàng, đơn hàng</small></div><div class="dv" title="Hồ sơ mua hàng Foton: BO, tồn NCC, báo giá, shipment, leadtime, đơn hàng và bộ chứng từ thanh toán/nhập kho."><b>Hồ sơ mua hàng Foton</b><small>DAT-PO-02 · Mua hàng, đơn hàng</small></div><div class="dv" title="Theo dõi hợp đồng, phụ lục, hiệu lực và việc cần thực hiện cho mua hàng/dịch vụ."><b>Theo dõi hợp đồng</b><small>DAT-PO-03 · Mua hàng, đơn hàng</small></div></div><div class="nhom"><div class="dau">Quy trình<span>2</span></div><div class="dv" title="Xây dựng quy trình mua hàng XNK cho các phòng liên quan; nội dung TXT, hình và quy tắc → Word và sơ đồ Draw.io."><b>Quy trình mua hàng XNK</b><small>PRC-PO-01 · Mua hàng, đơn hàng</small></div><div class="dv" title="Biên soạn quy trình phát triển sản phẩm và 7 biểu mẫu cho các bộ phận nghiệp vụ; nguồn quy trình → Word/Excel/PDF có thể in."><b>Quy trình phát triển sản phẩm mới</b><small>PRC-RD-01 · Phát triển SP mới</small></div></div><div class="nhom"><div class="dau">Đào tạo<span>3</span></div><div class="dv" title="Bộ học Excel gồm giáo án, tài liệu học viên, slide, bài thực hành/thu hoạch và đáp án → phục vụ giảng dạy nội bộ."><b>Đào tạo Excel</b><small>EDU-ADM-01 · Hành chính</small></div><div class="dv" title="Đào tạo AI 2 buổi × 90 phút cho nhân sự công ty; Markdown, nguồn slide, dữ liệu giả lập, audio → HTML/PPTX, video và khảo sát."><b>Đào tạo AI cơ bản</b><small>EDU-AI-01 · AI</small></div><div class="dv" title="Bộ đào tạo nghiệp vụ hải quan; tài liệu, văn bản tham chiếu, bài tập → slide, bài kiểm tra và đáp án."><b>Đào tạo pháp luật hải quan</b><small>EDU-CUS-01 · Hải quan, đăng kiểm</small></div></div><div class="nhom"><div class="dau">Thư viện mẫu<span>1</span></div><div class="dv" title="Kho tài nguyên dùng chung: logo, ảnh chữ ký/con dấu và mẫu trình ký → tài liệu nghiệp vụ."><b>Logo và mẫu trình ký</b><small>LIB-ADM-01 · Hành chính</small></div></div></div></div><p class="nguon">Rê chuột lên từng ô để xem mô tả. Sinh tự động từ CATALOG.yaml.</p></section>
+<h1 class="chuong" id="luna">3. Luna – trợ lý trên Teams</h1>
+<section id="m3"><h2>3.1 Hướng dẫn sử dụng Luna</h2>
+<h3>Bắt đầu</h3>
+<ul>
+<li>Trên Microsoft Teams, mở ứng dụng <b>Luna</b> (Ứng dụng → tìm "Luna") để <b>chat riêng 1–1</b>, hoặc thêm Luna vào nhóm chat / kênh.</li>
+<li>Trong nhóm phải <b>tag @Luna</b> thì Luna mới trả lời; câu trả lời sẽ tag lại người hỏi và trích tin nhắn gốc.</li>
+<li>Nhóm có người không được xem giá mua: Luna gửi câu trả lời <b>riêng</b> cho người hỏi, trong nhóm chỉ báo "đã gửi riêng".</li>
+</ul>
+<h3>Hai cách hỏi</h3>
+<ul>
+<li><b>Gõ lệnh</b> bắt đầu bằng dấu <code>/</code>, ví dụ <code>/kpi 10/2026</code>, <code>/giao-hang foton 2026 theo-thang</code>, <code>/top-ma mobis 200</code>. Gõ <code>/lenh</code> để xem nhóm lệnh ngay trong chat.</li>
+<li><b>Hỏi bình thường</b>, ví dụ "leadtime hàng air tháng 9 có đạt không?" – Luna tự chọn lệnh phù hợp.</li>
+<li>Mỗi câu hỏi được xử lý <b>độc lập</b>, Luna không nhớ câu trước: hãy nêu đủ NCC, kỳ, loại hàng trong cùng một câu.</li>
+<li>Không nêu kỳ thì lấy tháng hiện tại; không nêu bộ lọc thì lấy "Tất cả". Cuối câu trả lời luôn ghi bộ lọc đã áp dụng.</li>
+</ul>
+<h3>Đọc câu trả lời</h3>
+<ul>
+<li>Bảng chỉ có số, định dạng giống Bravo (<code>1,234,567.89</code>), đơn vị ghi ở tiêu đề cột – copy dán thẳng sang Excel.</li>
+<li>Câu trả lời quá dài (bảng trên 60 dòng): Luna gửi tóm tắt + 10 dòng đầu và <b>link file Excel tạm</b>; file bị xoá khi hết ngày, cần giữ thì tải về.</li>
+<li>Số liệu lấy từ báo cáo Power BI <b>BCQTMH</b> đã publish (làm mới 07:00 và 12:30 hằng ngày). Nếu lần làm mới gần nhất lỗi hoặc quá 26 giờ, Luna <b>không trả số</b> và báo lý do.</li>
+<li>Bạn chưa có quyền dùng một lệnh thì Luna báo "không có quyền" – liên hệ chủ hệ thống để được cấp.</li>
+</ul>
+<h3>Việc Luna làm tự động</h3>
+<ul>
+<li><b>Bảng tin</b> công việc gửi vào nhóm phòng lúc 9:00 thứ 2 – thứ 6.</li>
+<li>Tra danh bạ công cụ: <code>/tool</code>, <code>/template</code>, <code>/danh-ba</code>.</li>
+<li>Gõ <code>/so-tay</code> để Luna gửi link sổ tay này.</li>
+</ul>
+<p>Gặp câu trả lời sai hoặc câu hỏi Luna chưa hiểu: chụp màn hình gửi Lê Quỳnh Giao để bổ sung lệnh.</p>
+</section>
+<section id="m4"><h2>3.2 Danh sách lệnh Luna</h2><p>Gõ lệnh hoặc hỏi bằng câu tự nhiên trong chat với Luna. Bảng chỉ có số, copy được sang Excel.</p><iframe class="nhung" loading="lazy" srcdoc="&lt;title&gt;Lệnh Bot Mua hàng XNK&lt;/title&gt;
+&lt;meta name=&quot;claude:viewport-fit-sides&quot; content=&quot;cover&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap&quot;&gt;
+&lt;style&gt;
 /* Bố cục: một cột tra cứu nhanh, mỗi lệnh một thẻ, ví dụ gõ được ngay */
 :root {
   --bg: #eef1ee; --surface: #ffffff; --ink: #17201c; --muted: #56625c; --line: #d3dad5; --accent: #2b52c4; --accent-soft: #e2e8f8;
-  --f-display: "Archivo", "Segoe UI", system-ui, sans-serif; --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --f-display: &quot;Archivo&quot;, &quot;Segoe UI&quot;, system-ui, sans-serif; --f-body: &quot;IBM Plex Sans&quot;, &quot;Segoe UI&quot;, system-ui, sans-serif;
+  --f-mono: &quot;IBM Plex Mono&quot;, ui-monospace, Consolas, monospace;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+@media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) {
   --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa6a0; --line: #2b3430; --accent: #86a2f2; --accent-soft: #1f2a48; color-scheme: dark; } }
-:root[data-theme="dark"] { --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa6a0; --line: #2b3430; --accent: #86a2f2; --accent-soft: #1f2a48; color-scheme: dark; }
+:root[data-theme=&quot;dark&quot;] { --bg: #111614; --surface: #19201d; --ink: #e4ebe7; --muted: #9aa6a0; --line: #2b3430; --accent: #86a2f2; --accent-soft: #1f2a48; color-scheme: dark; }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
 .wrap { max-width: 980px; margin: 0 auto; padding-block: 28px 56px;
@@ -38,209 +158,595 @@ dl { margin: 0; display: flex; gap: 8px; font-size: 13px; } dt { color: var(--mu
 .group-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
 .group-name { font-size: 20px; }
 @media (max-width: 760px) { .how, .cmds { grid-template-columns: 1fr; } }
-</style>
-<div class="wrap">
-  <header>
-    <div class="eyebrow">Bot Mua hàng XNK · TST</div>
-    <h1>Bot trả lời được những gì</h1>
-    <p>Mọi số lấy từ báo cáo BCQTMH, dùng đúng chỉ số và bộ lọc của trang BCQT, cuối câu trả lời luôn ghi phạm vi dữ liệu để đối chiếu.</p>
-  </header>
-  <div class="how">
-    <section><h2>Gõ lệnh</h2><p>Bắt đầu bằng dấu <code>/</code>, thêm tháng, Sea/Air, <code>tach</code> nếu cần. Ví dụ <code>/kpi 10/2026</code>.</p></section>
-    <section><h2>Hoặc hỏi bình thường</h2><p>Bot tự hiểu câu hỏi thuộc lệnh nào, ví dụ "leadtime hàng air tháng 9 có đạt không?".</p></section>
-    <section><h2>Mặc định</h2><p>Không nêu tháng thì lấy tháng hiện tại. KPI mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung. Slicer không nêu thì "Tất cả".</p></section>
-  </div>
-  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime</a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng</a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng</a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo</a><a href="#nhom-kho">Tồn kho</a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu</a></nav>
-  <section class="group" id="nhom-kpi">
-    <div class="group-head"><h2 class="group-name">KPI &amp; leadtime</h2><code>/lenh kpi</code><span class="alias">4 lệnh</span></div>
-    <div class="cmds">
-      <article class="cmd" id="kpi">
-        <div class="cmd-head"><code class="name">/kpi</code><span class="alias">/cpmh</span><span class="alias">/chiphi</span></div>
-        <h2>KPI chi phí mua hàng</h2>
-        <p>CPMH/FOB, từng cấu phần (thuế NK, VC quốc tế, chi phí lấy hàng), chỉ tiêu, cùng kỳ. Mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung; tháng chưa kết thúc là số tạm tính / dự kiến.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, tách riêng NCC, Sea/Air, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/kpi 10/2026</code></li><li><code>/kpi 9 tach</code></li><li><code>/kpi 9 kho:da nhom:ptu</code></li><li><code>KPI dự kiến tháng 10 bao nhiêu?</code></li></ul>
-      </article>
-      <article class="cmd" id="leadtime">
-        <div class="cmd-head"><code class="name">/leadtime</code><span class="alias">/lt</span></div>
-        <h2>KPI leadtime</h2>
-        <p>CHỈ khi hỏi KPI / chỉ tiêu / đạt hay không: tỷ lệ dòng hàng Air ≤ 22 ngày, Sea ≤ 80 ngày so với chỉ tiêu. Mặc định 2 NCC Mobis gộp chung.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air, tách riêng NCC, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/leadtime 8</code></li><li><code>/leadtime 9 air</code></li><li><code>/leadtime 9 kho:hn</code></li><li><code>Leadtime hàng Sea tháng 9 đạt không?</code></li></ul>
-      </article>
-      <article class="cmd" id="leadtime-tb">
-        <div class="cmd-head"><code class="name">/leadtime-tb</code><span class="alias">/lttb</span></div>
-        <h2>Leadtime trung bình</h2>
-        <p>Số ngày leadtime trung bình theo giá trị và theo line item, chia Sea/Air, từng giai đoạn (đặt hàng → invoice → ship → cập cảng → về kho), so cùng kỳ. Cả năm hoặc 1 tháng; NCC nhập khẩu và nội địa. Thêm thang (hoặc hỏi &quot;từng tháng&quot;) để có bảng leadtime từng tháng của năm.</p>
-        <dl><dt>Tham số</dt><dd>năm, tháng, NCC, Sea/Air, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/leadtime-tb 2026 hhka148</code></li><li><code>/leadtime-tb 2026 dtmb002 sea thang</code></li><li><code>Leadtime thực tế theo giá trị hàng sea từng tháng năm 2026 NCC India</code></li><li><code>/leadtime-tb 9/2026 dtmb001</code></li><li><code>Lead time mua hàng trung bình năm 2026 từ HHKA148</code></li></ul>
-      </article>
-      <article class="cmd" id="co">
-        <div class="cmd-head"><code class="name">/co</code></div>
-        <h2>Tỷ lệ áp dụng C/O</h2>
-        <p>Tỷ lệ giá trị hàng có C/O trong tháng.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
-        <ul class="ex"><li><code>/co 9</code></li></ul>
-      </article>
-    </div>
-  </section>
-  <section class="group" id="nhom-mua">
-    <div class="group-head"><h2 class="group-name">Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="alias">8 lệnh</span></div>
-    <div class="cmds">
-      <article class="cmd" id="yeu-cau-mua">
-        <div class="cmd-head"><code class="name">/yeu-cau-mua</code><span class="alias">/ycmh</span></div>
-        <h2>Giá trị yêu cầu mua hàng</h2>
-        <p>Giá trị phiếu yêu cầu mua hàng trong tháng, chia Sea/Air, so cùng kỳ.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC</dd></dl>
-        <ul class="ex"><li><code>/yeu-cau-mua 10</code></li></ul>
-      </article>
-      <article class="cmd" id="cho-duyet">
-        <div class="cmd-head"><code class="name">/cho-duyet</code><span class="alias">/choduyet</span></div>
-        <h2>Yêu cầu mua hàng chờ duyệt</h2>
-        <p>Phiếu PP/PR đang chờ duyệt, người lập, số ngày chờ, giá trị.</p>
-        <dl><dt>Tham số</dt><dd>không</dd></dl>
-        <ul class="ex"><li><code>/cho-duyet</code></li></ul>
-      </article>
-      <article class="cmd" id="dat-hang">
-        <div class="cmd-head"><code class="name">/dat-hang</code><span class="alias">/ddh</span></div>
-        <h2>Giá trị đặt hàng</h2>
-        <p>Giá trị đơn đặt hàng mua trong tháng, chia Sea/Air. Kỳ nhiều tháng (cả năm, N tháng, khoảng ngày nhiều năm) thì có bảng theo từng tháng: giá trị Sea, Air, tổng và tỷ trọng Sea/Air. Không kèm phần đã / chưa lên invoice (xem /don-invoice).</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, số tháng (so_thang), khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</dd></dl>
-        <ul class="ex"><li><code>/dat-hang 10</code></li><li><code>/dat-hang 2026 dtmb002</code></li><li><code>/dat-hang 1/1/2025-13/11/2026 dtmb002 air</code></li><li><code>Giá trị đơn hàng mua theo từng tháng năm 2025 và 2026, hình thức air của NCC India</code></li><li><code>Tỷ trọng giá trị mua hàng Sea và Air theo từng tháng năm 2026 của NCC India</code></li></ul>
-      </article>
-      <article class="cmd" id="thong-ke-don">
-        <div class="cmd-head"><code class="name">/thong-ke-don</code></div>
-        <h2>Thống kê đơn đặt hàng</h2>
-        <p>Số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. N tháng gần nhất mặc định là N tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. Hoặc tính trong một khoảng ngày tùy chọn (từ ngày đến ngày). Không chọn Sea/Air thì có thêm bảng chia Sea / Air kèm dòng tổng. Hỗ trợ NCC và Sea/Air, gồm hàng nội địa.</p>
-        <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm kết thúc, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air</dd></dl>
-        <ul class="ex"><li><code>/thong-ke-don 3thang air</code></li><li><code>/thong-ke-don 31/10/2026-9/11/2026 hhka161</code></li><li><code>Tính tổng số đơn hàng từ 31/10/2026 đến 9/11/2026 của Foton</code></li><li><code>Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?</code></li></ul>
-      </article>
-      <article class="cmd" id="so-ma-hang">
-        <div class="cmd-head"><code class="name">/so-ma-hang</code><span class="alias">/somahang</span><span class="alias">/ma-dat</span></div>
-        <h2>Số mã hàng đã đặt</h2>
-        <p>Số mã hàng khác nhau (không trùng) trên đơn đặt hàng theo từng tháng và cả kỳ, kèm số dòng hàng. Kỳ giống /thong-ke-don: N tháng gần nhất (mặc định 3 tháng đã kết thúc), tháng/năm, hoặc khoảng ngày. Số mã cả kỳ không bằng tổng các tháng vì một mã chỉ đếm 1 lần.</p>
-        <dl><dt>Tham số</dt><dd>số tháng (so_thang), tháng/năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd</dd></dl>
-        <ul class="ex"><li><code>/so-ma-hang 2026 dtmb002</code></li><li><code>/so-ma-hang 10/2026 hhka161 air</code></li><li><code>Số lượng mã hàng đặt năm 2026 theo từng tháng của Mobis India</code></li></ul>
-      </article>
-      <article class="cmd" id="top-ma">
-        <div class="cmd-head"><code class="name">/top-ma</code><span class="alias">/topma</span><span class="alias">/ma-mua-nhieu</span></div>
-        <h2>Mã hàng đặt mua nhiều nhất</h2>
-        <p>Danh sách N mã hàng có tổng tiền đặt mua lớn nhất (mặc định 20, tối đa 250): mã, tên, model (nhóm xe cấp 3), số lượng, đơn giá bình quân, tổng tiền và tỷ trọng. Theo đơn đặt hàng, ngày đặt trong kỳ; kỳ giống /thong-ke-don (N tháng gần nhất, tháng/năm, khoảng ngày).</p>
-        <dl><dt>Tham số</dt><dd>số mã (topN), tháng/năm, khoảng ngày, NCC, Sea/Air, kho, nhóm hàng, nk/nd</dd></dl>
-        <ul class="ex"><li><code>/top-ma top200 2026 dtmb001 dtmb002</code></li><li><code>/top-ma 10/2026 hhka161</code></li><li><code>Cho tôi danh mục 200 mã mua nhiều nhất của Mobis Hàn và Mobis Ấn năm 2026</code></li></ul>
-      </article>
-      <article class="cmd" id="don-invoice">
-        <div class="cmd-head"><code class="name">/don-invoice</code><span class="alias">/chua-invoice</span><span class="alias">/da-invoice</span></div>
-        <h2>Đã đặt / đã lên invoice / đã giao</h2>
-        <p>Giá trị hàng đã đặt, đã lên invoice và đã đặt nhưng chưa lên invoice, chia Sea/Air và theo tháng đặt hàng. Không nêu kỳ thì tính toàn bộ đơn từ 01/01/2025; nêu tháng/năm thì tính đơn đặt trong kỳ đó. Mặc định VND; thêm usd để xem bằng USD (chỉ NCC nước ngoài). Thêm giao để xem đã giao / chưa giao (đã nhập kho theo ngày dự kiến về kho).</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, Sea/Air, usd, giao</dd></dl>
-        <ul class="ex"><li><code>/don-invoice dtmb001</code></li><li><code>/don-invoice dtmb001 usd</code></li><li><code>/don-invoice hhka161 giao</code></li><li><code>/don-invoice 9/2026 air</code></li><li><code>Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice</code></li><li><code>Giá trị đã đặt, đã giao và chưa giao của Foton</code></li></ul>
-      </article>
-      <article class="cmd" id="don-so-luong">
-        <div class="cmd-head"><code class="name">/don-so-luong</code><span class="alias">/sl-don</span><span class="alias">/so-luong-don</span></div>
-        <h2>Số lượng, số mã đã đặt / đã thực hiện</h2>
-        <p>Số lượng (đơn vị hàng) và số mã hàng: đã đặt, đã thực hiện (đã giao = nhập kho) và chưa thực hiện, chia Sea/Air và theo tháng đặt hàng. Thêm invoice để tính theo đã lên invoice. Kỳ: tháng/năm, khoảng ngày, không nêu = từ 01/01/2025. Giá trị (tiền) xem /don-invoice.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd, invoice</dd></dl>
-        <ul class="ex"><li><code>/don-so-luong 1/11/2025-13/11/2026 hhka161</code></li><li><code>/don-so-luong 2026 dtmb001 invoice</code></li><li><code>Tính số lượng đã đặt hàng, đã thực hiện, chưa thực hiện của Foton giai đoạn từ 1/11/2025 đến 13/11/2026</code></li></ul>
-      </article>
-    </div>
-  </section>
-  <section class="group" id="nhom-hang-ve">
-    <div class="group-head"><h2 class="group-name">Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="alias">5 lệnh</span></div>
-    <div class="cmds">
-      <article class="cmd" id="hang-ve">
-        <div class="cmd-head"><code class="name">/hang-ve</code><span class="alias">/hangve</span></div>
-        <h2>Giá trị hàng về</h2>
-        <p>Giá trị hàng về (FOB) trong tháng, chia Sea/Air, so cùng kỳ.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, kho, nhóm hàng</dd></dl>
-        <ul class="ex"><li><code>/hang-ve 9</code></li><li><code>/hang-ve 9 nhom:lop</code></li><li><code>Tháng 9 về bao nhiêu hàng?</code></li></ul>
-      </article>
-      <article class="cmd" id="lich-hang-ve">
-        <div class="cmd-head"><code class="name">/lich-hang-ve</code><span class="alias">/lich</span></div>
-        <h2>Lịch hàng về</h2>
-        <p>Các lô hàng (invoice) dự kiến về kho trong N ngày tới (mặc định 7).</p>
-        <dl><dt>Tham số</dt><dd>số ngày</dd></dl>
-        <ul class="ex"><li><code>/lich-hang-ve</code></li><li><code>/lich-hang-ve 14</code></li></ul>
-      </article>
-      <article class="cmd" id="giao-hang">
-        <div class="cmd-head"><code class="name">/giao-hang</code><span class="alias">/thoi-gian-giao</span><span class="alias">/tggh</span></div>
-        <h2>Thời gian giao hàng</h2>
-        <p>Các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (Sea/Air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. Thêm invoice để tính đến ngày invoice ghi trên phiếu yêu cầu nhập kho thay cho ngày lập phiếu. Thêm chua-giao để liệt kê theo mã các mã còn hàng chưa lên phiếu yêu cầu nhập kho và số ngày đã chờ. Kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nhóm hàng, invoice</dd></dl>
-        <ul class="ex"><li><code>/giao-hang hhka161</code></li><li><code>/giao-hang hhka161 invoice</code></li><li><code>/giao-hang 31/10/2026-13/11/2026 hhka161 chua-giao</code></li><li><code>/giao-hang 10/2026 hhka161 air</code></li><li><code>/giao-hang 1/10/2026-10/11/2026 dtmb001</code></li><li><code>Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho</code></li></ul>
-      </article>
-      <article class="cmd" id="cont">
-        <div class="cmd-head"><code class="name">/cont</code><span class="alias">/container</span></div>
-        <h2>Số cont nhập kho</h2>
-        <p>Số cont 20, cont 40 và số bill hàng lẻ (LCL) nhập kho theo ngày dự kiến về kho, chia theo NCC và kho.</p>
-        <dl><dt>Tham số</dt><dd>tháng, năm, NCC, kho</dd></dl>
-        <ul class="ex"><li><code>/cont 10 dtmb001</code></li><li><code>Số cont nhập kho từ Hyundai Mobis tháng 10</code></li></ul>
-      </article>
-      <article class="cmd" id="tre-hang">
-        <div class="cmd-head"><code class="name">/tre-hang</code><span class="alias">/tre</span></div>
-        <h2>Invoice trễ hàng</h2>
-        <p>Invoice quá ngày dự kiến về kho mà chưa hoàn thiện.</p>
-        <dl><dt>Tham số</dt><dd>không</dd></dl>
-        <ul class="ex"><li><code>/tre-hang</code></li></ul>
-      </article>
-    </div>
-  </section>
-  <section class="group" id="nhom-kiem-tra">
-    <div class="group-head"><h2 class="group-name">Kiểm tra dữ liệu Bravo</h2><code>/lenh kiem-tra</code><span class="alias">4 lệnh</span></div>
-    <div class="cmds">
-      <article class="cmd" id="chua-tbhv">
-        <div class="cmd-head"><code class="name">/chua-tbhv</code><span class="alias">/tbhv</span></div>
-        <h2>Chưa gửi mail TBHV</h2>
-        <p>Invoice đã cập cảng nhưng chưa gửi email thông báo hàng về.</p>
-        <dl><dt>Tham số</dt><dd>không</dd></dl>
-        <ul class="ex"><li><code>/chua-tbhv</code></li></ul>
-      </article>
-      <article class="cmd" id="lap-phieu">
-        <div class="cmd-head"><code class="name">/lap-phieu</code></div>
-        <h2>Còn Lập phiếu</h2>
-        <p>Invoice hàng quốc tế đã có vận đơn mà phiếu còn ở trạng thái Lập phiếu.</p>
-        <dl><dt>Tham số</dt><dd>không</dd></dl>
-        <ul class="ex"><li><code>/lap-phieu</code></li></ul>
-      </article>
-      <article class="cmd" id="vat">
-        <div class="cmd-head"><code class="name">/vat</code></div>
-        <h2>VAT bán ra cần xử lý</h2>
-        <p>Số mã hàng theo nhóm (c chưa có, b hết hạn, f thiếu HS, d lệch thuế suất, e sắp hết hạn) và ưu tiên, kèm 20 mã ưu tiên nhất.</p>
-        <dl><dt>Tham số</dt><dd>nhóm c/b/f/d/e, NCC (mã hàng trên invoice của NCC), hàng nhập khẩu / nội địa (nk / nd)</dd></dl>
-        <ul class="ex"><li><code>/vat</code></li><li><code>/vat c</code></li><li><code>/vat f</code></li><li><code>/vat hhka161</code></li><li><code>Mã nào chưa có VAT bán ra?</code></li><li><code>Có bao nhiêu mã hàng Foton đang thiếu thông tin VAT nội địa và VAT bán ra?</code></li></ul>
-      </article>
-      <article class="cmd" id="vat-nhap-kho">
-        <div class="cmd-head"><code class="name">/vat-nhap-kho</code><span class="alias">/vatnk</span></div>
-        <h2>VAT mã hàng nhập kho trong ngày</h2>
-        <p>Mã hàng lên phiếu yêu cầu nhập kho trong ngày (mặc định hôm nay) đang thiếu VAT đầu vào (mua vào), đầu ra (bán ra), hết hạn, thiếu mã HS hoặc lệch thuế suất, kèm invoice và NCC. Gõ ngày hoặc khoảng ngày để xem ngày khác.</p>
-        <dl><dt>Tham số</dt><dd>ngày hoặc khoảng ngày (tu_ngay, den_ngay), NCC, hàng nhập khẩu / nội địa (nk / nd), kho</dd></dl>
-        <ul class="ex"><li><code>/vat-nhap-kho</code></li><li><code>/vat-nhap-kho 10/11/2026</code></li><li><code>/vat-nhap-kho nd</code></li><li><code>Hàng nội địa nhập kho ngày 10/11 có mã nào thiếu VAT không?</code></li><li><code>Có mã hàng nào nhập kho hôm nay bị thiếu VAT đầu vào - đầu ra không?</code></li></ul>
-      </article>
-    </div>
-  </section>
-  <section class="group" id="nhom-kho">
-    <div class="group-head"><h2 class="group-name">Tồn kho</h2><code>/lenh kho</code><span class="alias">1 lệnh</span></div>
-    <div class="cmds">
-      <article class="cmd" id="ton-kho">
-        <div class="cmd-head"><code class="name">/ton-kho</code><span class="alias">/tonkho</span><span class="alias">/ton</span></div>
-        <h2>Tồn kho</h2>
-        <p>Tồn kho hiện tại theo báo cáo tồn kho theo kho của Bravo: giá trị, số lượng, số mã còn tồn, chia theo kho và nhóm hàng; hoặc tồn từng kho của 1 mã hàng (gõ một phần mã thì liệt kê các mã khớp).</p>
-        <dl><dt>Tham số</dt><dd>mã hàng, kho, nhóm hàng, Sea/Air</dd></dl>
-        <ul class="ex"><li><code>/ton-kho</code></li><li><code>/ton-kho kho:da nhom:ptu</code></li><li><code>/ton-kho 59796AA400</code></li><li><code>Mã 230404A960 còn tồn bao nhiêu?</code></li></ul>
-      </article>
-    </div>
-  </section>
-  <section class="group" id="nhom-danh-ba">
-    <div class="group-head"><h2 class="group-name">Danh bạ công cụ &amp; tài liệu</h2><code>/lenh danh-ba</code><span class="alias">1 lệnh</span></div>
-    <div class="cmds">
-      <article class="cmd" id="danh-ba">
-        <div class="cmd-head"><code class="name">/danh-ba</code><span class="alias">/danhba</span><span class="alias">/cong-cu</span><span class="alias">/tai-lieu</span></div>
-        <h2>Danh bạ công cụ, báo cáo, tài liệu của phòng</h2>
-        <p>Tìm công cụ / tool / báo cáo / template Excel / quy trình / tài liệu đào tạo của phòng MH-XNK ở đâu, link mở, đã chuyển chỗ mới chưa. Không từ khoá: link file danh bạ + tổng quan. Từ khoá (so_tra_cuu) để tìm theo tên.</p>
-        <dl><dt>Tham số</dt><dd>từ khoá (so_tra_cuu)</dd></dl>
-        <ul class="ex"><li><code>/danh-ba</code></li><li><code>/danh-ba invoice</code></li><li><code>Quy trình mua hàng XNK để ở đâu?</code></li><li><code>Cho xin link tài liệu đào tạo Excel</code></li></ul>
-      </article>
-    </div>
-  </section>
-  <p class="foot">Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm, <code>/lenh &lt;nhóm&gt;</code> để xem chi tiết một nhóm. Cập nhật 14/11/2026.</p>
-</div>
+&lt;/style&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;header&gt;
+    &lt;div class=&quot;eyebrow&quot;&gt;Bot Mua hàng XNK · TST&lt;/div&gt;
+    &lt;h1&gt;Bot trả lời được những gì&lt;/h1&gt;
+    &lt;p&gt;Số báo cáo lấy từ BCQTMH đã publish; cuối câu trả lời ghi từng slicer và bộ lọc thực tế của trang BCQT tương ứng. Lệnh chưa có trang đối chiếu chính xác sẽ ghi rõ phạm vi và nguồn.&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;div class=&quot;how&quot;&gt;
+    &lt;section&gt;&lt;h2&gt;Gõ lệnh&lt;/h2&gt;&lt;p&gt;Bắt đầu bằng dấu &lt;code&gt;/&lt;/code&gt;, thêm tháng, Sea/Air, &lt;code&gt;tach&lt;/code&gt; nếu cần. Ví dụ &lt;code&gt;/kpi 10/2026&lt;/code&gt;.&lt;/p&gt;&lt;/section&gt;
+    &lt;section&gt;&lt;h2&gt;Hoặc hỏi bình thường&lt;/h2&gt;&lt;p&gt;Bot tự hiểu câu hỏi thuộc lệnh nào, ví dụ &quot;leadtime hàng air tháng 9 có đạt không?&quot;.&lt;/p&gt;&lt;/section&gt;
+    &lt;section&gt;&lt;h2&gt;Mặc định&lt;/h2&gt;&lt;p&gt;Không nêu tháng thì lấy tháng hiện tại. KPI mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung. Slicer không nêu thì &quot;Tất cả&quot;.&lt;/p&gt;&lt;/section&gt;
+  &lt;/div&gt;
+  &lt;nav class=&quot;nav&quot;&gt;&lt;a href=&quot;#nhom-kpi&quot;&gt;KPI &amp;amp; leadtime&lt;/a&gt;&lt;a href=&quot;#nhom-mua&quot;&gt;Yêu cầu mua &amp;amp; đặt hàng&lt;/a&gt;&lt;a href=&quot;#nhom-hang-ve&quot;&gt;Hàng về &amp;amp; lô hàng&lt;/a&gt;&lt;a href=&quot;#nhom-kiem-tra&quot;&gt;Kiểm tra dữ liệu Bravo&lt;/a&gt;&lt;a href=&quot;#nhom-kho&quot;&gt;Tồn kho&lt;/a&gt;&lt;a href=&quot;#nhom-danh-ba&quot;&gt;Danh bạ công cụ &amp;amp; tài liệu&lt;/a&gt;&lt;/nav&gt;
+  &lt;section class=&quot;group&quot; id=&quot;nhom-kpi&quot;&gt;
+    &lt;div class=&quot;group-head&quot;&gt;&lt;h2 class=&quot;group-name&quot;&gt;KPI &amp;amp; leadtime&lt;/h2&gt;&lt;code&gt;/lenh kpi&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;5 lệnh&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;cmds&quot;&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;kpi&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/kpi&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/cpmh&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/chiphi&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;KPI chi phí mua hàng&lt;/h2&gt;
+        &lt;p&gt;CPMH/FOB, từng cấu phần (thuế NK, VC quốc tế, chi phí lấy hàng), chỉ tiêu, cùng kỳ. Mặc định 2 NCC HYUNDAI MOBIS + MOBIS INDIA LTD. gộp chung; tháng chưa kết thúc là số tạm tính / dự kiến.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, NCC, tách riêng NCC, Sea/Air, kho, nhóm hàng&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/kpi 10/2026&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/kpi 9 tach&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/kpi 9 kho:da nhom:ptu&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;KPI dự kiến tháng 10 bao nhiêu?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;leadtime&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/leadtime&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/lt&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;KPI leadtime&lt;/h2&gt;
+        &lt;p&gt;CHỈ khi hỏi KPI / chỉ tiêu / đạt hay không: tỷ lệ dòng hàng Air ≤ 22 ngày, Sea ≤ 80 ngày so với chỉ tiêu. Mặc định 2 NCC Mobis gộp chung.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, NCC, Sea/Air, tách riêng NCC, kho, nhóm hàng&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/leadtime 8&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/leadtime 9 air&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/leadtime 9 kho:hn&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Leadtime hàng Sea tháng 9 đạt không?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;leadtime-tb&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/leadtime-tb&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/lttb&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Leadtime trung bình&lt;/h2&gt;
+        &lt;p&gt;Số ngày leadtime trung bình theo giá trị và theo line item, chia Sea/Air, từng giai đoạn (đặt hàng → invoice → ship → cập cảng → về kho), so cùng kỳ. Cả năm hoặc 1 tháng; NCC nhập khẩu và nội địa. Thêm thang (hoặc hỏi &amp;quot;từng tháng&amp;quot;) để có bảng leadtime từng tháng của năm.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;năm, tháng, NCC, Sea/Air, kho, nhóm hàng&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/leadtime-tb 2026 hhka148&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/leadtime-tb 2026 dtmb002 sea thang&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Leadtime thực tế theo giá trị hàng sea từng tháng năm 2026 NCC India&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/leadtime-tb 9/2026 dtmb001&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Lead time mua hàng trung bình năm 2026 từ HHKA148&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;co&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/co&lt;/code&gt;&lt;/div&gt;
+        &lt;h2&gt;Tỷ lệ áp dụng C/O&lt;/h2&gt;
+        &lt;p&gt;Tỷ lệ giá trị hàng có C/O trong tháng.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, NCC&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/co 9&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;cap-co&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/cap-co&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/dm-co&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/co-noi&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Danh mục cấp C/O theo nơi nhập&lt;/h2&gt;
+        &lt;p&gt;Hyundai Mobis Hàn (DTMB001): mã nào có C/O ở HP / CM / Nội Bài theo lần nhập gần nhất ở từng nơi (loại thuế NK áp dụng = 2). Không nêu mã: số mã theo 8 nhóm tổ hợp nơi và tỷ lệ có C/O từng nơi; nêu mã (tối đa 200): ngày nhập gần nhất và có / không C/O ở từng nơi.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;mã hàng (so_tra_cuu, nhiều mã cách nhau dấu cách hoặc phẩy)&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/cap-co&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/cap-co 88380N9010 55540D3000&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Mã 88380N9010 về Cái Mép lần gần nhất có C/O không?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&quot;group&quot; id=&quot;nhom-mua&quot;&gt;
+    &lt;div class=&quot;group-head&quot;&gt;&lt;h2 class=&quot;group-name&quot;&gt;Yêu cầu mua &amp;amp; đặt hàng&lt;/h2&gt;&lt;code&gt;/lenh mua&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;10 lệnh&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;cmds&quot;&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;yeu-cau-mua&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/yeu-cau-mua&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/ycmh&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Giá trị yêu cầu mua hàng&lt;/h2&gt;
+        &lt;p&gt;Giá trị phiếu yêu cầu mua hàng trong tháng, chia Sea/Air, so cùng kỳ.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, NCC&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/yeu-cau-mua 10&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;cho-duyet&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/cho-duyet&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/choduyet&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Yêu cầu mua hàng chờ duyệt&lt;/h2&gt;
+        &lt;p&gt;Phiếu PP/PR đang chờ duyệt, người lập, số ngày chờ, giá trị.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;không&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/cho-duyet&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;dat-hang&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/dat-hang&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/ddh&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Giá trị đặt hàng&lt;/h2&gt;
+        &lt;p&gt;Giá trị đơn đặt hàng mua trong tháng, chia Sea/Air. Kỳ nhiều tháng (cả năm, N tháng, khoảng ngày nhiều năm) thì có bảng theo từng tháng: giá trị Sea, Air, tổng và tỷ trọng Sea/Air. Không kèm phần đã / chưa lên invoice (xem /don-invoice).&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, số tháng (so_thang), khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/dat-hang 10&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/dat-hang 2026 dtmb002&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/dat-hang 1/1/2025-13/11/2026 dtmb002 air&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Giá trị đơn hàng mua theo từng tháng năm 2025 và 2026, hình thức air của NCC India&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Tỷ trọng giá trị mua hàng Sea và Air theo từng tháng năm 2026 của NCC India&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;thong-ke-don&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/thong-ke-don&lt;/code&gt;&lt;/div&gt;
+        &lt;h2&gt;Thống kê đơn đặt hàng&lt;/h2&gt;
+        &lt;p&gt;Số đơn, tổng giá trị đơn, giá trị bình quân mỗi đơn, số đơn bình quân mỗi tháng và chi tiết từng tháng. N tháng gần nhất mặc định là N tháng đã kết thúc (mặc định 3); có tháng/năm thì là kỳ kết thúc. Hoặc tính trong một khoảng ngày tùy chọn (từ ngày đến ngày). Không chọn Sea/Air thì có thêm bảng chia Sea / Air kèm dòng tổng. Hỗ trợ NCC và Sea/Air, gồm hàng nội địa.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;số tháng (so_thang), tháng/năm kết thúc, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/thong-ke-don 3thang air&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/thong-ke-don 31/10/2026-9/11/2026 hhka161&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Tính tổng số đơn hàng từ 31/10/2026 đến 9/11/2026 của Foton&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Đơn khẩn Foton trung bình bao nhiêu đơn mỗi tháng trong 3 tháng gần nhất?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;so-ma-hang&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/so-ma-hang&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/somahang&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/ma-dat&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Số mã hàng đã đặt&lt;/h2&gt;
+        &lt;p&gt;Số mã hàng khác nhau (không trùng) trên đơn đặt hàng theo từng tháng và cả kỳ, kèm số dòng hàng. Kỳ giống /thong-ke-don: N tháng gần nhất (mặc định 3 tháng đã kết thúc), tháng/năm, hoặc khoảng ngày. Số mã cả kỳ không bằng tổng các tháng vì một mã chỉ đếm 1 lần.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;số tháng (so_thang), tháng/năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/so-ma-hang 2026 dtmb002&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/so-ma-hang 10/2026 hhka161 air&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Số lượng mã hàng đặt năm 2026 theo từng tháng của Mobis India&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;top-ma&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/top-ma&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/topma&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/ma-mua-nhieu&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Mã hàng đặt mua nhiều nhất&lt;/h2&gt;
+        &lt;p&gt;Danh sách N mã hàng có tổng tiền đặt mua lớn nhất (mặc định 20, tối đa 1000; trên 60 mã gửi kèm file Excel tạm): mã, tên, model (nhóm xe cấp 3), số lượng, đơn giá bình quân, tổng tiền và tỷ trọng; thêm chữ co để có cột được / không được áp dụng C/O (lần về kho gần nhất). Theo đơn đặt hàng, ngày đặt trong kỳ; kỳ giống /thong-ke-don (N tháng gần nhất, tháng/năm, khoảng ngày).&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;số mã (topN), tháng/năm, khoảng ngày, NCC, Sea/Air, kho, nhóm hàng, nk/nd, co&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/top-ma top200 2026 dtmb001 dtmb002&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/top-ma top300 2026 dtmb001 co&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/top-ma 10/2026 hhka161&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Cho tôi danh mục 200 mã mua nhiều nhất của Mobis Hàn và Mobis Ấn năm 2026&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;don-invoice&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/don-invoice&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/chua-invoice&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/da-invoice&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Đã đặt / đã lên invoice / đã giao&lt;/h2&gt;
+        &lt;p&gt;Giá trị hàng đã đặt, đã lên invoice và đã đặt nhưng chưa lên invoice, chia Sea/Air và theo tháng đặt hàng. Không nêu kỳ thì tính toàn bộ đơn từ 01/01/2025; nêu tháng/năm thì tính đơn đặt trong kỳ đó. Mặc định VND; thêm usd để xem bằng USD (chỉ NCC nước ngoài). Thêm giao để xem đã giao / chưa giao (đã nhập kho theo ngày dự kiến về kho).&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, NCC, Sea/Air, usd, giao&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/don-invoice dtmb001&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/don-invoice dtmb001 usd&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/don-invoice hhka161 giao&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/don-invoice 9/2026 air&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Giá trị hàng đã đặt Hyundai Mobis nhưng chưa lên invoice&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Giá trị đã đặt, đã giao và chưa giao của Foton&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;don-so-luong&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/don-so-luong&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/sl-don&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/so-luong-don&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Số lượng, số mã đã đặt / đã thực hiện&lt;/h2&gt;
+        &lt;p&gt;Số lượng (đơn vị hàng) và số mã hàng: đã đặt, đã thực hiện (đã giao = nhập kho) và chưa thực hiện, chia Sea/Air và theo tháng đặt hàng. Thêm invoice để tính theo đã lên invoice. Kỳ: tháng/năm, khoảng ngày, không nêu = từ 01/01/2025. Giá trị (tiền) xem /don-invoice.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nk/nd, invoice&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/don-so-luong 1/11/2025-13/11/2026 hhka161&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/don-so-luong 2026 dtmb001 invoice&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Tính số lượng đã đặt hàng, đã thực hiện, chưa thực hiện của Foton giai đoạn từ 1/11/2025 đến 13/11/2026&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;khieu-nai&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/khieu-nai&lt;/code&gt;&lt;/div&gt;
+        &lt;h2&gt;Tỷ lệ khiếu nại thành công theo giá trị&lt;/h2&gt;
+        &lt;p&gt;Giá trị khiếu nại = Đơn giá × SL; tỷ lệ = GT Đồng ý / (GT Đồng ý + GT Từ chối). Thêm theo-thang để xem từng tháng. Tổng cộng đủ tiền và tính lại tỷ lệ khi một NCC hoặc nguồn xác nhận cùng loại tiền; nhiều NCC khác/chưa rõ loại tiền có tổng riêng từng NCC, không cộng chéo. Chưa xử lý và Khác không vào mẫu số. Mặc định từ đầu năm đến hôm nay.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;năm, tháng, khoảng ngày (tu_ngay, den_ngay), NCC (tên chứa chuỗi hoặc mã), theo-thang&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/khieu-nai 2026 hhka161 theo-thang&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/khieu-nai 2026 Thành Công Motor&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/khieu-nai 1/1/2026-31/10/2026&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Tỷ lệ khiếu nại thành công theo giá trị năm 2026&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;bien-dong-gia&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/bien-dong-gia&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/bdg&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/gia&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Biến động giá mua&lt;/h2&gt;
+        &lt;p&gt;So giá mua hiệu lực ngày cuối kỳ với ngày đầu kỳ và với giá lần trước (bảng giá mua Bravo): % và tiền chênh gia quyền theo SL đã mua trong kỳ, số mã tăng / giảm, từng NCC, N mã tác động tiền lớn nhất (mặc định 10); hoặc giá từng NCC của 1 mã hàng. Không nêu kỳ = 01/01 năm nay đến hôm nay; ngày cuối kỳ được ở tương lai (giá đã báo trước).&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;khoảng ngày (tu_ngay = ngày đầu kỳ, den_ngay = ngày cuối kỳ), tháng, năm, NCC, số mã top (so_ma), mã hàng (so_tra_cuu)&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/bien-dong-gia&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/bien-dong-gia 1/1/2026-31/12/2027 dtmb002 top20&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/bien-dong-gia 0510000441C&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Giá mua năm 2026 tăng bao nhiêu so với đầu năm?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&quot;group&quot; id=&quot;nhom-hang-ve&quot;&gt;
+    &lt;div class=&quot;group-head&quot;&gt;&lt;h2 class=&quot;group-name&quot;&gt;Hàng về &amp;amp; lô hàng&lt;/h2&gt;&lt;code&gt;/lenh hang-ve&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;7 lệnh&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;cmds&quot;&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;hang-ve&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/hang-ve&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/hangve&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Giá trị hàng về&lt;/h2&gt;
+        &lt;p&gt;Giá trị hàng về (FOB) trong tháng, chia Sea/Air, so cùng kỳ.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, NCC, kho, nhóm hàng&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/hang-ve 9&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/hang-ve 9 nhom:lop&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Tháng 9 về bao nhiêu hàng?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;lich-hang-ve&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/lich-hang-ve&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/lich&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Lịch hàng về&lt;/h2&gt;
+        &lt;p&gt;Các lô hàng (invoice) dự kiến về kho trong N ngày tới (mặc định 7).&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;số ngày&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/lich-hang-ve&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/lich-hang-ve 14&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;giao-hang&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/giao-hang&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/thoi-gian-giao&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/tggh&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Thời gian giao hàng&lt;/h2&gt;
+        &lt;p&gt;Các đơn đặt hàng trong kỳ: số ngày từ phiếu xử lý đơn hàng mua đến khi lên phiếu yêu cầu nhập kho, tính theo từng dòng đơn: trung bình (theo dòng và theo giá trị), nhanh nhất / chậm nhất, chia loại đơn (Sea/Air; nội địa: thường/khẩn) và kho theo đơn, phân bố số ngày, các dòng chậm nhất, các dòng chưa lên phiếu yêu cầu nhập kho. Thêm invoice để tính đến ngày invoice ghi trên phiếu yêu cầu nhập kho thay cho ngày lập phiếu. Thêm theo-thang để xem bảng ngang: hàng leadtime theo giá trị Sea/Air, cột Năm (cả kỳ) và từng tháng đặt hàng; tháng không có dòng để trống. Kèm số dòng và bảng TB theo dòng. Thêm phan-bo để xem tỷ lệ % giá trị đã giao theo mốc ≤15, 16–30, 31–45, 46–60, 61–75, 76–90, &amp;gt;90 ngày, chia theo tháng đặt hàng, hình thức Sea/Air và kho (hàng ngang = 100). Thêm chua-giao để liệt kê theo mã các mã còn hàng chưa lên phiếu yêu cầu nhập kho và số ngày đã chờ. Kỳ là ngày đơn hàng; không nêu kỳ thì từ đầu năm nay.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, khoảng ngày (tu_ngay, den_ngay), NCC, Sea/Air, kho, nhóm hàng, invoice, theo-thang, phan-bo&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/giao-hang hhka161&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/giao-hang 1/1/2026-31/10/2026 hhka161 theo-thang&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/giao-hang hhka161 invoice&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/giao-hang 31/10/2026-13/11/2026 hhka161 chua-giao&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/giao-hang 2026 hhka161 phan-bo&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/giao-hang 10/2026 hhka161 air&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/giao-hang 1/10/2026-10/11/2026 dtmb001&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Tính thời gian giao hàng của các đơn Foton từ phiếu xử lý đơn hàng mua đến lúc lên phiếu yêu cầu nhập kho&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;thong-quan&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/thong-quan&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/thongquan&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/tq&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Thời gian cập cảng → thông quan&lt;/h2&gt;
+        &lt;p&gt;Số ngày trung bình từ ngày cập cảng đến ngày thông quan, mỗi invoice (lô) tính 1 lần, chia Sea/Air kèm dòng tổng, nhanh nhất / chậm nhất; kỳ lọc theo ngày thông quan (khoảng ngày, tháng hoặc năm; không nêu = từ đầu năm nay). Lô thông quan trước cập cảng tính 0 ngày; lô quá 30 ngày coi là nghi sai ngày, không tính, được liệt kê riêng.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;khoảng ngày (tu_ngay, den_ngay), tháng, năm, NCC, Sea/Air, kho, nk/nd&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/thong-quan 1/1/2026-31/10/2026&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/thong-quan 2026 dtmb001 sea&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/thong-quan 10/2026&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Luna tính thời gian trung bình từ ngày cập cảng đến ngày thông quan trong khoảng từ 1/1/2026-31/10/2026&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;cont&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/cont&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/container&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Số cont nhập kho&lt;/h2&gt;
+        &lt;p&gt;Số cont 20, cont 40 và số bill hàng lẻ (LCL) nhập kho theo ngày dự kiến về kho, chia theo NCC và kho.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;tháng, năm, NCC, kho&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/cont 10 dtmb001&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Số cont nhập kho từ Hyundai Mobis tháng 10&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;hang-nguy-hiem&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/hang-nguy-hiem&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/nguy-hiem&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/hnh&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Hàng nguy hiểm&lt;/h2&gt;
+        &lt;p&gt;Hàng nguy hiểm (phân loại Bravo MB01) theo từng tháng về kho: Sea đếm số cont có hàng nguy hiểm (trong đó cont DG), Air đếm số lô (invoice); giá trị hàng nguy hiểm, chi phí vận chuyển quốc tế + nội địa cả cont/lô và phần phân bổ cho hàng nguy hiểm. Kỳ 1 tháng thì kèm danh sách cont / invoice. Không nêu kỳ = từ đầu năm nay.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;khoảng ngày (tu_ngay, den_ngay), tháng, năm, NCC, Sea/Air&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/hang-nguy-hiem 2026&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/hang-nguy-hiem 10/2026 air&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/hang-nguy-hiem 1/1/2026-31/10/2026&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Năm 2026 có bao nhiêu cont hàng nguy hiểm theo từng tháng&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;tre-hang&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/tre-hang&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/tre&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Invoice trễ hàng&lt;/h2&gt;
+        &lt;p&gt;Invoice quá ngày dự kiến về kho mà chưa hoàn thiện.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;không&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/tre-hang&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&quot;group&quot; id=&quot;nhom-kiem-tra&quot;&gt;
+    &lt;div class=&quot;group-head&quot;&gt;&lt;h2 class=&quot;group-name&quot;&gt;Kiểm tra dữ liệu Bravo&lt;/h2&gt;&lt;code&gt;/lenh kiem-tra&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;4 lệnh&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;cmds&quot;&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;chua-tbhv&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/chua-tbhv&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/tbhv&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Chưa gửi mail TBHV&lt;/h2&gt;
+        &lt;p&gt;Invoice đã cập cảng nhưng chưa gửi email thông báo hàng về.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;không&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/chua-tbhv&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;lap-phieu&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/lap-phieu&lt;/code&gt;&lt;/div&gt;
+        &lt;h2&gt;Còn Lập phiếu&lt;/h2&gt;
+        &lt;p&gt;Invoice hàng quốc tế đã có vận đơn mà phiếu còn ở trạng thái Lập phiếu.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;không&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/lap-phieu&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;vat&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/vat&lt;/code&gt;&lt;/div&gt;
+        &lt;h2&gt;VAT bán ra cần xử lý&lt;/h2&gt;
+        &lt;p&gt;Số mã hàng theo nhóm (c chưa có, b hết hạn, f thiếu HS, d lệch thuế suất, e sắp hết hạn) và ưu tiên, kèm 20 mã ưu tiên nhất.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;nhóm c/b/f/d/e, NCC (mã hàng trên invoice của NCC), hàng nhập khẩu / nội địa (nk / nd)&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/vat&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/vat c&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/vat f&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/vat hhka161&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Mã nào chưa có VAT bán ra?&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Có bao nhiêu mã hàng Foton đang thiếu thông tin VAT nội địa và VAT bán ra?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;vat-nhap-kho&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/vat-nhap-kho&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/vatnk&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;VAT mã hàng nhập kho trong ngày&lt;/h2&gt;
+        &lt;p&gt;Mã hàng lên phiếu yêu cầu nhập kho trong ngày (mặc định hôm nay) đang thiếu VAT đầu vào (mua vào), đầu ra (bán ra), hết hạn, thiếu mã HS hoặc lệch thuế suất, kèm invoice và NCC. Gõ ngày hoặc khoảng ngày để xem ngày khác.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;ngày hoặc khoảng ngày (tu_ngay, den_ngay), NCC, hàng nhập khẩu / nội địa (nk / nd), kho&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/vat-nhap-kho&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/vat-nhap-kho 10/11/2026&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/vat-nhap-kho nd&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Hàng nội địa nhập kho ngày 10/11 có mã nào thiếu VAT không?&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Có mã hàng nào nhập kho hôm nay bị thiếu VAT đầu vào - đầu ra không?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&quot;group&quot; id=&quot;nhom-kho&quot;&gt;
+    &lt;div class=&quot;group-head&quot;&gt;&lt;h2 class=&quot;group-name&quot;&gt;Tồn kho&lt;/h2&gt;&lt;code&gt;/lenh kho&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;1 lệnh&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;cmds&quot;&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;ton-kho&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/ton-kho&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/tonkho&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/ton&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Tồn kho&lt;/h2&gt;
+        &lt;p&gt;Tồn kho hiện tại theo báo cáo tồn kho theo kho của Bravo: giá trị, số lượng, số mã còn tồn, chia theo kho và nhóm hàng; hoặc tồn từng kho của 1 mã hàng (gõ một phần mã thì liệt kê các mã khớp).&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;mã hàng, kho, nhóm hàng, Sea/Air&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/ton-kho&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/ton-kho kho:da nhom:ptu&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/ton-kho 59796AA400&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Mã 230404A960 còn tồn bao nhiêu?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+  &lt;section class=&quot;group&quot; id=&quot;nhom-danh-ba&quot;&gt;
+    &lt;div class=&quot;group-head&quot;&gt;&lt;h2 class=&quot;group-name&quot;&gt;Danh bạ công cụ &amp;amp; tài liệu&lt;/h2&gt;&lt;code&gt;/lenh danh-ba&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;3 lệnh&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;cmds&quot;&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;danh-ba&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/danh-ba&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/danhba&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/cong-cu&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/tai-lieu&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Danh bạ công cụ, báo cáo, tài liệu của phòng&lt;/h2&gt;
+        &lt;p&gt;Tìm công cụ / tool / báo cáo / template Excel / quy trình / tài liệu đào tạo của phòng MH-XNK ở đâu, link mở, đã chuyển chỗ mới chưa. Không từ khoá: link file danh bạ + tổng quan. Từ khoá (so_tra_cuu) để tìm theo tên.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;từ khoá (so_tra_cuu)&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/danh-ba&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/danh-ba invoice&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Quy trình mua hàng XNK để ở đâu?&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Cho xin link tài liệu đào tạo Excel&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;template&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/template&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/templates&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/mau&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/bieu-mau&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/tpl&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Template / biểu mẫu&lt;/h2&gt;
+        &lt;p&gt;Truy cập nhanh template Excel (import invoice, tờ khai, VAT, C/O, bảng kê YCNK, chứng từ CK...) và logo / mẫu trình ký của phòng: tên, dùng để làm gì, link mở thư mục. Không từ khoá: cả danh sách; có từ khoá (so_tra_cuu): template khớp.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;từ khoá (so_tra_cuu)&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/template&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/template invoice&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/template vat&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Cho mình template import invoice Mobis&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Mẫu trình ký để ở đâu?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;cmd&quot; id=&quot;chi-tieu&quot;&gt;
+        &lt;div class=&quot;cmd-head&quot;&gt;&lt;code class=&quot;name&quot;&gt;/chi-tieu&lt;/code&gt;&lt;span class=&quot;alias&quot;&gt;/chitieu&lt;/span&gt;&lt;span class=&quot;alias&quot;&gt;/dinh-nghia&lt;/span&gt;&lt;/div&gt;
+        &lt;h2&gt;Định nghĩa chỉ tiêu&lt;/h2&gt;
+        &lt;p&gt;Tra định nghĩa, công thức (DAX), nguồn, đơn vị, ngoại lệ của một chỉ tiêu / measure BCQTMH hoặc của một lệnh Luna (sổ chỉ tiêu). Không trả số liệu.&lt;/p&gt;
+        &lt;dl&gt;&lt;dt&gt;Tham số&lt;/dt&gt;&lt;dd&gt;từ khoá (so_tra_cuu): tên chỉ tiêu, measure hoặc tên lệnh&lt;/dd&gt;&lt;/dl&gt;
+        &lt;ul class=&quot;ex&quot;&gt;&lt;li&gt;&lt;code&gt;/chi-tieu leadtime&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;/chi-tieu CPMH&lt;/code&gt;&lt;/li&gt;&lt;li&gt;&lt;code&gt;Tỷ lệ C/O tính thế nào?&lt;/code&gt;&lt;/li&gt;&lt;/ul&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+  &lt;p class=&quot;foot&quot;&gt;Câu hỏi chưa có lệnh sẽ được ghi lại để bổ sung. Gõ &lt;code&gt;/lenh&lt;/code&gt; trong Teams để xem tóm tắt theo nhóm, &lt;code&gt;/lenh &amp;lt;nhóm&amp;gt;&lt;/code&gt; để xem chi tiết một nhóm. Cập nhật 18/11/2026.&lt;/p&gt;
+&lt;/div&gt;
+"></iframe></section>
+<h1 class="chuong" id="c4">4. Hướng dẫn sử dụng công cụ</h1>
+<section id="m5"><h2>4.1 TOOL-ADM-01 – Điền khảo sát phối hợp TST</h2><p class="nguon">Nguồn: <code>tools/TOOL-ADM-01_khao-sat-tst/phat-hanh/README.md</code></p><p>Hỗ trợ nhân viên MH-XNK điền khảo sát phối hợp phòng ban trên Edge theo danh sách trong bảng. Có lịch sử để tránh gửi trùng.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>Auto_Khao_Sat_TST.exe</code> trong thư mục này. Máy cần có trình duyệt Microsoft Edge.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Chọn tháng/năm khảo sát và các tuỳ chọn ở phía trên (Bình quân ±1, Tự động gửi; mặc định Tự động gửi đang tắt).</li>
+<li>Ở tab <strong>Danh sách phiếu</strong>, nhập từng dòng hoặc bấm <strong>Dán Excel</strong> để dán nhiều dòng. Cột Mã nhân viên là bắt buộc (nên để định dạng Text trong Excel để giữ số 0 ở đầu).</li>
+<li>Có thể bấm <strong>Danh bạ nhân viên</strong>, chọn một người rồi bấm <strong>Điền vào dòng đang chọn</strong> để điền sẵn mã, họ tên, email.</li>
+<li>Bấm <strong>Bắt đầu</strong>. Tool mở Edge và điền lần lượt từng dòng; muốn ngừng thì bấm <strong>Dừng</strong>.</li>
+<li>Đọc cột <strong>Trạng thái</strong> của từng dòng để biết dòng nào đã điền/đã gửi, dòng nào lỗi hoặc bị chặn.</li>
+<li>Xong việc, bấm <strong>Đóng các tab đã điền</strong> để đóng các tab Edge còn mở.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>Tool điền thẳng lên trang khảo sát. Lịch sử từng phiếu xem bằng nút <strong>Xem lịch sử</strong>; bảng đang nhập được tự lưu cho lần mở sau.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Không đổi link hoặc điểm để gửi lại cùng một người trong cùng kỳ: tool sẽ chặn gửi trùng.</li>
+<li>Nếu kết quả gửi chưa rõ, tool dừng cả lô: không xoá lịch sử để thử lại, hãy báo người phụ trách kiểm tra.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-ADM-01\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m6"><h2>4.2 TOOL-ADM-02 – In hàng loạt</h2><p class="nguon">Nguồn: <code>tools/TOOL-ADM-02_in-hang-loat/phat-hanh/README.md</code></p><p>In hàng loạt các file Excel, Word, PDF trong một thư mục. Ngoài ra có chức năng ghép trang đầu các tờ khai ToKhaiHQ7N thành một file PDF.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>Tool_In_Hang_Loat.exe</code> trong thư mục này. Máy cần có máy in; in Excel/Word cần cài Microsoft Excel/Word.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Chọn file hoặc thư mục cần in, xem danh sách (OK/LỖI) và các tab xem trước/kiểm tra.</li>
+<li>Chọn chế độ <strong>In hàng loạt</strong> (Excel in sheet đầu, Word, PDF) hoặc <strong>Trang đầu TKHQ</strong> (Excel tờ khai có tên chứa <code>ToKhaiHQ7N</code>).</li>
+<li>Bấm <strong>Nạp máy in</strong>, chọn máy in, số bản, in 1 hay 2 mặt, khổ giấy. Với chế độ trang đầu tờ khai có thể chọn lưu thành file PDF.</li>
+<li>Bấm <strong>Chạy / In</strong> và xác nhận các hộp thoại hiện ra.</li>
+<li>Theo dõi tiến độ; khi xong dùng nút mở kết quả hoặc mở thư mục nếu có.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>In trực tiếp ra máy in thì không tạo file. Với ghép trang đầu tờ khai, bạn chọn nơi lưu file PDF ngay khi chạy.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>PDF được gửi sang máy in qua ứng dụng PDF mặc định; tool báo đã gửi lệnh in, không xác nhận giấy đã in ra.</li>
+<li>Nếu gặp lỗi, đóng các file Excel/Word đang mở rồi chạy lại.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-ADM-02\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m7"><h2>4.3 TOOL-ADM-03 – In đề xuất Base Request</h2><p class="nguon">Nguồn: <code>tools/TOOL-ADM-03_in-de-xuat-base/phat-hanh/README.md</code></p><p>Đọc danh sách mã đề xuất trong file Excel, kiểm tra đề xuất đã được duyệt xong chưa trên Base Request, tải và in file chữ ký điện tử, rồi ghi kết quả vào Excel.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>Tool_Print_Base_Request.exe</code> trong thư mục này. Máy cần có trình duyệt Chrome và máy in; bạn cần có tài khoản Base Request.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Chuẩn bị file <code>List.xlsx</code> chứa danh sách Mã đề xuất; chọn đúng file này trong tool.</li>
+<li>Chọn máy in ở mục <strong>Máy in chỉ định</strong> (hoặc dùng máy in mặc định của Windows).</li>
+<li>Lần đầu: bấm <strong>Mở Chrome &amp; Đăng nhập Base</strong>, đăng nhập tài khoản Base trên cửa sổ Chrome vừa mở. Các lần sau không cần đăng nhập lại.</li>
+<li>Bấm <strong>BẮT ĐẦU CHẠY TOOL</strong>. Tool lần lượt mở từng đề xuất, kiểm tra duyệt, tải và in file chữ ký điện tử.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<ul>
+<li>File PDF chữ ký điện tử tải về thư mục <code>downloads</code> cạnh tool.</li>
+<li>Trạng thái từng dòng ghi ngay vào <code>List.xlsx</code>: <strong>Đã in</strong>, <strong>Chưa duyệt hết</strong> hoặc <strong>Lỗi</strong>.</li>
+</ul>
+<h3>Lưu ý</h3>
+<ul>
+<li>Đề xuất ở trạng thái Chưa duyệt hết sẽ không được in; chờ duyệt xong rồi chạy lại.</li>
+<li>Nếu ghi Excel bị lỗi, đóng file <code>List.xlsx</code> đang mở rồi chạy lại.</li>
+<li>Dòng Lỗi: kiểm tra lại mã đề xuất hoặc kết nối mạng rồi chạy lại.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m8"><h2>4.4 TOOL-ADM-04 – Ký PDF hàng loạt</h2><p class="nguon">Nguồn: <code>tools/TOOL-ADM-04_ky-pdf-hang-loat/phat-hanh/README.md</code></p><p>Tool dùng để ký/đóng dấu nhiều file PDF một lần.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>bulk_pdf_signer.exe</code> trong thư mục này.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Chưa có hướng dẫn chi tiết từng bước cho tool này. Nếu cần dùng, hãy liên hệ người phụ trách trước.</li>
+<li>Nên thử trên bản sao của file PDF, không thử trực tiếp trên bản gốc.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m9"><h2>4.5 TOOL-CO-01 – Trích xuất C/O e-Form D</h2><p class="nguon">Nguồn: <code>tools/TOOL-CO-01_co-form-d/phat-hanh/README.md</code></p><p>Đọc các file PDF C/O e-Form D (có lớp chữ) và xuất thông tin C/O, danh sách mặt hàng và các lỗi ra file Excel.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>CO_FormD_to_Excel.exe</code> trong thư mục này.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Bấm <strong>Chọn thư mục</strong> (đọc cả thư mục con) hoặc <strong>Chọn file</strong> để chọn PDF. Mỗi lần chọn sẽ thay thế lựa chọn trước.</li>
+<li>Xem danh sách: mỗi PDF có trạng thái OK/LỖI và ghi chú.</li>
+<li>Bấm <strong>Xuất Excel</strong>.</li>
+<li>Bấm <strong>Mở file kết quả</strong> hoặc <strong>Mở thư mục</strong> để xem.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>File <code>CO_extract_&lt;ngày&gt;_&lt;giờ&gt;.xlsx</code> được tự lưu trong thư mục bạn đã chọn (hoặc cạnh file PDF đầu tiên nếu chọn từng file). Có các sheet <strong>CO</strong>, <strong>Items</strong> và <strong>Errors</strong> (nếu có PDF lỗi).</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>PDF phải có lớp chữ; tool không đọc được file scan (ảnh).</li>
+<li>Cột Check trong sheet CO cảnh báo khi thiếu thông tin hoặc tổng FOB lệch: đối chiếu lại với PDF gốc.</li>
+<li>Nếu Excel đang mở file kết quả, đóng lại rồi xuất lại.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m10"><h2>4.6 TOOL-CO-02 – Trích xuất C/O Form E bằng OCR</h2><p class="nguon">Nguồn: <code>tools/TOOL-CO-02_co-form-e/phat-hanh/README.md</code></p><p>Đọc C/O Form E dạng PDF bằng nhận dạng chữ (OCR) và xuất ra file Excel.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>CO_FormE_Reader.exe</code> trong thư mục này.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Bấm <strong>Chọn file</strong> (một hoặc nhiều PDF) hoặc <strong>Chọn thư mục</strong> (quét cả thư mục con).</li>
+<li>Chờ tool đọc xong, chọn từng dòng bên trái để xem các tab <strong>Thông tin chung</strong>, <strong>Chi tiết</strong>, <strong>Kiểm tra</strong>.</li>
+<li>Bấm <strong>Xuất Excel</strong>.</li>
+<li>Chọn dòng đã xuất rồi bấm <strong>Mở file kết quả</strong> hoặc <strong>Mở thư mục</strong>.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>Mỗi PDF có một file <code>&lt;tên PDF&gt;_extracted.xlsx</code> lưu cạnh chính file PDF đó. Nếu file đã có, tool hỏi trước khi ghi đè.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Luôn đối chiếu kết quả OCR với PDF gốc trước khi dùng.</li>
+<li>Nếu Excel đang mở file kết quả, đóng lại rồi xuất lại.</li>
+<li>Lần đầu chạy OCR có thể chậm hơn.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-CO-02\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m11"><h2>4.7 TOOL-CUS-02 – Tách tờ khai hải quan PDF</h2><p class="nguon">Nguồn: <code>tools/TOOL-CUS-02_tach-tkhq/phat-hanh/README.md</code></p><p>Tìm và tách các trang tờ khai trong PDF nguồn theo danh sách Excel (mã KHSP, số lượng, tên file xuất), ra từng file PDF riêng.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>Tool_Tach_TKHQ.exe</code> trong thư mục này.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Bấm <strong>Chọn file</strong>, chọn file Excel danh sách (ví dụ <code>file auto.xlsx</code>; tool đọc sheet đầu tiên, bỏ dòng tiêu đề).</li>
+<li>Chọn <strong>Thư mục PDF nguồn</strong> và <strong>Thư mục kết quả</strong>.</li>
+<li>Chờ xem trước, xem các tab <strong>Chi tiết</strong> và <strong>Kiểm tra</strong> để sửa lỗi đầu vào nếu có.</li>
+<li>Bấm <strong>Tách PDF</strong> và xác nhận.</li>
+<li>Bấm <strong>Mở file kết quả</strong> hoặc <strong>Mở thư mục</strong> để xem các PDF đã tách.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>Các PDF đã tách nằm trong thư mục kết quả bạn chọn. File trùng tên sẽ bị ghi đè. File ghi chú <code>log_&lt;ngày&gt;_&lt;giờ&gt;.txt</code> nằm cạnh PDF nguồn.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Lỗi ở một dòng không làm dừng các dòng còn lại; xem tab Kiểm tra để biết dòng nào lỗi.</li>
+<li>Nếu không xuất được PDF nào, các nút mở kết quả bị khoá: kiểm tra lại file Excel và thư mục PDF nguồn.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-CUS-02\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m12"><h2>4.8 TOOL-CUS-03 – Tra cứu kết quả đăng kiểm</h2><p class="nguon">Nguồn: <code>tools/TOOL-CUS-03_tra-cuu-dang-kiem/phat-hanh/README.md</code></p><p>Tra kết quả hồ sơ đăng kiểm theo danh sách số hồ sơ một cửa trong file Excel.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>Tool_Tra_Cuu_KQDK.exe</code> trong thư mục này. Máy cần có trình duyệt Chrome hoặc Edge và mạng internet.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Chọn file Excel (đọc sheet đầu; dòng đầu là tiêu đề; số hồ sơ nằm ở cột thứ 2).</li>
+<li>Xem các tab <strong>Chi tiết</strong> và <strong>Kiểm tra</strong>, chọn thư mục kết quả.</li>
+<li>Nhập tài khoản và mật khẩu của chính bạn vào các ô tương ứng.</li>
+<li>Bấm <strong>Tra cứu</strong>. Dòng thiếu số hồ sơ sẽ được hỏi xác nhận.</li>
+<li>Mở file kết quả hoặc log bằng các nút trên giao diện.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>File <code>Ket_Qua_Tra_Cuu_Dang_Kiem.xlsx</code> trong thư mục kết quả, kết quả nằm ở cột thứ 4. Nếu file đang mở trong Excel, tool lưu thành file khác có kèm thời điểm.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Tool không lưu tài khoản/mật khẩu; mỗi lần dùng phải nhập lại.</li>
+<li>Khi trang web lỗi, tool vẫn lưu các dòng đã xử lý và liệt kê các dòng chưa xử lý: chạy lại với các dòng đó.</li>
+<li>Dòng ghi "chưa có kết quả" nghĩa là hệ thống chưa trả kết quả cho hồ sơ đó.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-CUS-03\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m13"><h2>4.9 TOOL-CUS-04 – Hỗ trợ rà mã HS</h2><p class="nguon">Nguồn: <code>tools/TOOL-CUS-04_check-hs-code/phat-hanh/README.md</code></p><p>Điền mã HS, phân nhóm và dẫn chứng cho danh sách phụ tùng trong file Excel, xuất ra file mới đã điền.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>Check_HS_Code.exe</code> trong thư mục này. Tool không dùng mạng.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Chọn file Excel (.xlsx) danh sách phụ tùng.</li>
+<li>Xem các tab <strong>Chi tiết</strong> và <strong>Kiểm tra</strong> (xem trước tối đa 500 dòng). Sheet không có dòng hợp lệ báo LỖI; muốn xuất vẫn phải xác nhận.</li>
+<li>Bấm <strong>Xuất Excel đã điền</strong> và chọn tên file mới.</li>
+<li>Dùng các nút mở file, mở thư mục để xem kết quả.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>File Excel mới do bạn đặt tên; tool không ghi đè file nguồn hay file kết quả đã có.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Mã HS do tool điền theo quy tắc có sẵn: cần rà soát lại trước khi khai báo.</li>
+<li>Đóng file Excel đang mở trước khi xuất.</li>
+<li>Thư mục <code>Tai-lieu</code> đi kèm chứa tài liệu tham khảo.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-CUS-04\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m14"><h2>4.10 TOOL-INV-01 – Đọc hóa đơn điện tử XML</h2><p class="nguon">Nguồn: <code>tools/TOOL-INV-01_hoa-don-dien-tu-xml/phat-hanh/README.md</code></p><p>Đọc hàng loạt hóa đơn điện tử XML/ZIP, kiểm tra dữ liệu và chữ ký rồi xuất ra file Excel.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>DocHoaDonXML.exe</code> trong thư mục này, hoặc kéo file/thư mục hóa đơn thả vào file EXE. Tool không dùng mạng hay máy in.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Chọn file XML/ZIP hoặc thư mục hóa đơn (mặc định không quét thư mục con).</li>
+<li>Xem thông tin chung, dòng hàng và phần kiểm tra.</li>
+<li>Chọn nơi lưu nếu cần, rồi bấm <strong>Xuất Excel</strong>. Nếu có lỗi/cảnh báo, tool hỏi xác nhận trước khi xuất.</li>
+<li>Dùng các nút mở kết quả, mở thư mục ở dưới bảng để xem file.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>File Excel tại nơi bạn chọn, gồm thông tin chung, chi tiết và chi tiết tổng hợp.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Hóa đơn có cảnh báo chữ ký hoặc dữ liệu: đối chiếu lại với hóa đơn gốc.</li>
+<li>Nếu Excel đang mở file kết quả, đóng lại rồi xuất lại.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-INV-01\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m15"><h2>4.11 TOOL-INV-02 – Đọc invoice Skoda</h2><p class="nguon">Nguồn: <code>tools/TOOL-INV-02_invoice-skoda/phat-hanh/README.md</code></p><p>Bóc các dòng hàng trong invoice PDF của Skoda (mã hàng, tên, số lượng, đơn giá, trị giá, mã kiện, xuất xứ, reference) sang file Excel.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>doc_pdf_invoice_skoda.exe</code> trong thư mục này.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Chọn file PDF (chọn được nhiều file) hoặc chọn thư mục (quét cả thư mục con). Tool tự đọc xem trước, chưa ghi Excel.</li>
+<li>Chọn từng PDF để xem các tab <strong>Thông tin chung</strong>, <strong>Chi tiết</strong>, <strong>Kiểm tra</strong>.</li>
+<li>Bấm <strong>Xuất Excel</strong> và xác nhận nếu tool hỏi (ghi đè hoặc dữ liệu có cảnh báo).</li>
+<li>Bấm <strong>Mở file kết quả</strong> hoặc <strong>Mở thư mục</strong> để xem.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>Mỗi PDF cho ra một file <code>&lt;tên PDF&gt;_extracted.xlsx</code> lưu cạnh chính file PDF đó.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>PDF phải có lớp chữ và đúng mẫu invoice Skoda; không đọc được file scan.</li>
+<li>PDF không đọc được sẽ bị bỏ qua, các PDF còn lại vẫn chạy tiếp.</li>
+<li>Tab Kiểm tra cảnh báo dòng thiếu dữ liệu hoặc lệch số lượng x đơn giá: đối chiếu PDF gốc.</li>
+<li>Đóng file Excel kết quả đang mở trước khi xuất lại.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-INV-02\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m16"><h2>4.12 TOOL-LOG-01 – Đọc packing list Skoda India</h2><p class="nguon">Nguồn: <code>tools/TOOL-LOG-01_doc-packing-list-skoda-india/phat-hanh/README.md</code></p><p>Đọc file PDF "Invoice cum Packing List" của Skoda India sang Excel: thông tin chung, dòng hàng, kiện và đối chiếu tổng.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>PackingList_SkodaIndia.exe</code> trong thư mục này. Để nguyên file <code>danh_muc_bravo.csv</code> cạnh EXE (dùng để khớp mã hàng Bravo).</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Bấm <strong>Chọn file PDF</strong> (chọn được nhiều file) hoặc <strong>Chọn thư mục</strong> (đọc mọi PDF, kể cả thư mục con).</li>
+<li>Xem danh sách bên trái (xanh = OK, đỏ = có lỗi) và các tab <strong>Thông tin chung</strong>, <strong>Dòng hàng</strong>, <strong>Kiện</strong>, <strong>Kiểm tra</strong>.</li>
+<li>Bấm <strong>Xuất Excel</strong>.</li>
+<li>Bấm <strong>Mở file Excel</strong> hoặc <strong>Mở thư mục</strong> để xem.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<ul>
+<li>Chọn 1 file: lưu cạnh PDF, tên <code>&lt;tên PDF&gt;_packing_list.xlsx</code>.</li>
+<li>Chọn nhiều file: lưu thành <code>PackingList_SkodaIndia_&lt;ngày giờ&gt;.xlsx</code>.</li>
+<li>Sheet "Mau in invoice" đúng mẫu in invoice; các sheet còn lại là chi tiết và kiểm tra.</li>
+</ul>
+<h3>Lưu ý</h3>
+<ul>
+<li>Tab Kiểm tra có dòng đỏ thì đối chiếu lại PDF trước khi dùng số liệu.</li>
+<li>Cột "Mã trên bravo": ô vàng = nhiều mã trùng khoá, cam = chỉ gần đúng, đỏ = không thấy.</li>
+<li>Chỉ đọc đúng mẫu PDF của Skoda India (có lớp chữ, không phải bản scan). Đóng file Excel cũ trước khi xuất lại.</li>
+<li>Không xoá file <code>danh_muc_bravo.csv</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m17"><h2>4.13 TOOL-LOG-02 – Đọc Debit note PAM CARGO từ PDF</h2><p class="nguon">Nguồn: <code>tools/TOOL-LOG-02_doc-debit-note-pam-cargo/phat-hanh/README.md</code></p><p>Đọc Debit note PDF của forwarder PAM CARGO sang Excel: mỗi khoản phí một dòng, tách tiền chưa VAT và VAT, tra số invoice theo số HBL và kiểm tra tổng tiền.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>DebitNote_PamCargo.exe</code> trong thư mục này. Để nguyên hai file <code>van_don_invoice.csv</code> và <code>van_don_invoice.meta.json</code> cạnh EXE (bảng tra số invoice).</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Bấm <strong>Chọn file PDF</strong> (chọn được nhiều file) hoặc <strong>Chọn thư mục</strong> (đọc mọi PDF, kể cả thư mục con).</li>
+<li>Xem danh sách bên trái (xanh = OK, đỏ = lệch/lỗi) và các tab <strong>Thông tin chung</strong>, <strong>Chi tiết phí</strong>, <strong>Kiểm tra</strong>.</li>
+<li>Bấm <strong>Xuất Excel</strong>.</li>
+<li>Bấm <strong>Mở file Excel</strong> hoặc <strong>Mở thư mục</strong> để xem.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>File <code>DebitNote_PamCargo_&lt;ngày giờ&gt;.xlsx</code> lưu cạnh PDF (hoặc thư mục bạn chọn), gồm các sheet Chi tiet phi, Tong hop DN, Kiem tra, Nguon.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Dòng đỏ ở sheet Kiem tra là lệch/lỗi; dòng vàng là số HBL không thấy trong bảng tra (số invoice để trống, tool không tự đoán).</li>
+<li>Sheet Nguon ghi thời điểm cập nhật của bảng tra số invoice; nếu ghi "bảng tra cũ" thì số invoice có thể chưa mới nhất.</li>
+<li>Chỉ đọc đúng mẫu Debit note PAM CARGO có lớp chữ. Không xoá hai file bảng tra.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m18"><h2>4.14 TOOL-PO-01 – Đọc đơn hàng Skoda</h2><p class="nguon">Nguồn: <code>tools/TOOL-PO-01_order-skoda/phat-hanh/README.md</code></p><p>Đọc đơn hàng Skoda dạng PDF (nhiều mẫu khác nhau) và xuất ra file Excel.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>TOOL-PO-01_order-skoda.exe</code> trong thư mục này.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Chọn bộ đọc phù hợp mẫu đơn hàng: <strong>Form 1</strong>, <strong>Form 2</strong>, <strong>Form 3</strong> (đọc ngay trên máy) hoặc <strong>Document AI</strong> (gửi PDF lên Google, có thể tính phí).</li>
+<li>Chọn file PDF hoặc thư mục.</li>
+<li>Xem trước và tab <strong>Kiểm tra</strong> (xem trước tối đa 500 dòng, file Excel xuất đầy đủ).</li>
+<li>Bấm <strong>Chạy / Xuất Excel</strong>; xác nhận nếu tool hỏi (ví dụ ghi đè file đã có).</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>Mặc định trong thư mục <code>D:\OneDrive - TST\Du-lieu\TOOL-PO-01_order-skoda\</code>; có nút chọn thư mục khác.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Chỉ dùng Document AI khi cần; nó cần được cấp thông tin truy cập qua nút <strong>Cấp / đổi</strong> trong khu Thông tin đăng nhập. Nếu chỉ dùng Form 1–3, chọn Bỏ qua khi tool hỏi.</li>
+<li>Các PDF trùng tên phải được chia nhóm trước khi chạy.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-PO-01\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m19"><h2>4.15 TOOL-PO-03 – Lấy giá và tồn Foton</h2><p class="nguon">Nguồn: <code>tools/TOOL-PO-03_foton-gia-ton/phat-hanh/README.md</code></p><p>Lấy danh mục, giá và tồn sản phẩm Foton trên CRM MISA, cập nhật vào file Excel <code>Foton_Price_Crawling.xlsx</code>.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>Foton_Price_Crawling.exe</code> trong thư mục này. Máy cần có Microsoft Excel và Chrome hoặc Edge.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Lần đầu, tool tự mở khung <strong>Thông tin đăng nhập</strong>: nhập tài khoản và mật khẩu của bạn (ô che ký tự). Các lần sau chỉ hiện Đã cấp / Chưa cấp; để trống khi đổi nghĩa là giữ giá trị cũ.</li>
+<li>Chọn Chrome hoặc Edge.</li>
+<li>Chọn file Excel Foton hoặc bấm <strong>Đổi thư mục</strong>; xem tab <strong>Chi tiết / Kiểm tra</strong>.</li>
+<li>Bấm <strong>Chạy / cập nhật Excel</strong>. Muốn ngừng thì bấm <strong>Dừng và lưu</strong>: dữ liệu đã lấy được giữ lại.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>Mặc định <code>D:\OneDrive - TST\Du-lieu\TOOL-PO-03_foton-gia-ton\Foton_Price_Crawling.xlsx</code>. File vừa là đầu vào vừa là đầu ra: mã đã có được cập nhật, mã mới được thêm.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Chỉ chọn đúng file Foton của tool (đủ 14 cột); file khác sẽ báo LỖI.</li>
+<li>Trạng thái CHỜ nghĩa là chưa lấy đủ; chạy lại để lấy tiếp.</li>
+<li>Đóng file Excel trước khi chạy.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-PO-03\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<section id="m20"><h2>4.16 TOOL-SUP-01 – Tra cứu claim Skoda</h2><p class="nguon">Nguồn: <code>tools/TOOL-SUP-01_claim-skoda/phat-hanh/README.md</code></p><p>Đăng nhập cổng claim Skoda (ServiceTonic), lấy thông tin các ticket và tải tài liệu đính kèm.</p>
+<h3>Cách mở</h3>
+<p>Bấm đúp file <code>TOOL-SUP-01_claim-skoda.exe</code> trong thư mục này. Giữ nguyên thư mục <code>_internal</code> cạnh EXE. Máy cần có Edge hoặc Chrome.</p>
+<h3>Các bước dùng</h3>
+<ol>
+<li>Trong khu <strong>Thông tin đăng nhập</strong>, nhập tài khoản và mật khẩu cổng claim của bạn (ô che ký tự). Thiếu thông tin lần đầu thì tool tự mở hộp nhập.</li>
+<li>Chọn file <code>Ticket History.xlsx</code> hoặc bấm <strong>Đổi thư mục</strong> (file chưa có sẽ được tạo khi tải). Đóng Excel trước khi chạy.</li>
+<li>Chọn Edge hoặc Chrome, bấm <strong>Đăng nhập / mở phiên</strong>, chờ đăng nhập thành công.</li>
+<li>Bấm <strong>Tải My Tickets (Home)</strong>. Có thể tải lại trong cùng phiên, hoặc bấm <strong>Dừng phiên</strong> khi xong.</li>
+<li>Bấm <strong>Mở file kết quả</strong>, <strong>Mở thư mục</strong> hoặc <strong>Mở log</strong> để xem.</li>
+</ol>
+<h3>Kết quả lưu ở đâu</h3>
+<p>Mặc định <code>D:\OneDrive - TST\Du-lieu\TOOL-SUP-01_claim-skoda\</code>: file <code>Ticket History.xlsx</code> và các thư mục <code>Tickets\&lt;mã ticket&gt;</code> chứa tệp đính kèm. Ticket đã có được cập nhật theo Ticket Number.</p>
+<h3>Lưu ý</h3>
+<ul>
+<li>Nếu đăng nhập không được, kiểm tra lại tài khoản/mật khẩu.</li>
+<li>Nhật ký: bấm nút <strong>Mở log</strong> hoặc xem thư mục <code>%LOCALAPPDATA%\TST\TOOL-SUP-01\logs\</code>.</li>
+</ul>
+<p>Cần hỗ trợ: liên hệ Lê Quỳnh Giao (phòng MH-XNK).</p></section>
+<h1 class="chuong" id="c5">5. Báo cáo, mẫu biểu, dữ liệu</h1>
+<section id="m21"><h2>5.1 Báo cáo</h2><div class="bang"><table><thead><tr><th>Mã</th><th>Tên</th><th>Dùng để</th><th>Thư mục</th></tr></thead><tbody><tr><td><code>RPT-CO-01</code></td><td>Báo cáo chuyển đổi C/O AK–VK</td><td>Phân tích hiệu quả chuyển đổi C/O AK sang VK, phục vụ báo cáo tiết kiệm thuế và tỷ lệ chuyển đổi. Excel nguồn → JSON phân tích → PowerPoint 3 slide cho giai đoạn 6 tháng đầu 2026.</td><td><code>OneDrive - TST\Data\RPT-CO-01_chuyen-doi-ak-vk</code></td></tr><tr><td><code>RPT-HR-01</code></td><td>Báo cáo định biên MHXNK</td><td>Tổng hợp khối lượng công việc, năng lực và kịch bản định biên MHXNK. Dữ liệu Bravo, ECUS và hồ sơ đăng kiểm → báo cáo Excel, phụ lục đối chiếu và kịch bản tải công việc.</td><td><code>OneDrive - TST\Data\RPT-HR-01_dinh-bien</code></td></tr><tr><td><code>RPT-KPI-01</code></td><td>BCQTMH – trang báo cáo quản trị mua hàng</td><td>Báo cáo mua hàng, chi phí, leadtime, C/O, kế hoạch kéo hàng và biến động giá cho phòng MHXNK. SQL Bravo và file SharePoint → semantic model, báo cáo Power BI và nguồn số cho các tool báo cáo khác.</td><td><code></code></td></tr><tr><td><code>RPT-KPI-02</code></td><td>Báo cáo quản trị MHXNK</td><td>Sinh báo cáo quản trị MHXNK hằng tháng, tổng hợp TST và VAD. Power BI BCQTMH (đã publish, không SQL riêng từ 16/11/2026), file VAD/KPI/khiếu nại và nội dung nhập tay → PowerPoint cùng danh sách dữ liệu cần bổ sung.</td><td><code></code></td></tr><tr><td><code>RPT-KPI-03</code></td><td>Báo cáo giao ban MHXNK</td><td>Tạo báo cáo giao ban tuần/tháng MHXNK. Số liệu Power BI BCQTMH và nội dung Markdown người dùng nhập → PowerPoint, số liệu JSON và phần phân tích tự động.</td><td><code></code></td></tr><tr><td><code>RPT-KPI-04</code></td><td>Báo cáo KRI MHXNK</td><td>Tổng hợp chỉ số rủi ro về xác nhận yêu cầu mua hàng, khiếu nại và phí lưu cont/bãi/kho. File xuất nghiệp vụ và bộ KRI yêu cầu → báo cáo Excel theo tháng kèm cơ sở tính.</td><td><code>OneDrive - TST\Data\RPT-KPI-04_kri</code></td></tr><tr><td><code>RPT-LOG-01</code></td><td>Báo cáo hàng nguy hiểm</td><td>Hàng nguy hiểm (phân loại Bravo MB01) theo tháng về kho – Sea theo cont, Air theo invoice – giá trị FOB, chi phí vận chuyển quốc tế + nội địa cả cont/lô và phần phân bổ cho hàng nguy hiểm. Số từ dataset BCQTMH đã publish → Excel.</td><td><code>OneDrive - TST\Data\RPT-LOG-01_hang-nguy-hiem</code></td></tr><tr><td><code>RPT-PLN-01</code></td><td>Kế hoạch năm MHXNK</td><td>Hỗ trợ kế hoạch 2027 qua tỷ lệ giao hàng NCC, biến động giá mua và danh mục cấp C/O. Tỷ lệ giao hàng và biến động giá lấy từ dataset BCQTMH đã publish (16/11/2026; biến động giá = measure BDN.* → Excel pivot); C/O (BC Cấp C/O) cũng lấy từ dataset (F_BKICT, 16/11); phần biến động giá còn nằm trực tiếp trong PBIP của đơn vị KPI.</td><td><code></code></td></tr><tr><td><code>RPT-VAT-01</code></td><td>Báo cáo kiểm tra thuế nhập khẩu</td><td>Tính lại thuế NK/VAT theo HS đúng cho 1.151 mã hàng khai sai HS, phần nộp thêm và tiền phạt chậm nộp 0,03%/ngày. Script lấy F_BKICT từ BCQTMH + biểu thuế 2026.</td><td><code>OneDrive - TST\Data\RPT-VAT-01_check-thue-nk</code></td></tr></tbody></table></div></section>
+<section id="m22"><h2>5.2 Mẫu Excel / template</h2><div class="bang"><table><thead><tr><th>Mã</th><th>Tên</th><th>Dùng để</th><th>Thư mục</th></tr></thead><tbody><tr><td><code>TPL-CO-01</code></td><td>Workbook đối chiếu C/O</td><td>Đối chiếu danh sách Part No với dữ liệu invoice để lấy loại thuế nhập khẩu áp dụng và invoice gần nhất. Danh sách trong bảng Input → bảng kết quả ghép dữ liệu SQL.</td><td><code>OneDrive - TST\Data\TPL-CO-01_check-co</code></td></tr><tr><td><code>TPL-CUS-01</code></td><td>Workbook import tờ khai</td><td>Gom dữ liệu tờ khai hải quan Excel và ghép thông tin invoice/hợp đồng từ SQL để chuẩn bị nhập Bravo. File ToKhaiHQ7N*.xlsx + dữ liệu SQL → bảng tổng hợp và mapping import.</td><td><code>OneDrive - TST\Data\TPL-CUS-01_import-to-khai</code></td></tr><tr><td><code>TPL-INV-01</code></td><td>Template import invoice</td><td>Chuyển chứng từ NCC Korea/India/Indo/Egypt/Shanghai thành bảng import invoice Bravo chuẩn 19 cột.</td><td><code>OneDrive - TST\Data\TPL-INV-01_import-invoice</code></td></tr><tr><td><code>TPL-INV-02</code></td><td>Template import invoice VAD</td><td>Chuyển invoice/packing VAD → bảng Output phục vụ nhập liệu và phụ lục.</td><td><code>OneDrive - TST\Data\TPL-INV-02_import-invoice-vad</code></td></tr><tr><td><code>TPL-INV-03</code></td><td>Bộ xử lý chứng từ CK-No và CK-Yes</td><td>Bộ xử lý invoice/phụ lục/FXL và kiểm tra C/O; chứng từ đầu vào → file xử lý và chứng từ, gồm hai biến thể CK-No và CK-Yes.</td><td><code>OneDrive - TST\Data\TPL-INV-03_xu-ly-chung-tu-ck</code></td></tr><tr><td><code>TPL-INV-04</code></td><td>Tra cứu thông tin invoice (Invoice_Info)</td><td>Nhập danh sách số invoice → Power Query lấy ngày invoice/ship/cập cảng/thông quan/về kho/nhập kho, hợp đồng, phụ lục, L/C, cont, giá trị, phí, thuế; sheet Sample ghép nội dung YCVC, hàng Air, bảo hiểm theo số vận đơn.</td><td><code>OneDrive - TST\Data\TPL-INV-04_tra-cuu-invoice</code></td></tr><tr><td><code>TPL-LOG-01</code></td><td>Template bảng kê yêu cầu nhập kho</td><td>Tạo bảng kê yêu cầu nhập kho từ dữ liệu đầu vào và danh mục NCC.</td><td><code>OneDrive - TST\Data\TPL-LOG-01_bang-ke-ycnk</code></td></tr><tr><td><code>TPL-VAT-01</code></td><td>Template import VAT</td><td>Tổng hợp/chuẩn bị dữ liệu VAT và tờ khai phục vụ nghiệp vụ nhập khẩu.</td><td><code>OneDrive - TST\Data\TPL-VAT-01_import-vat</code></td></tr><tr><td><code>TPL-VAT-02</code></td><td>Template tính lại thuế</td><td>Tính/đối chiếu lại thuế, CO và chi phí nhập khẩu → bảng Final/Check.</td><td><code>OneDrive - TST\Data\TPL-VAT-02_tinh-lai-thue</code></td></tr></tbody></table></div></section>
+<section id="m23"><h2>5.3 Vùng dữ liệu</h2><div class="bang"><table><thead><tr><th>Mã</th><th>Tên</th><th>Dùng để</th><th>Thư mục</th></tr></thead><tbody><tr><td><code>DAT-CORE-02</code></td><td>Danh sách VAT không cảnh báo</td><td>Danh sách VAT không cảnh báo dùng chung cho Luna và bảng tin; dữ liệu Excel → danh sách loại trừ.</td><td><code>OneDrive - TST\Data\DAT-CORE-02_vat-khong-canh-bao</code></td></tr><tr><td><code>DAT-LOG-04</code></td><td>Theo dõi nhập - xuất kho</td><td>Bản làm việc tổng hợp/theo dõi XNK; dữ liệu SQL và danh mục → kế hoạch, record và báo cáo.</td><td><code>OneDrive - TST\Data\DAT-LOG-04_theo-doi-nhap-xuat-kho</code></td></tr><tr><td><code>DAT-PO-01</code></td><td>Dữ liệu BO</td><td>Theo dõi yêu cầu và phản hồi BO; dữ liệu hai phía → bảng Record/đối chiếu.</td><td><code>OneDrive - TST\Data\DAT-PO-01_bo</code></td></tr><tr><td><code>DAT-PO-02</code></td><td>Hồ sơ mua hàng Foton</td><td>Hồ sơ mua hàng Foton: BO, tồn NCC, báo giá, shipment, leadtime, đơn hàng và bộ chứng từ thanh toán/nhập kho.</td><td><code>OneDrive - TST\Data\DAT-PO-02_foton</code></td></tr><tr><td><code>DAT-PO-03</code></td><td>Theo dõi hợp đồng</td><td>Theo dõi hợp đồng, phụ lục, hiệu lực và việc cần thực hiện cho mua hàng/dịch vụ.</td><td><code>OneDrive - TST\Data\DAT-PO-03_contract-tracking</code></td></tr></tbody></table></div></section>
+<section id="m24"><h2>5.4 Quy trình</h2><div class="bang"><table><thead><tr><th>Mã</th><th>Tên</th><th>Dùng để</th><th>Thư mục</th></tr></thead><tbody><tr><td><code>PRC-PO-01</code></td><td>Quy trình mua hàng XNK</td><td>Xây dựng quy trình mua hàng XNK cho các phòng liên quan; nội dung TXT, hình và quy tắc → Word và sơ đồ Draw.io.</td><td><code>OneDrive - TST\Releases\PRC-PO-01_quy-trinh-mua-hang-xnk</code></td></tr><tr><td><code>PRC-RD-01</code></td><td>Quy trình phát triển sản phẩm mới</td><td>Biên soạn quy trình phát triển sản phẩm và 7 biểu mẫu cho các bộ phận nghiệp vụ; nguồn quy trình → Word/Excel/PDF có thể in.</td><td><code>OneDrive - TST\Releases\PRC-RD-01_quy-trinh-phat-trien-san-pham</code></td></tr></tbody></table></div></section>
+<section id="m25"><h2>5.5 Đào tạo</h2><div class="bang"><table><thead><tr><th>Mã</th><th>Tên</th><th>Dùng để</th><th>Thư mục</th></tr></thead><tbody><tr><td><code>EDU-ADM-01</code></td><td>Đào tạo Excel</td><td>Bộ học Excel gồm giáo án, tài liệu học viên, slide, bài thực hành/thu hoạch và đáp án → phục vụ giảng dạy nội bộ.</td><td><code>OneDrive - TST\Releases\EDU-ADM-01_excel</code></td></tr><tr><td><code>EDU-AI-01</code></td><td>Đào tạo AI cơ bản</td><td>Đào tạo AI 2 buổi × 90 phút cho nhân sự công ty; Markdown, nguồn slide, dữ liệu giả lập, audio → HTML/PPTX, video và khảo sát.</td><td><code>OneDrive - TST\Releases\EDU-AI-01_basic-ai</code></td></tr><tr><td><code>EDU-CUS-01</code></td><td>Đào tạo pháp luật hải quan</td><td>Bộ đào tạo nghiệp vụ hải quan; tài liệu, văn bản tham chiếu, bài tập → slide, bài kiểm tra và đáp án.</td><td><code>OneDrive - TST\Releases\EDU-CUS-01_phap-luat-hai-quan</code></td></tr></tbody></table></div></section>
+<section id="m26"><h2>5.6 Thư viện mẫu</h2><div class="bang"><table><thead><tr><th>Mã</th><th>Tên</th><th>Dùng để</th><th>Thư mục</th></tr></thead><tbody><tr><td><code>LIB-ADM-01</code></td><td>Logo và mẫu trình ký</td><td>Kho tài nguyên dùng chung: logo, ảnh chữ ký/con dấu và mẫu trình ký → tài liệu nghiệp vụ.</td><td><code>OneDrive - TST\Releases\LIB-ADM-01_logo-mau</code></td></tr></tbody></table></div></section>
+</main>
+<script>
+document.querySelectorAll('iframe.nhung').forEach(f=>f.addEventListener('load',()=>{
+  try{const h=f.contentDocument.body.scrollHeight;if(h>200)f.style.height=Math.min(h+40,30000)+'px'}catch(e){}
+}));
+const tim=document.getElementById('tim'),secs=[...document.querySelectorAll('main section')];
+tim.addEventListener('input',()=>{const q=tim.value.trim().toLowerCase();
+  secs.forEach(s=>{const ok=!q||s.textContent.toLowerCase().includes(q);s.classList.toggle('an',!ok);
+    const a=document.querySelector('aside a[data-m="'+s.id+'"]');if(a)a.classList.toggle('an',!ok)})});
+const links={};document.querySelectorAll('aside a[data-m]').forEach(a=>links[a.dataset.m]=a);
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;
+  Object.values(links).forEach(a=>a.classList.remove('dang'));const a=links[e.target.id];
+  if(a){a.classList.add('dang');a.scrollIntoView({block:'nearest'})}}),{rootMargin:'0px 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+</script></body></html>
