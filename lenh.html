@@ -5,14 +5,12 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 :root {
-  --bg:#f5f7fb; --surface:#ffffff; --surface2:#f0f3f9; --ink:#0e1525; --muted:#5b6578; --line:#e1e6f0;
-  --accent:#4f46e5; --accent2:#06b6d4; --accent-soft:#eef0ff; --ok:#10b981;
+  /* Một tông tối thống nhất (người dùng chốt 18/11/2026: không để chỗ sáng chỗ tối) */
+  --bg:#0a0e1c; --surface:#11172a; --surface2:#161d33; --ink:#e6eaf7; --muted:#9099b5; --line:#232c47;
+  --accent:#8b85ff; --accent2:#22d3ee; --accent-soft:#1d2147; --ok:#10b981; color-scheme:dark;
   --hero:#070b1a; --hero-ink:#e8ecff; --hero-muted:#9aa3c7;
   --f:"Be Vietnam Pro","Segoe UI",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg:#0a0e1c; --surface:#11172a; --surface2:#161d33; --ink:#e6eaf7; --muted:#9099b5; --line:#232c47; --accent:#8b85ff; --accent-soft:#1d2147; color-scheme:dark; } }
-:root[data-theme="dark"] { --bg:#0a0e1c; --surface:#11172a; --surface2:#161d33; --ink:#e6eaf7; --muted:#9099b5; --line:#232c47; --accent:#8b85ff; --accent-soft:#1d2147; color-scheme:dark; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.6 var(--f); -webkit-font-smoothing:antialiased; }
@@ -87,7 +85,7 @@ a { color:inherit; }
 .cmds { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
 .cmd { position:relative; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:7px; transition:transform .15s,border-color .15s,box-shadow .15s; scroll-margin-top:80px; }
 .cmd::before { content:""; position:absolute; left:0; top:16px; bottom:16px; width:3px; border-radius:0 3px 3px 0; background:linear-gradient(var(--accent),var(--accent2)); opacity:0; transition:opacity .15s; }
-.cmd:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 45%,var(--line)); box-shadow:0 12px 30px -12px rgba(79,70,229,.35); }
+.cmd:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 45%,var(--line)); box-shadow:0 12px 30px -12px rgba(139,133,255,.45); }
 .cmd:hover::before { opacity:1; }
 .cmd header { display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; }
 .cmd .name { font:700 16px var(--mono); color:var(--accent); }
@@ -102,7 +100,7 @@ a { color:inherit; }
 .ex:hover { border-color:var(--accent); }
 .empty { display:none; text-align:center; color:var(--muted); padding:40px; }
 .foot { margin:56px 0 40px; padding-top:20px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-.toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px); opacity:0; background:#111827; color:#fff; font:13px var(--mono); padding:9px 16px; border-radius:10px; transition:.2s; pointer-events:none; z-index:9; }
+.toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px); opacity:0; background:#4f46e5; color:#fff; font:13px var(--mono); padding:9px 16px; border-radius:10px; transition:.2s; pointer-events:none; z-index:9; }
 .toast.on { opacity:1; transform:translate(-50%,0); }
 .an { display:none !important; }
 @media (max-width:980px) { .hero-grid { grid-template-columns:1fr; } .flow { grid-template-columns:1fr 1fr; } .node::after { display:none; } .how { grid-template-columns:1fr; } }

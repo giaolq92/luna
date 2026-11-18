@@ -4,10 +4,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
-:root{--bg:#f5f7fb;--surface:#fff;--surface2:#f0f3f9;--ink:#0e1525;--muted:#5b6578;--line:#e1e6f0;--accent:#4f46e5;--accent2:#06b6d4;--soft:#eef0ff;
-  --side:#ffffff;--hero:#070b1a;--f:"Be Vietnam Pro","Segoe UI",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0e1c;--surface:#11172a;--surface2:#161d33;--ink:#e6eaf7;--muted:#9099b5;--line:#232c47;--accent:#8b85ff;--soft:#1d2147;--side:#0d1222;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0a0e1c;--surface:#11172a;--surface2:#161d33;--ink:#e6eaf7;--muted:#9099b5;--line:#232c47;--accent:#8b85ff;--soft:#1d2147;--side:#0d1222;color-scheme:dark}
+/* Một tông tối thống nhất (người dùng chốt 18/11/2026) */
+:root{color-scheme:dark;--bg:#0a0e1c;--surface:#11172a;--surface2:#161d33;--ink:#e6eaf7;--muted:#9099b5;--line:#232c47;--accent:#8b85ff;--accent2:#22d3ee;--soft:#1d2147;
+  --side:#0b1020;--hero:#070b1a;--f:"Be Vietnam Pro","Segoe UI",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace}
 *{box-sizing:border-box} html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 var(--f);-webkit-font-smoothing:antialiased}
 code{font-family:var(--mono);font-size:.86em;background:var(--soft);color:var(--accent);padding:1px 6px;border-radius:5px}
@@ -47,7 +46,7 @@ main{margin-left:300px;min-width:0}
 .cc{position:relative;display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px 16px;transition:.15s}
 .cc span{font:700 12px var(--mono);color:var(--accent)} .cc b{font-size:15px} .cc small{color:var(--muted);font-size:12.5px;line-height:1.45}
 .cc i{position:absolute;right:16px;top:14px;font-style:normal;color:var(--muted);transition:.15s}
-.cc:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 12px 30px -14px rgba(79,70,229,.45)} .cc:hover i{color:var(--accent);transform:translateX(3px)}
+.cc:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 12px 30px -14px rgba(139,133,255,.5)} .cc:hover i{color:var(--accent);transform:translateX(3px)}
 
 /* nội dung */
 .noi{padding:8px 56px 80px;max-width:1240px}
@@ -69,7 +68,7 @@ th{background:var(--surface2);font-weight:600;font-size:12px;text-transform:uppe
 iframe.nhung{width:100%;height:900px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
 
 /* sơ đồ tổ chức */
-.cay .goc{position:relative;background:var(--hero);color:#fff;border-radius:14px;padding:16px 22px;text-align:center;font:700 17px var(--f);max-width:560px;margin:12px auto 26px;overflow:hidden}
+.cay .goc{position:relative;background:linear-gradient(135deg,#1e1b4b,#0c4a6e);color:#fff;border-radius:14px;padding:16px 22px;text-align:center;font:700 17px var(--f);max-width:560px;margin:12px auto 26px;overflow:hidden}
 .cay .goc::after{content:"";position:absolute;left:50%;bottom:-26px;width:2px;height:26px;background:var(--line)}
 .cay .goc small{display:block;font:500 11px var(--mono);letter-spacing:.14em;color:#a5b4fc;margin-bottom:2px}
 .cay .goc em{display:inline-block;margin-left:10px;font:600 12px var(--mono);font-style:normal;background:rgba(255,255,255,.12);border-radius:999px;padding:2px 10px;vertical-align:2px}
@@ -82,7 +81,7 @@ iframe.nhung{width:100%;height:900px;border:1px solid var(--line);border-radius:
 .dv:hover{transform:translateX(2px);border-color:var(--c)}
 .dv b{font-size:13px;font-weight:600;line-height:1.35} .dv small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
 .dv small code{font-size:10.5px;padding:0 5px;margin-right:4px}
-.dv .tt{margin-left:6px;font:600 10px var(--mono);background:#fff4e0;color:#9a5b00;border-radius:8px;padding:0 6px}
+.dv .tt{margin-left:6px;font:600 10px var(--mono);background:rgba(245,158,11,.16);color:#fbbf24;border-radius:8px;padding:0 6px}
 .an{display:none!important}
 .len{position:fixed;right:22px;bottom:22px;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--accent);font:700 18px var(--f);display:grid;place-items:center;text-decoration:none;box-shadow:0 8px 24px -10px rgba(0,0,0,.4)}
 @media (max-width:900px){aside{position:static;width:auto;max-height:46vh;border-right:0;border-bottom:1px solid var(--line)}main{margin:0}.hero{padding:40px 18px}.chuongs,.noi{padding-left:16px;padding-right:16px}section{padding:4px 16px 16px}.stats{grid-template-columns:1fr 1fr}}
@@ -130,7 +129,7 @@ iframe.nhung{width:100%;height:900px;border:1px solid var(--line);border-radius:
     <p class="kh">Một nơi cho mọi công cụ của phòng.</p>
     <p>Luna – AI Agent, công cụ, báo cáo và mẫu biểu của phòng Mua hàng XNK: giới thiệu, sơ đồ tổ chức và hướng dẫn sử dụng ở một nơi.</p>
     <div class="stats"><div class="stat"><b>30</b><span>lệnh Luna</span></div><div class="stat"><b>16</b><span>công cụ</span></div><div class="stat"><b>9</b><span>báo cáo</span></div><div class="stat"><b>10</b><span>mẫu biểu</span></div></div>
-    <div class="meta">Sinh lúc 18/11/2026 10:11 · commit ab6c957 · scripts/tao_sach.py</div>
+    <div class="meta">Sinh lúc 18/11/2026 10:17 · commit 84699d4 · scripts/tao_sach.py</div>
   </header>
   <div class="chuongs"><a class="cc" href="#gioi-thieu"><span>01</span><b>Giới thiệu</b><small>Hệ thống của phòng và cách tìm công cụ</small><i>→</i></a><a class="cc" href="#so-do"><span>02</span><b>Sơ đồ tổ chức</b><small>Các nhóm đơn vị và vai trò của từng thành phần</small><i>→</i></a><a class="cc" href="#luna"><span>03</span><b>Luna – AI Agent</b><small>Cách hỏi, đọc câu trả lời, toàn bộ lệnh</small><i>→</i></a><a class="cc" href="#cong-cu"><span>04</span><b>Hướng dẫn sử dụng công cụ</b><small>Mở tool, các bước dùng, kết quả lưu ở đâu</small><i>→</i></a><a class="cc" href="#bao-cao"><span>05</span><b>Báo cáo, mẫu biểu, dữ liệu</b><small>Danh mục và thư mục của từng đơn vị</small><i>→</i></a></div>
   <div class="noi">
@@ -192,14 +191,12 @@ trong thư viện, truy vấn trực tiếp dataset Power BI <b>BCQTMH</b> và t
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap&quot;&gt;
 &lt;style&gt;
 :root {
-  --bg:#f5f7fb; --surface:#ffffff; --surface2:#f0f3f9; --ink:#0e1525; --muted:#5b6578; --line:#e1e6f0;
-  --accent:#4f46e5; --accent2:#06b6d4; --accent-soft:#eef0ff; --ok:#10b981;
+  /* Một tông tối thống nhất (người dùng chốt 18/11/2026: không để chỗ sáng chỗ tối) */
+  --bg:#0a0e1c; --surface:#11172a; --surface2:#161d33; --ink:#e6eaf7; --muted:#9099b5; --line:#232c47;
+  --accent:#8b85ff; --accent2:#22d3ee; --accent-soft:#1d2147; --ok:#10b981; color-scheme:dark;
   --hero:#070b1a; --hero-ink:#e8ecff; --hero-muted:#9aa3c7;
   --f:&quot;Be Vietnam Pro&quot;,&quot;Segoe UI&quot;,system-ui,sans-serif; --mono:&quot;JetBrains Mono&quot;,ui-monospace,Consolas,monospace;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme=&quot;light&quot;]) {
-  --bg:#0a0e1c; --surface:#11172a; --surface2:#161d33; --ink:#e6eaf7; --muted:#9099b5; --line:#232c47; --accent:#8b85ff; --accent-soft:#1d2147; color-scheme:dark; } }
-:root[data-theme=&quot;dark&quot;] { --bg:#0a0e1c; --surface:#11172a; --surface2:#161d33; --ink:#e6eaf7; --muted:#9099b5; --line:#232c47; --accent:#8b85ff; --accent-soft:#1d2147; color-scheme:dark; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.6 var(--f); -webkit-font-smoothing:antialiased; }
@@ -274,7 +271,7 @@ a { color:inherit; }
 .cmds { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:14px; }
 .cmd { position:relative; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 18px; display:flex; flex-direction:column; gap:7px; transition:transform .15s,border-color .15s,box-shadow .15s; scroll-margin-top:80px; }
 .cmd::before { content:&quot;&quot;; position:absolute; left:0; top:16px; bottom:16px; width:3px; border-radius:0 3px 3px 0; background:linear-gradient(var(--accent),var(--accent2)); opacity:0; transition:opacity .15s; }
-.cmd:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 45%,var(--line)); box-shadow:0 12px 30px -12px rgba(79,70,229,.35); }
+.cmd:hover { transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 45%,var(--line)); box-shadow:0 12px 30px -12px rgba(139,133,255,.45); }
 .cmd:hover::before { opacity:1; }
 .cmd header { display:flex; gap:8px; align-items:baseline; flex-wrap:wrap; }
 .cmd .name { font:700 16px var(--mono); color:var(--accent); }
@@ -289,7 +286,7 @@ a { color:inherit; }
 .ex:hover { border-color:var(--accent); }
 .empty { display:none; text-align:center; color:var(--muted); padding:40px; }
 .foot { margin:56px 0 40px; padding-top:20px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-.toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px); opacity:0; background:#111827; color:#fff; font:13px var(--mono); padding:9px 16px; border-radius:10px; transition:.2s; pointer-events:none; z-index:9; }
+.toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px); opacity:0; background:#4f46e5; color:#fff; font:13px var(--mono); padding:9px 16px; border-radius:10px; transition:.2s; pointer-events:none; z-index:9; }
 .toast.on { opacity:1; transform:translate(-50%,0); }
 .an { display:none !important; }
 @media (max-width:980px) { .hero-grid { grid-template-columns:1fr; } .flow { grid-template-columns:1fr 1fr; } .node::after { display:none; } .how { grid-template-columns:1fr; } }
