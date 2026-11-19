@@ -213,10 +213,10 @@ a { color:inherit; }
   <section class="group" id="nhom-mua">
     <div class="group-head"><span class="idx">02</span><h2>Yêu cầu mua &amp; đặt hàng</h2><code>/lenh mua</code><span class="count">11 lệnh</span></div>
     <div class="cmds">
-      <article class="cmd" id="yeu-cau-mua" data-tim="yeu-cau-mua giá trị yêu cầu mua hàng giá trị phiếu yêu cầu mua hàng trong tháng, chia sea/air, so cùng kỳ. tháng, năm, ncc ycmh /yeu-cau-mua 10">
+      <article class="cmd" id="yeu-cau-mua" data-tim="yeu-cau-mua giá trị yêu cầu mua hàng giá trị phiếu yêu cầu mua hàng trong tháng, chia sea/air, so cùng kỳ. kỳ nhiều tháng thì thêm bảng từng tháng. tháng, năm, ncc ycmh /yeu-cau-mua 10">
         <header><code class="name">/yeu-cau-mua</code><div class="alias"><span>/ycmh</span></div></header>
         <h3>Giá trị yêu cầu mua hàng</h3>
-        <p>Giá trị phiếu yêu cầu mua hàng trong tháng, chia Sea/Air, so cùng kỳ.</p>
+        <p>Giá trị phiếu yêu cầu mua hàng trong tháng, chia Sea/Air, so cùng kỳ. Kỳ nhiều tháng thì thêm bảng từng tháng.</p>
         <div class="param"><b>Tham số</b><span>tháng, năm, NCC</span></div>
         <div class="exs"><button class="ex" type="button" data-copy="/yeu-cau-mua 10"><i>›</i>/yeu-cau-mua 10</button></div>
       </article>
@@ -294,12 +294,12 @@ a { color:inherit; }
   <section class="group" id="nhom-hang-ve">
     <div class="group-head"><span class="idx">03</span><h2>Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="count">8 lệnh</span></div>
     <div class="cmds">
-      <article class="cmd" id="hang-ve" data-tim="hang-ve giá trị hàng về giá trị hàng về (fob) trong tháng, chia sea/air, so cùng kỳ. tháng, năm, ncc, kho, nhóm hàng hangve /hang-ve 9 /hang-ve 9 nhom:lop tháng 9 về bao nhiêu hàng?">
+      <article class="cmd" id="hang-ve" data-tim="hang-ve giá trị hàng về giá trị hàng về (fob) trong tháng, chia sea/air, so cùng kỳ. kỳ nhiều tháng (cả năm, khoảng ngày) thì thêm bảng từng tháng. tháng, năm, khoảng ngày, ncc, kho, nhóm hàng hangve /hang-ve 9 /hang-ve 9 nhom:lop tháng 9 về bao nhiêu hàng? tổng giá trị hàng về từ 1/1/2026 đến hôm nay của catina">
         <header><code class="name">/hang-ve</code><div class="alias"><span>/hangve</span></div></header>
         <h3>Giá trị hàng về</h3>
-        <p>Giá trị hàng về (FOB) trong tháng, chia Sea/Air, so cùng kỳ.</p>
-        <div class="param"><b>Tham số</b><span>tháng, năm, NCC, kho, nhóm hàng</span></div>
-        <div class="exs"><button class="ex" type="button" data-copy="/hang-ve 9"><i>›</i>/hang-ve 9</button><button class="ex" type="button" data-copy="/hang-ve 9 nhom:lop"><i>›</i>/hang-ve 9 nhom:lop</button><button class="ex" type="button" data-copy="Tháng 9 về bao nhiêu hàng?"><i>›</i>Tháng 9 về bao nhiêu hàng?</button></div>
+        <p>Giá trị hàng về (FOB) trong tháng, chia Sea/Air, so cùng kỳ. Kỳ nhiều tháng (cả năm, khoảng ngày) thì thêm bảng từng tháng.</p>
+        <div class="param"><b>Tham số</b><span>tháng, năm, khoảng ngày, NCC, kho, nhóm hàng</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/hang-ve 9"><i>›</i>/hang-ve 9</button><button class="ex" type="button" data-copy="/hang-ve 9 nhom:lop"><i>›</i>/hang-ve 9 nhom:lop</button><button class="ex" type="button" data-copy="Tháng 9 về bao nhiêu hàng?"><i>›</i>Tháng 9 về bao nhiêu hàng?</button><button class="ex" type="button" data-copy="Tổng giá trị hàng về từ 1/1/2026 đến hôm nay của Catina"><i>›</i>Tổng giá trị hàng về từ 1/1/2026 đến hôm nay của Catina</button></div>
       </article>
       <article class="cmd" id="nhap-ma-hang" data-tim="nhap-ma-hang nhập theo mã hàng số lượng nhập, giá trị fob vnd và số invoice khác nhau theo tháng về kho, trừ phiếu hủy; không phải thống kê đơn đặt hàng. ma_hang (bắt buộc, một hoặc nhiều mã), kỳ từ tháng đến tháng / khoảng ngày, ncc, kho, loại hình, nhóm hàng, invoice nhap-ma /nhap-ma ma:95440j9101 t10.2025-t10.2026 luna tổng hợp số lượng nhập, giá trị nhập, số lô hàng về có mã 95440j9101 giai đoạn t10.2025-t10.2026">
         <header><code class="name">/nhap-ma-hang</code><div class="alias"><span>/nhap-ma</span></div></header>
@@ -420,7 +420,7 @@ a { color:inherit; }
       </article></div>
   </section>
   <p class="empty" id="rong">Không có lệnh khớp. Thử từ khoá khác – hoặc cứ hỏi Luna bằng câu bình thường.</p>
-  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>32 lệnh · 112 ví dụ · cập nhật 19/11/2026</span></div>
+  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>32 lệnh · 113 ví dụ · cập nhật 19/11/2026</span></div>
 </main>
 <div class="toast" id="toast">Đã copy</div>
 <script>
