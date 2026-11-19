@@ -115,7 +115,7 @@ a { color:inherit; }
     <p class="tag">Hỏi bằng tiếng Việt. Nhận về bảng số kiểm chứng được.</p>
     <p class="lead">Luna là AI Agent chạy trên Microsoft Teams: hiểu câu hỏi tự nhiên, chọn đúng lệnh trong thư viện, truy vấn DAX trực tiếp trên semantic model <b>BCQTMH</b> đã publish và trả lời bằng bảng số copy thẳng sang Excel – kèm bộ lọc và giờ làm mới dữ liệu để đối chiếu.</p>
     <div class="stats">
-      <div class="stat"><b>31</b><span>lệnh nghiệp vụ</span></div>
+      <div class="stat"><b>32</b><span>lệnh nghiệp vụ</span></div>
       <div class="stat"><b>6</b><span>nhóm chức năng</span></div>
       <div class="stat"><b>1</b><span>nguồn số: BCQTMH</span></div>
       <div class="stat"><b>2×</b><span>làm mới / ngày</span></div>
@@ -144,7 +144,7 @@ a { color:inherit; }
   <div class="flow">
     <div class="node"><div class="n">01 · KÊNH</div><h4>Microsoft Teams</h4><p>Chat riêng 1–1 hoặc tag @Luna trong nhóm, kênh.</p><code>Agents SDK</code></div>
     <div class="node"><div class="n">02 · ROUTER</div><h4>Hiểu câu hỏi</h4><p>Lệnh <b>/...</b> đi thẳng; câu tự nhiên được AI phân loại thành lệnh + tham số.</p><code>Claude Haiku</code></div>
-    <div class="node"><div class="n">03 · THƯ VIỆN</div><h4>31 lệnh nghiệp vụ</h4><p>Mỗi lệnh là truy vấn + mẫu trả lời đã kiểm thử bằng bộ câu hỏi thật.</p><code>DAX cố định</code></div>
+    <div class="node"><div class="n">03 · THƯ VIỆN</div><h4>32 lệnh nghiệp vụ</h4><p>Mỗi lệnh là truy vấn + mẫu trả lời đã kiểm thử bằng bộ câu hỏi thật.</p><code>DAX cố định</code></div>
     <div class="node"><div class="n">04 · DỮ LIỆU</div><h4>BCQTMH</h4><p>Semantic model Power BI đã publish – nguồn số duy nhất, làm mới 07:00 và 12:30.</p><code>Power BI Service</code></div>
     <div class="node"><div class="n">05 · TRẢ LỜI</div><h4>Bảng số chuẩn</h4><p>Số kiểu Bravo, đơn vị ở tiêu đề, ghi bộ lọc + giờ refresh; dài thì xuất Excel.</p><code>Teams · Excel</code></div>
   </div>
@@ -167,7 +167,7 @@ a { color:inherit; }
 
 <div class="tools"><div class="wrap">
   <label class="search"><span>⌕</span><input id="q" type="search" placeholder="Tìm lệnh: leadtime, tồn kho, VAT, Foton…" autocomplete="off"><kbd>/</kbd></label>
-  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime <small>5</small></a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng <small>11</small></a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng <small>7</small></a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo <small>4</small></a><a href="#nhom-kho">Tồn kho <small>1</small></a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu <small>3</small></a></nav>
+  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime <small>5</small></a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng <small>11</small></a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng <small>8</small></a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo <small>4</small></a><a href="#nhom-kho">Tồn kho <small>1</small></a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu <small>3</small></a></nav>
 </div></div>
 
 <main class="wrap">
@@ -292,7 +292,7 @@ a { color:inherit; }
       </article></div>
   </section>
   <section class="group" id="nhom-hang-ve">
-    <div class="group-head"><span class="idx">03</span><h2>Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="count">7 lệnh</span></div>
+    <div class="group-head"><span class="idx">03</span><h2>Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="count">8 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="hang-ve" data-tim="hang-ve giá trị hàng về giá trị hàng về (fob) trong tháng, chia sea/air, so cùng kỳ. tháng, năm, ncc, kho, nhóm hàng hangve /hang-ve 9 /hang-ve 9 nhom:lop tháng 9 về bao nhiêu hàng?">
         <header><code class="name">/hang-ve</code><div class="alias"><span>/hangve</span></div></header>
@@ -300,6 +300,13 @@ a { color:inherit; }
         <p>Giá trị hàng về (FOB) trong tháng, chia Sea/Air, so cùng kỳ.</p>
         <div class="param"><b>Tham số</b><span>tháng, năm, NCC, kho, nhóm hàng</span></div>
         <div class="exs"><button class="ex" type="button" data-copy="/hang-ve 9"><i>›</i>/hang-ve 9</button><button class="ex" type="button" data-copy="/hang-ve 9 nhom:lop"><i>›</i>/hang-ve 9 nhom:lop</button><button class="ex" type="button" data-copy="Tháng 9 về bao nhiêu hàng?"><i>›</i>Tháng 9 về bao nhiêu hàng?</button></div>
+      </article>
+      <article class="cmd" id="nhap-ma-hang" data-tim="nhap-ma-hang nhập theo mã hàng số lượng nhập, giá trị fob vnd và số invoice khác nhau theo tháng về kho, trừ phiếu hủy; không phải thống kê đơn đặt hàng. ma_hang (bắt buộc, một hoặc nhiều mã), kỳ từ tháng đến tháng / khoảng ngày, ncc, kho, loại hình, nhóm hàng, invoice nhap-ma /nhap-ma ma:95440j9101 t10.2025-t10.2026 luna tổng hợp số lượng nhập, giá trị nhập, số lô hàng về có mã 95440j9101 giai đoạn t10.2025-t10.2026">
+        <header><code class="name">/nhap-ma-hang</code><div class="alias"><span>/nhap-ma</span></div></header>
+        <h3>Nhập theo mã hàng</h3>
+        <p>Số lượng nhập, giá trị FOB VND và số invoice khác nhau theo tháng về kho, trừ phiếu hủy; không phải thống kê đơn đặt hàng.</p>
+        <div class="param"><b>Tham số</b><span>ma_hang (bắt buộc, một hoặc nhiều mã), kỳ từ tháng đến tháng / khoảng ngày, NCC, kho, loại hình, nhóm hàng, invoice</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/nhap-ma ma:95440J9101 T10.2025-T10.2026"><i>›</i>/nhap-ma ma:95440J9101 T10.2025-T10.2026</button><button class="ex" type="button" data-copy="Luna tổng hợp số lượng nhập, giá trị nhập, số lô hàng về có mã 95440J9101 giai đoạn T10.2025-T10.2026"><i>›</i>Luna tổng hợp số lượng nhập, giá trị nhập, số lô hàng về có mã 95440J9101 giai đoạn T10.2025-T10.2026</button></div>
       </article>
       <article class="cmd" id="lich-hang-ve" data-tim="lich-hang-ve lịch hàng về các lô hàng (invoice) dự kiến về kho trong n ngày tới (mặc định 7). số ngày lich /lich-hang-ve /lich-hang-ve 14">
         <header><code class="name">/lich-hang-ve</code><div class="alias"><span>/lich</span></div></header>
@@ -413,7 +420,7 @@ a { color:inherit; }
       </article></div>
   </section>
   <p class="empty" id="rong">Không có lệnh khớp. Thử từ khoá khác – hoặc cứ hỏi Luna bằng câu bình thường.</p>
-  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>31 lệnh · 110 ví dụ · cập nhật 18/11/2026</span></div>
+  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>32 lệnh · 112 ví dụ · cập nhật 19/11/2026</span></div>
 </main>
 <div class="toast" id="toast">Đã copy</div>
 <script>
