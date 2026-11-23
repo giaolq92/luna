@@ -1,52 +1,28 @@
 {
- "cap_nhat": "2026-11-19T10:30+07:00",
+ "cap_nhat": "2026-11-23T07:00+07:00",
  "nguoi_dung": {
-  "d7": 9,
-  "d7_truoc": 4,
-  "d30": 9,
+  "d7": 7,
+  "d7_truoc": 9,
+  "d30": 10,
   "d30_truoc": 0
  },
  "cau_hoi": {
   "hom_nay": 0,
-  "hom_qua_cung_gio": 8,
-  "d7": 91,
-  "d7_truoc": 13,
-  "d30": 128,
+  "hom_qua_cung_gio": 0,
+  "d7": 46,
+  "d7_truoc": 72,
+  "d30": 142,
   "d30_truoc": 0
  },
  "nhom_d30": {
-  "lenh": 12,
-  "ai": 91,
-  "chua": 25
+  "lenh": 13,
+  "ai": 102,
+  "chua": 27
  },
- "ty_le_tra_loi_d30": 80.5,
- "ty_le_lenh_d30": 11.7,
- "phan_hoi_trung_vi_giay_d30": 12.0,
+ "ty_le_tra_loi_d30": 81.0,
+ "ty_le_lenh_d30": 11.3,
+ "phan_hoi_trung_vi_giay_d30": 11.9,
  "theo_ngay": [
-  {
-   "ngay": "2026-10-21",
-   "lenh": 0,
-   "ai": 0,
-   "chua": 0
-  },
-  {
-   "ngay": "2026-10-22",
-   "lenh": 0,
-   "ai": 0,
-   "chua": 0
-  },
-  {
-   "ngay": "2026-10-23",
-   "lenh": 0,
-   "ai": 0,
-   "chua": 0
-  },
-  {
-   "ngay": "2026-10-24",
-   "lenh": 0,
-   "ai": 0,
-   "chua": 0
-  },
   {
    "ngay": "2026-10-25",
    "lenh": 0,
@@ -199,6 +175,30 @@
   },
   {
    "ngay": "2026-11-19",
+   "lenh": 1,
+   "ai": 11,
+   "chua": 2
+  },
+  {
+   "ngay": "2026-11-20",
+   "lenh": 0,
+   "ai": 0,
+   "chua": 0
+  },
+  {
+   "ngay": "2026-11-21",
+   "lenh": 0,
+   "ai": 0,
+   "chua": 0
+  },
+  {
+   "ngay": "2026-11-22",
+   "lenh": 0,
+   "ai": 0,
+   "chua": 0
+  },
+  {
+   "ngay": "2026-11-23",
    "lenh": 0,
    "ai": 0,
    "chua": 0
@@ -206,12 +206,12 @@
  ],
  "top_lenh_d30": [
   {
-   "lenh": "leadtime-tb",
-   "so": 15
+   "lenh": "dat-hang",
+   "so": 18
   },
   {
-   "lenh": "dat-hang",
-   "so": 13
+   "lenh": "leadtime-tb",
+   "so": 15
   },
   {
    "lenh": "don-invoice",
@@ -226,14 +226,14 @@
    "so": 8
   }
  ],
- "du_lieu_den": "2026-11-18T16:48+07:00",
+ "du_lieu_den": "2026-11-19T17:09+07:00",
  "cau_hoi_bo_sung": {
-  "da_bo_sung": 20,
-  "dang_cho": 13,
+  "da_bo_sung": 21,
+  "dang_cho": 20,
   "khong_lam": 0
  },
  "bcqtmh_refresh": {
-  "luc": "2026-11-19T07:14+07:00",
+  "luc": "2026-11-22T12:44+07:00",
   "loi_luc": null
  }
 }
