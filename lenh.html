@@ -115,7 +115,7 @@ a { color:inherit; }
     <p class="tag">Hỏi bằng tiếng Việt. Nhận về bảng số kiểm chứng được.</p>
     <p class="lead">Luna là AI Agent chạy trên Microsoft Teams: hiểu câu hỏi tự nhiên, chọn đúng lệnh trong thư viện, truy vấn DAX trực tiếp trên semantic model <b>BCQTMH</b> đã publish và trả lời bằng bảng số copy thẳng sang Excel – kèm bộ lọc và giờ làm mới dữ liệu để đối chiếu.</p>
     <div class="stats">
-      <div class="stat"><b>32</b><span>lệnh nghiệp vụ</span></div>
+      <div class="stat"><b>34</b><span>lệnh nghiệp vụ</span></div>
       <div class="stat"><b>6</b><span>nhóm chức năng</span></div>
       <div class="stat"><b>1</b><span>nguồn số: BCQTMH</span></div>
       <div class="stat"><b>2×</b><span>làm mới / ngày</span></div>
@@ -144,7 +144,7 @@ a { color:inherit; }
   <div class="flow">
     <div class="node"><div class="n">01 · KÊNH</div><h4>Microsoft Teams</h4><p>Chat riêng 1–1 hoặc tag @Luna trong nhóm, kênh.</p><code>Agents SDK</code></div>
     <div class="node"><div class="n">02 · ROUTER</div><h4>Hiểu câu hỏi</h4><p>Lệnh <b>/...</b> đi thẳng; câu tự nhiên được AI phân loại thành lệnh + tham số.</p><code>Claude Haiku</code></div>
-    <div class="node"><div class="n">03 · THƯ VIỆN</div><h4>32 lệnh nghiệp vụ</h4><p>Mỗi lệnh là truy vấn + mẫu trả lời đã kiểm thử bằng bộ câu hỏi thật.</p><code>DAX cố định</code></div>
+    <div class="node"><div class="n">03 · THƯ VIỆN</div><h4>34 lệnh nghiệp vụ</h4><p>Mỗi lệnh là truy vấn + mẫu trả lời đã kiểm thử bằng bộ câu hỏi thật.</p><code>DAX cố định</code></div>
     <div class="node"><div class="n">04 · DỮ LIỆU</div><h4>BCQTMH</h4><p>Semantic model Power BI đã publish – nguồn số duy nhất, làm mới 07:00 và 12:30.</p><code>Power BI Service</code></div>
     <div class="node"><div class="n">05 · TRẢ LỜI</div><h4>Bảng số chuẩn</h4><p>Số kiểu Bravo, đơn vị ở tiêu đề, ghi bộ lọc + giờ refresh; dài thì xuất Excel.</p><code>Teams · Excel</code></div>
   </div>
@@ -167,7 +167,7 @@ a { color:inherit; }
 
 <div class="tools"><div class="wrap">
   <label class="search"><span>⌕</span><input id="q" type="search" placeholder="Tìm lệnh: leadtime, tồn kho, VAT, Foton…" autocomplete="off"><kbd>/</kbd></label>
-  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime <small>5</small></a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng <small>11</small></a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng <small>8</small></a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo <small>4</small></a><a href="#nhom-kho">Tồn kho <small>1</small></a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu <small>3</small></a></nav>
+  <nav class="nav"><a href="#nhom-kpi">KPI &amp; leadtime <small>5</small></a><a href="#nhom-mua">Yêu cầu mua &amp; đặt hàng <small>11</small></a><a href="#nhom-hang-ve">Hàng về &amp; lô hàng <small>10</small></a><a href="#nhom-kiem-tra">Kiểm tra dữ liệu Bravo <small>4</small></a><a href="#nhom-kho">Tồn kho <small>1</small></a><a href="#nhom-danh-ba">Danh bạ công cụ &amp; tài liệu <small>3</small></a></nav>
 </div></div>
 
 <main class="wrap">
@@ -292,7 +292,7 @@ a { color:inherit; }
       </article></div>
   </section>
   <section class="group" id="nhom-hang-ve">
-    <div class="group-head"><span class="idx">03</span><h2>Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="count">8 lệnh</span></div>
+    <div class="group-head"><span class="idx">03</span><h2>Hàng về &amp; lô hàng</h2><code>/lenh hang-ve</code><span class="count">10 lệnh</span></div>
     <div class="cmds">
       <article class="cmd" id="hang-ve" data-tim="hang-ve giá trị hàng về giá trị hàng về (fob) trong tháng, chia sea/air, so cùng kỳ. kỳ nhiều tháng (cả năm, khoảng ngày) thì thêm bảng từng tháng. tháng, năm, khoảng ngày, ncc, kho, nhóm hàng hangve /hang-ve 9 /hang-ve 9 nhom:lop tháng 9 về bao nhiêu hàng? tổng giá trị hàng về từ 1/1/2026 đến hôm nay của catina">
         <header><code class="name">/hang-ve</code><div class="alias"><span>/hangve</span></div></header>
@@ -328,6 +328,20 @@ a { color:inherit; }
         <p>Số ngày trung bình từ ngày cập cảng đến ngày thông quan, mỗi invoice (lô) tính 1 lần, chia Sea/Air kèm dòng tổng, nhanh nhất / chậm nhất; kỳ lọc theo ngày thông quan (khoảng ngày, tháng hoặc năm; không nêu = từ đầu năm nay). Lô thông quan trước cập cảng tính 0 ngày; lô quá 30 ngày coi là nghi sai ngày, không tính, được liệt kê riêng.</p>
         <div class="param"><b>Tham số</b><span>khoảng ngày (tu_ngay, den_ngay), tháng, năm, NCC, Sea/Air, kho, nk/nd</span></div>
         <div class="exs"><button class="ex" type="button" data-copy="/thong-quan 1/1/2026-31/10/2026"><i>›</i>/thong-quan 1/1/2026-31/10/2026</button><button class="ex" type="button" data-copy="/thong-quan 2026 dtmb001 sea"><i>›</i>/thong-quan 2026 dtmb001 sea</button><button class="ex" type="button" data-copy="/thong-quan 10/2026"><i>›</i>/thong-quan 10/2026</button><button class="ex" type="button" data-copy="Luna tính thời gian trung bình từ ngày cập cảng đến ngày thông quan trong khoảng từ 1/1/2026-31/10/2026"><i>›</i>Luna tính thời gian trung bình từ ngày cập cảng đến ngày thông quan trong khoảng từ 1/1/2026-31/10/2026</button></div>
+      </article>
+      <article class="cmd" id="lo-cang" data-tim="lo-cang lô hàng theo cảng đến tổng hợp các lô hàng (invoice) về theo cảng đến (cát lái, cái mép, hải phòng, hà nội...): số lô, số vận đơn, số cont, giá trị fob chia theo cảng đến và sea/air, theo tháng ship, kèm danh sách từng lô (vận đơn, ngày ship, cập cảng, về kho); kỳ theo ngày ship invoice (không nêu = từ đầu năm nay). cang_den (một hoặc nhiều cảng), ncc, khoảng ngày / tháng / năm, sea/air, kho, nk/nd, invoice locang cang-den /lo-cang dtmb001 den:cat-lai,cai-mep 1/1/2026-30/11/2026 /lo-cang den:hai-phong 10/2026 luna tổng hợp các lô hàng của ncc dtmb001 về cat lai và cai mep từ 1/1/2026-30/11/2026">
+        <header><code class="name">/lo-cang</code><div class="alias"><span>/locang</span><span>/cang-den</span></div></header>
+        <h3>Lô hàng theo cảng đến</h3>
+        <p>Tổng hợp các lô hàng (invoice) về theo cảng đến (Cát Lái, Cái Mép, Hải Phòng, Hà Nội...): số lô, số vận đơn, số cont, giá trị FOB chia theo cảng đến và Sea/Air, theo tháng ship, kèm danh sách từng lô (vận đơn, ngày ship, cập cảng, về kho); kỳ theo ngày ship invoice (không nêu = từ đầu năm nay).</p>
+        <div class="param"><b>Tham số</b><span>cang_den (một hoặc nhiều cảng), NCC, khoảng ngày / tháng / năm, Sea/Air, kho, nk/nd, invoice</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/lo-cang dtmb001 den:cat-lai,cai-mep 1/1/2026-30/11/2026"><i>›</i>/lo-cang dtmb001 den:cat-lai,cai-mep 1/1/2026-30/11/2026</button><button class="ex" type="button" data-copy="/lo-cang den:hai-phong 10/2026"><i>›</i>/lo-cang den:hai-phong 10/2026</button><button class="ex" type="button" data-copy="Luna tổng hợp các lô hàng của NCC DTMB001 về CAT LAI và CAI MEP từ 1/1/2026-30/11/2026"><i>›</i>Luna tổng hợp các lô hàng của NCC DTMB001 về CAT LAI và CAI MEP từ 1/1/2026-30/11/2026</button></div>
+      </article>
+      <article class="cmd" id="vcqt-ncc" data-tim="vcqt-ncc lô hàng theo ncc vận chuyển quốc tế tổng hợp các lô hàng (invoice) có chi phí vận chuyển quốc tế do một / nhiều ncc vận chuyển (forwarder, hãng tàu, mã dvka...) thực hiện: số lô, giá trị fob, chi phí vc quốc tế, tỷ lệ vc/fob theo ncc vận chuyển và sea/air, theo tháng, kèm danh sách từng lô (cảng đến, ngày phiếu nhập); lọc thêm ncc hàng, cảng đến; kỳ theo ngày phiếu nhập (không nêu = từ đầu năm nay). ncc_vc (mã / tên ncc vận chuyển), ncc hàng, cảng đến, khoảng ngày / tháng / năm, sea/air, kho, nk/nd, invoice vcqt forwarder /vcqt-ncc dtmb001 vc:dvka171 1/1/2026-30/11/2026 /vcqt-ncc 2026 sea luna tổng hợp các lô hàng của ncc dtmb001 có chi phí vận chuyển quốc tế của ncc dvka171 từ 1/1/2026-30/11/2026">
+        <header><code class="name">/vcqt-ncc</code><div class="alias"><span>/vcqt</span><span>/forwarder</span></div></header>
+        <h3>Lô hàng theo NCC vận chuyển quốc tế</h3>
+        <p>Tổng hợp các lô hàng (invoice) có chi phí vận chuyển quốc tế do một / nhiều NCC vận chuyển (forwarder, hãng tàu, mã DVKA...) thực hiện: số lô, giá trị FOB, chi phí VC quốc tế, tỷ lệ VC/FOB theo NCC vận chuyển và Sea/Air, theo tháng, kèm danh sách từng lô (cảng đến, ngày phiếu nhập); lọc thêm NCC hàng, cảng đến; kỳ theo ngày phiếu nhập (không nêu = từ đầu năm nay).</p>
+        <div class="param"><b>Tham số</b><span>ncc_vc (mã / tên NCC vận chuyển), NCC hàng, cảng đến, khoảng ngày / tháng / năm, Sea/Air, kho, nk/nd, invoice</span></div>
+        <div class="exs"><button class="ex" type="button" data-copy="/vcqt-ncc dtmb001 vc:dvka171 1/1/2026-30/11/2026"><i>›</i>/vcqt-ncc dtmb001 vc:dvka171 1/1/2026-30/11/2026</button><button class="ex" type="button" data-copy="/vcqt-ncc 2026 sea"><i>›</i>/vcqt-ncc 2026 sea</button><button class="ex" type="button" data-copy="Luna tổng hợp các lô hàng của NCC DTMB001 có chi phí vận chuyển quốc tế của NCC DVKA171 từ 1/1/2026-30/11/2026"><i>›</i>Luna tổng hợp các lô hàng của NCC DTMB001 có chi phí vận chuyển quốc tế của NCC DVKA171 từ 1/1/2026-30/11/2026</button></div>
       </article>
       <article class="cmd" id="cont" data-tim="cont số cont nhập kho số cont 20, cont 40 và số bill hàng lẻ (lcl) nhập kho theo ngày dự kiến về kho, chia theo ncc và kho. tháng, năm, ncc, kho container /cont 10 dtmb001 số cont nhập kho từ hyundai mobis tháng 10">
         <header><code class="name">/cont</code><div class="alias"><span>/container</span></div></header>
@@ -420,7 +434,7 @@ a { color:inherit; }
       </article></div>
   </section>
   <p class="empty" id="rong">Không có lệnh khớp. Thử từ khoá khác – hoặc cứ hỏi Luna bằng câu bình thường.</p>
-  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>32 lệnh · 113 ví dụ · cập nhật 19/11/2026</span></div>
+  <div class="foot"><span>Bấm vào ví dụ để copy, dán vào chat với Luna. Gõ <code>/lenh</code> trong Teams để xem tóm tắt theo nhóm.</span><span>34 lệnh · 119 ví dụ · cập nhật 26/11/2026</span></div>
 </main>
 <div class="toast" id="toast">Đã copy</div>
 <script>
