@@ -1,27 +1,27 @@
 {
- "cap_nhat": "2026-11-27T14:00+07:00",
+ "cap_nhat": "2026-11-27T14:30+07:00",
  "nguoi_dung": {
-  "d7": 2,
+  "d7": 4,
   "d7_truoc": 10,
   "d30": 10,
   "d30_truoc": 0
  },
  "cau_hoi": {
-  "hom_nay": 6,
+  "hom_nay": 10,
   "hom_qua_cung_gio": 1,
-  "d7": 15,
+  "d7": 19,
   "d7_truoc": 75,
-  "d30": 157,
+  "d30": 161,
   "d30_truoc": 0
  },
  "nhom_d30": {
   "lenh": 14,
-  "ai": 113,
+  "ai": 117,
   "chua": 30
  },
- "ty_le_tra_loi_d30": 80.9,
- "ty_le_lenh_d30": 11.0,
- "phan_hoi_trung_vi_giay_d30": 11.9,
+ "ty_le_tra_loi_d30": 81.4,
+ "ty_le_lenh_d30": 10.7,
+ "phan_hoi_trung_vi_giay_d30": 12.0,
  "theo_ngay": [
   {
    "ngay": "2026-10-29",
@@ -200,14 +200,14 @@
   {
    "ngay": "2026-11-27",
    "lenh": 1,
-   "ai": 5,
+   "ai": 9,
    "chua": 0
   }
  ],
  "top_lenh_d30": [
   {
    "lenh": "dat-hang",
-   "so": 18
+   "so": 19
   },
   {
    "lenh": "leadtime-tb",
@@ -218,15 +218,15 @@
    "so": 13
   },
   {
-   "lenh": "thong-ke-don",
-   "so": 10
+   "lenh": "vcqt-ncc",
+   "so": 13
   },
   {
-   "lenh": "vcqt-ncc",
+   "lenh": "thong-ke-don",
    "so": 10
   }
  ],
- "du_lieu_den": "2026-11-27T13:47+07:00",
+ "du_lieu_den": "2026-11-27T14:19+07:00",
  "cau_hoi_bo_sung": {
   "da_bo_sung": 21,
   "dang_cho": 24,
