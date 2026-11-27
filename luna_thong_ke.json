@@ -1,5 +1,5 @@
 {
- "cap_nhat": "2026-11-27T17:00+07:00",
+ "cap_nhat": "2026-11-27T17:30+07:00",
  "nguoi_dung": {
   "d7": 4,
   "d7_truoc": 10,
@@ -8,7 +8,7 @@
  },
  "cau_hoi": {
   "hom_nay": 18,
-  "hom_qua_cung_gio": 6,
+  "hom_qua_cung_gio": 8,
   "d7": 27,
   "d7_truoc": 75,
   "d30": 169,
