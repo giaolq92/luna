@@ -1,5 +1,5 @@
 {
- "cap_nhat": "2026-11-27T13:00+07:00",
+ "cap_nhat": "2026-11-27T14:00+07:00",
  "nguoi_dung": {
   "d7": 2,
   "d7_truoc": 10,
@@ -7,20 +7,20 @@
   "d30_truoc": 0
  },
  "cau_hoi": {
-  "hom_nay": 5,
+  "hom_nay": 6,
   "hom_qua_cung_gio": 1,
-  "d7": 14,
+  "d7": 15,
   "d7_truoc": 75,
-  "d30": 156,
+  "d30": 157,
   "d30_truoc": 0
  },
  "nhom_d30": {
   "lenh": 14,
-  "ai": 112,
+  "ai": 113,
   "chua": 30
  },
- "ty_le_tra_loi_d30": 80.8,
- "ty_le_lenh_d30": 11.1,
+ "ty_le_tra_loi_d30": 80.9,
+ "ty_le_lenh_d30": 11.0,
  "phan_hoi_trung_vi_giay_d30": 11.9,
  "theo_ngay": [
   {
@@ -200,7 +200,7 @@
   {
    "ngay": "2026-11-27",
    "lenh": 1,
-   "ai": 4,
+   "ai": 5,
    "chua": 0
   }
  ],
@@ -223,10 +223,10 @@
   },
   {
    "lenh": "vcqt-ncc",
-   "so": 9
+   "so": 10
   }
  ],
- "du_lieu_den": "2026-11-27T11:07+07:00",
+ "du_lieu_den": "2026-11-27T13:47+07:00",
  "cau_hoi_bo_sung": {
   "da_bo_sung": 21,
   "dang_cho": 24,
